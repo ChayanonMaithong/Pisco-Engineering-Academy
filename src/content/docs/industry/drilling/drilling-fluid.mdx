@@ -1,0 +1,95 @@
+---
+title: Drilling Fluid (น้ำโคลนเจาะ)
+description: หน้าที่ ชนิด คุณสมบัติ และการควบคุมแรงดันด้วยน้ำโคลนเจาะ
+sidebar:
+  order: 1
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import HydrostaticCalc from '../../../../components/HydrostaticCalc.astro';
+
+**ระดับ:** Intermediate
+**ความรู้ที่ต้องมีก่อน:** [Fluid Mechanics](/foundations/fluid-mechanics/) (hydrostatics, rheology) · [Petroleum Engineering](/disciplines/petroleum-engineering/)
+
+## วัตถุประสงค์การเรียนรู้
+- บอกหน้าที่หลักของน้ำโคลนเจาะ
+- คำนวณแรงดันไฮโดรสแตติกและ ECD
+- อ่านค่า Plastic Viscosity และ Yield Point จาก Fann viscometer
+- อธิบาย pressure window ระหว่าง pore pressure กับ fracture gradient
+
+## หน้าที่หลัก
+1. **ควบคุมแรงดันใต้หลุม** ไม่ให้ของไหลจากชั้นหินไหลเข้าหลุม (kick)
+2. **ขนเศษหิน (cuttings)** ขึ้นมาที่ผิวดิน
+3. **พยุงเศษหิน** ไว้เมื่อหยุดปั๊ม (gel strength)
+4. **ระบายความร้อนและหล่อลื่น** หัวเจาะและก้านเจาะ
+5. **ทำให้ผนังหลุมเสถียร** ด้วย filter cake บาง ๆ
+6. **ส่งข้อมูลและพลังงาน** ให้เครื่องมือ MWD และ mud motor
+
+## ชนิดของน้ำโคลน
+
+<Tabs>
+  <TabItem label="Water-Based (WBM)">
+    ราคาถูก จัดการด้านสิ่งแวดล้อมง่าย แต่ทำปฏิกิริยากับหินดินดาน (shale) ที่ไวต่อน้ำได้
+  </TabItem>
+  <TabItem label="Oil-Based (OBM)">
+    ช่วยให้หลุมเสถียรและหล่อลื่นได้ดี ทนอุณหภูมิสูง แต่แพงและมีข้อจำกัดด้านสิ่งแวดล้อมสูง
+  </TabItem>
+  <TabItem label="Synthetic-Based (SBM)">
+    ประสิทธิภาพใกล้เคียง OBM และเป็นพิษต่อสิ่งแวดล้อมน้อยกว่า นิยมใช้ในงานนอกชายฝั่ง
+  </TabItem>
+</Tabs>
+
+## แรงดันไฮโดรสแตติก (หน่วย Oilfield)
+
+$$
+P_h\,[\text{psi}] = 0.052 \times MW\,[\text{ppg}] \times TVD\,[\text{ft}]
+$$
+
+<Aside type="tip">
+ค่า **0.052** มาจากการแปลง $\rho g h$ เป็นหน่วย ppg และ ft ที่ใช้ในแท่นเจาะ ต้องใช้ **TVD** (ความลึกแนวดิ่ง) ไม่ใช่ MD (ความยาวตามแนวหลุม) โดยเฉพาะในหลุมเจาะเอียง
+</Aside>
+
+<HydrostaticCalc />
+
+## Pressure Window
+
+ต้องรักษาน้ำหนักน้ำโคลนให้อยู่ระหว่าง
+
+$$
+P_{\text{pore}} < P_{\text{wellbore}} < P_{\text{fracture}}
+$$
+
+- ต่ำกว่า pore pressure → เกิด **kick** และอาจลุกลามเป็น blowout
+- สูงกว่า fracture pressure → หินแตก น้ำโคลนไหลหายเข้าชั้นหิน (**lost circulation**)
+
+ขณะปั๊มน้ำโคลน แรงดันที่ก้นหลุมจะสูงกว่าค่าไฮโดรสแตติก เพราะมีแรงเสียดทานใน annulus จึงใช้ **Equivalent Circulating Density**:
+
+$$
+ECD = MW + \frac{\Delta P_{\text{annulus}}}{0.052 \times TVD}
+$$
+
+## Rheology จาก Fann Viscometer
+
+อ่านค่ามุมหน้าปัดที่ 600 และ 300 rpm แล้วคำนวณตามแบบจำลอง Bingham Plastic:
+
+$$
+PV\,[\text{cP}] = \theta_{600} - \theta_{300}, \qquad
+YP\,[\text{lb}/100\,\text{ft}^2] = \theta_{300} - PV
+$$
+
+- **PV** สูงขึ้นเมื่อมีของแข็งในน้ำโคลนมาก ทำให้เจาะช้าลง
+- **YP** สะท้อนความสามารถในการขนเศษหิน
+
+## ตัวอย่างจากงานจริง
+เจาะถึง TVD 9,000 ft ใช้น้ำโคลน 10.5 ppg ผลทดสอบชั้นหินให้ fracture gradient เทียบเท่า 13.0 ppg และวัด annular pressure loss ได้ 250 psi:
+
+- $P_h = 0.052 \times 10.5 \times 9000 \approx 4{,}914$ psi
+- $ECD = 10.5 + 250 / (0.052 \times 9000) \approx 11.03$ ppg ซึ่งยังต่ำกว่า 13.0 ppg จึงปลอดภัยจากการทำให้หินแตก
+
+## แบบฝึกหัด
+1. Fann อ่านได้ $\theta_{600} = 52$, $\theta_{300} = 32$ จงหา PV และ YP (เฉลย: PV = 20 cP, YP = 12 lb/100ft²)
+2. ถ้า pore pressure ที่ 8,000 ft TVD เท่ากับ 4,000 psi ต้องใช้น้ำโคลนอย่างน้อยกี่ ppg (เฉลย: ≈ 9.6 ppg ก่อนบวก trip margin)
+
+## อ่านต่อ / มาตรฐาน
+- API RP 13B-1 / 13B-2 — การทดสอบน้ำโคลนในภาคสนาม (water-based / oil-based)
+- [Directional Drilling](/industry/drilling/directional-drilling/)

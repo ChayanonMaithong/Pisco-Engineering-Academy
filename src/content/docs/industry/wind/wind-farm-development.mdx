@@ -1,0 +1,80 @@
+---
+title: Wind Farm Development
+description: กระบวนการพัฒนาโครงการฟาร์มกังหันลม ตั้งแต่หาพื้นที่จนถึงเริ่มจ่ายไฟเชิงพาณิชย์ (COD)
+sidebar:
+  order: 1
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import WindPowerCalc from '../../../../components/WindPowerCalc.astro';
+
+**ระดับ:** Intermediate
+**ความรู้ที่ต้องมีก่อน:** [Fluid Mechanics](/foundations/fluid-mechanics/) · Statistics (Weibull distribution) · Power Systems เบื้องต้น
+
+## วัตถุประสงค์การเรียนรู้
+- อธิบายขั้นตอนการพัฒนาโครงการฟาร์มกังหันลมได้ครบทุกขั้น
+- ประมาณกำลังของกังหันจากความเร็วลม และเข้าใจข้อจำกัด Betz
+- อธิบายความหมายของ P50 / P90 และ Capacity Factor
+
+## ขั้นตอนการพัฒนาโครงการ
+
+<Steps>
+
+1. **Site Screening** — คัดเลือกพื้นที่จากแผนที่ศักยภาพลม การเข้าถึงสายส่ง ถนน ข้อจำกัดด้านสิ่งแวดล้อม และระยะห่างจากชุมชน
+
+2. **Wind Measurement** — ติดตั้งเสาวัดลม (met mast) หรือ LiDAR เก็บข้อมูลอย่างน้อย **12 เดือน** แล้วปรับเทียบกับข้อมูลระยะยาว (MCP: Measure–Correlate–Predict)
+
+3. **Energy Yield Assessment** — จำลองการวางตำแหน่งกังหัน (layout) คำนวณ wake loss แล้วประเมินพลังงานรายปีที่ระดับความเชื่อมั่น **P50 / P90**
+
+4. **Permitting** — ศึกษาผลกระทบสิ่งแวดล้อม (EIA/IEE ตามที่กฎหมายกำหนด) ประเมินเสียง เงา (shadow flicker) นก/ค้างคาว และรับฟังความเห็นชุมชน แล้วขอใบอนุญาตจากหน่วยงานกำกับ
+
+5. **Grid Connection & PPA** — ศึกษาการเชื่อมต่อระบบ (grid study) และทำสัญญาซื้อขายไฟฟ้ากับการไฟฟ้าหรือผู้ซื้อ
+
+6. **Financing & Procurement** — ทำ due diligence เลือกกังหัน (Turbine Supply Agreement) และผู้รับเหมา BoP (Balance of Plant)
+
+7. **Construction & Commissioning** — งานฐานราก ถนน สถานีไฟฟ้าย่อย ติดตั้งกังหัน ทดสอบ และเริ่มจ่ายไฟเชิงพาณิชย์ (**COD**)
+
+</Steps>
+
+## กำลังจากลม
+
+$$
+P = \tfrac{1}{2} \rho A v^3 C_p
+$$
+
+- $\rho$ ความหนาแน่นอากาศ (≈ 1.225 kg/m³ ที่ระดับน้ำทะเล 15 °C)
+- $A = \pi D^2 / 4$ พื้นที่กวาดของใบพัด
+- $C_p$ สัมประสิทธิ์กำลัง ซึ่งตามทฤษฎีไม่เกิน **Betz limit** $= 16/27 \approx 0.593$ ส่วนกังหันจริงทำได้ราว 0.45–0.50
+
+<WindPowerCalc />
+
+<Aside type="caution">
+ค่าที่ได้เป็นกำลังทางทฤษฎี กังหันจริงทำงานตาม **power curve** ของผู้ผลิต: เริ่มหมุนที่ cut-in, ถึง rated power ที่ rated speed และหยุดที่ cut-out
+</Aside>
+
+## ความเร็วลมตามความสูง (Wind Shear)
+
+$$
+\frac{v_2}{v_1} = \left( \frac{h_2}{h_1} \right)^{\alpha}
+$$
+
+ค่า $\alpha \approx 1/7$ ใช้กับพื้นที่โล่ง ส่วนพื้นที่ป่าหรือภูมิประเทศซับซ้อนจะมีค่าสูงกว่านี้ จึงต้องวัดจริงที่หลายระดับความสูง
+
+## Capacity Factor
+
+$$
+CF = \frac{\text{พลังงานที่ผลิตได้จริงใน 1 ปี (MWh)}}{\text{กำลังติดตั้ง (MW)} \times 8760\ \text{h}}
+$$
+
+## P50 กับ P90
+- **P50**: พลังงานรายปีที่มีโอกาส 50% ว่าจะได้มากกว่านี้ (ค่ากลาง)
+- **P90**: พลังงานรายปีที่มีโอกาส 90% ว่าจะได้มากกว่านี้ ธนาคารมักใช้ค่านี้ในการกำหนดวงเงินกู้
+
+## แบบฝึกหัด
+1. ฟาร์มขนาด 90 MW ผลิตไฟได้ 236,520 MWh ต่อปี มี Capacity Factor เท่าใด (เฉลย: 30%)
+2. วัดลมที่ 60 m ได้ 6.0 m/s ใช้ $\alpha = 0.2$ ความเร็วลมที่ hub height 120 m เป็นเท่าใด (เฉลย: ≈ 6.9 m/s)
+
+## อ่านต่อ / มาตรฐาน
+- IEC 61400-1 — Design requirements
+- IEC 61400-12-1 — Power performance measurement
+- [Wind Farm O&M](/industry/wind/wind-farm-om/)

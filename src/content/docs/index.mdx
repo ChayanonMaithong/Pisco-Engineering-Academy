@@ -1,0 +1,39 @@
+---
+title: Engineering Academy
+description: สื่อการเรียนการสอนวิศวกรรม ตั้งแต่พื้นฐาน หลักสูตรภาควิชา จนถึงงานจริงในอุตสาหกรรม
+template: splash
+hero:
+  tagline: เรียนวิศวกรรมจากพื้นฐาน → ภาควิชา → งานจริงในภาคสนาม ทุกบทเรียนเชื่อมโยงกลับไปหาหลักการที่ใช้
+  actions:
+    - text: เริ่มต้นที่นี่
+      link: /guides/how-to-use/
+      icon: right-arrow
+    - text: ดูตัวอย่าง Wind Farm Development
+      link: /industry/wind/wind-farm-development/
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## โครงสร้าง 3 ชั้น
+
+<CardGrid>
+  <Card title="ชั้น 1 · Foundations" icon="open-book">
+    คณิตศาสตร์ ฟิสิกส์ กลศาสตร์ของไหล อุณหพลศาสตร์ วัสดุ — พื้นฐานที่ทุกสาขาใช้ร่วมกัน
+  </Card>
+  <Card title="ชั้น 2 · Disciplines" icon="list-format">
+    หลักสูตรของแต่ละภาควิชา รายวิชา ลำดับการเรียน และวิชาที่ต้องเรียนก่อน
+  </Card>
+  <Card title="ชั้น 3 · Industry Practice" icon="rocket">
+    งานจริง: Wind Farm Development, O&M, Directional Drilling, Drilling Fluid และอื่น ๆ
+  </Card>
+</CardGrid>
+
+## บทเรียนตัวอย่าง
+
+<CardGrid>
+  <LinkCard title="Wind Farm Development" href="/industry/wind/wind-farm-development/" description="จากการหาพื้นที่จนถึง COD — มีเครื่องคำนวณกำลังกังหันลม" />
+  <LinkCard title="Wind Farm O&M" href="/industry/wind/wind-farm-om/" description="Availability, SCADA, Preventive vs Predictive maintenance" />
+  <LinkCard title="Drilling Fluid" href="/industry/drilling/drilling-fluid/" description="หน้าที่ของน้ำโคลน, rheology, pressure window — มีเครื่องคำนวณแรงดัน" />
+  <LinkCard title="Directional Drilling" href="/industry/drilling/directional-drilling/" description="KOP, build rate, MWD, RSS" />
+</CardGrid>
