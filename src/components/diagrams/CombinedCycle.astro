@@ -1,0 +1,73 @@
+---
+import Figure from './Figure.astro';
+import Arrow from './Arrow.astro';
+---
+<Figure label="แผนภาพโรงไฟฟ้าความร้อนร่วม" caption="Combined cycle: ไอเสียร้อนจากกังหันก๊าซผลิตไอน้ำใน HRSG แล้วขับกังหันไอน้ำ ได้ไฟฟ้าจากทั้งสองเครื่อง">
+  <svg viewBox="0 0 700 400" role="img" aria-label="Gas turbine, HRSG ที่มี superheater evaporator economizer, steam turbine, condenser และปั๊ม">
+    <!-- Gas turbine block -->
+    <circle cx="52" cy="90" r="28" class="d-box-power" />
+    <text x="52" y="95" text-anchor="middle" class="d-label">G</text>
+    <line x1="80" y1="90" x2="100" y2="90" class="d-shaft" />
+    <rect x="100" y="55" width="170" height="70" rx="10" class="d-box-hot" />
+    <text x="185" y="86" text-anchor="middle" class="d-label">Gas Turbine</text>
+    <text x="185" y="106" text-anchor="middle" class="d-small">ผลิตไฟ ≈ 2/3 ของโรง</text>
+    <Arrow pts={[[185, 18], [185, 53]]} kind="hot" />
+    <text x="197" y="30" class="d-small">ก๊าซ + อากาศ</text>
+    <Arrow pts={[[270, 90], [318, 90]]} kind="hot" size={10} />
+    <text x="294" y="78" text-anchor="middle" class="d-small">~600 °C</text>
+
+    <!-- HRSG -->
+    <rect x="320" y="50" width="270" height="80" rx="8" class="d-box" />
+    <rect x="320" y="50" width="90" height="80" rx="8" class="d-box-hot" />
+    <rect x="410" y="50" width="90" height="80" class="d-box-hot" style="fill-opacity:0.55" />
+    <rect x="500" y="50" width="90" height="80" class="d-box" />
+    <text x="365" y="86" text-anchor="middle" class="d-label">SH</text>
+    <text x="365" y="104" text-anchor="middle" class="d-small">Superheater</text>
+    <text x="455" y="86" text-anchor="middle" class="d-label">EVAP</text>
+    <text x="455" y="104" text-anchor="middle" class="d-small">Evaporator</text>
+    <text x="545" y="86" text-anchor="middle" class="d-label">ECO</text>
+    <text x="545" y="104" text-anchor="middle" class="d-small">Economizer</text>
+    <text x="455" y="40" text-anchor="middle" class="d-note">HRSG — ไอเสียไหลจากร้อนไปเย็น →</text>
+    <!-- Stack -->
+    <rect x="600" y="30" width="34" height="100" rx="4" class="d-box" />
+    <Arrow pts={[[590, 110], [598, 110]]} kind="line" size={6} head={false} />
+    <Arrow pts={[[617, 30], [617, 4]]} kind="line" dashed />
+    <text x="642" y="62" class="d-small">ปล่อง</text>
+    <text x="642" y="78" class="d-small">~90 °C</text>
+
+    <!-- Steam to ST -->
+    <Arrow pts={[[365, 130], [365, 165], [320, 165], [320, 255], [358, 255]]} kind="steam" />
+    <text x="326" y="210" class="d-small">ไอน้ำ</text>
+    <text x="326" y="224" class="d-small">HP/IP/LP</text>
+
+    <!-- Steam turbine -->
+    <path d="M360 230 L480 205 L480 305 L360 280 Z" class="d-box-accent" />
+    <text x="420" y="252" text-anchor="middle" class="d-label">Steam</text>
+    <text x="420" y="270" text-anchor="middle" class="d-label">Turbine</text>
+    <line x1="480" y1="255" x2="514" y2="255" class="d-shaft" />
+    <circle cx="542" cy="255" r="28" class="d-box-power" />
+    <text x="542" y="260" text-anchor="middle" class="d-label">G</text>
+    <text x="542" y="298" text-anchor="middle" class="d-small">≈ 1/3 ของโรง</text>
+
+    <!-- Condenser -->
+    <Arrow pts={[[440, 297], [440, 328]]} kind="steam" dashed />
+    <rect x="360" y="330" width="150" height="50" rx="8" class="d-box-water" />
+    <text x="435" y="360" text-anchor="middle" class="d-label">Condenser</text>
+
+    <!-- Feedwater back to ECO -->
+    <Arrow pts={[[510, 355], [632, 355]]} kind="water" />
+    <circle cx="650" cy="355" r="16" class="d-box" />
+    <text x="650" y="359" text-anchor="middle" class="d-small">P</text>
+    <text x="650" y="390" text-anchor="middle" class="d-small">Feed pump</text>
+    <Arrow pts={[[650, 339], [650, 160], [545, 160], [545, 132]]} kind="water" />
+    <text x="602" y="152" text-anchor="middle" class="d-small">น้ำป้อน</text>
+    <!-- Water/steam path inside HRSG (ECO → EVAP → SH) -->
+    <Arrow pts={[[525, 120], [480, 120]]} kind="water" size={6} />
+    <Arrow pts={[[435, 120], [390, 120]]} kind="steam" size={6} />
+  </svg>
+  <div class="d-legend">
+    <span><i style="--c: var(--d-hot)"></i>ก๊าซร้อน / ไอเสีย</span>
+    <span><i style="--c: var(--d-steam)"></i>ไอน้ำ</span>
+    <span><i style="--c: var(--d-water)"></i>น้ำ</span>
+  </div>
+</Figure>

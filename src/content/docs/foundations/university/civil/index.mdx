@@ -6,6 +6,8 @@ sidebar:
   order: 0
 ---
 
+import PathMap from '../../../../../components/diagrams/PathMap.astro';
+
 ## ภาพรวมหลักสูตร (ตัวอย่างโครงสร้างทั่วไป)
 
 | ปี | กลุ่มวิชาหลัก |
@@ -25,15 +27,7 @@ sidebar:
 
 ## เส้นทางสู่งานจริง
 
-```
-Soil Mechanics ────────┐
-Foundation Engineering ┼─► ฐานรากกังหันลม / ฐานรากนอกชายฝั่ง ─► Wind Construction, Offshore Wind
-Reinforced Concrete ───┘
-Structural Analysis ───┬─► เสากังหัน, โครงสร้างรองรับแผง PV, อาคารโรงไฟฟ้า
-Steel Design ──────────┘
-Hydraulics / Hydrology ──► ระบบระบายน้ำของโซลาร์ฟาร์ม, ความเสี่ยงน้ำท่วม, Floating PV
-Construction Management ─► ถนน, กำหนดการ, การบริหารผู้รับเหมา
-```
+<PathMap groups={[{"courses": ["Soil Mechanics", "Foundation Engineering", "Reinforced Concrete"], "apply": "ฐานรากกังหันลมบนบกและนอกชายฝั่ง", "tracks": [{"label": "Wind Farm Construction", "href": "/industry/wind/wind-farm-construction/"}, {"label": "Offshore Wind", "href": "/industry/wind/offshore-wind/"}]}, {"courses": ["Structural Analysis", "Steel Design"], "apply": "เสากังหัน, โครงสร้างรองรับแผง PV, อาคารโรงไฟฟ้า", "tracks": [{"label": "Wind Turbine Technology", "href": "/industry/wind/wind-turbine-technology/"}, {"label": "PV Plant Design", "href": "/industry/solar/pv-plant-design/"}]}, {"courses": ["Hydraulics", "Hydrology"], "apply": "ระบบระบายน้ำของโซลาร์ฟาร์ม, ความเสี่ยงน้ำท่วม, Floating PV", "tracks": [{"label": "PV Plant Design", "href": "/industry/solar/pv-plant-design/"}]}, {"courses": ["Construction Management"], "apply": "ถนน, กำหนดการ, การบริหารผู้รับเหมา", "tracks": [{"label": "Wind Farm Construction", "href": "/industry/wind/wind-farm-construction/"}]}]} />
 
 ## ตัวอย่างงานของวิศวกรโยธาในโครงการพลังงาน
 - **พลังงานลม:** ออกแบบฐานรากแผ่และเสาเข็ม, ตรวจสอบกำลังอัดของคอนกรีต, ออกแบบถนนและลาน crane, ควบคุมงานก่อสร้าง

@@ -1,0 +1,9 @@
+---
+// Wrapper for inline SVG diagrams: themed card, horizontal scroll on narrow screens, caption.
+interface Props { caption?: string; label: string; wide?: boolean }
+const { caption, label, wide = false } = Astro.props;
+---
+<figure class:list={['diagram', 'not-content', { wide }]} role="group" aria-label={label}>
+  <div class="diagram-scroll"><slot /></div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

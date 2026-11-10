@@ -1,0 +1,58 @@
+---
+import Figure from './Figure.astro';
+import Arrow from './Arrow.astro';
+const mirrors = [40, 70, 100, 130, 160];
+---
+<Figure label="แผนภาพโรงไฟฟ้า solar tower" caption="Solar tower: heliostat สะท้อนแสงไปที่ receiver บนหอคอย เกลือหลอมเหลวเก็บความร้อนไว้ในถังร้อน แล้วนำไปผลิตไอน้ำขับกังหัน — จึงผลิตไฟต่อได้หลังพระอาทิตย์ตก">
+  <svg viewBox="0 0 700 340" role="img" aria-label="ดวงอาทิตย์ heliostat หอคอยและ receiver ถังเกลือร้อน ถังเกลือเย็น เครื่องผลิตไอน้ำ กังหัน และ generator">
+    <!-- sun -->
+    <circle cx="60" cy="50" r="22" class="d-fill-sun" />
+    <!-- rays sun -> mirrors -> receiver -->
+    {mirrors.map((mx) => (
+      <g>
+        <line x1="60" y1="50" x2={mx} y2="282" class="d-flow d-sun d-dashed" style="opacity:0.55" />
+        <line x1={mx} y1="282" x2="212" y2="72" class="d-flow d-sun" style="opacity:0.7" />
+        <line x1={mx - 12} y1="288" x2={mx + 12} y2="278" class="d-flow d-accent" style="stroke-width:4" />
+        <line x1={mx} y1="286" x2={mx} y2="300" class="d-axis" />
+      </g>
+    ))}
+    <text x="100" y="322" text-anchor="middle" class="d-small">Heliostats (กระจก 2 แกน)</text>
+    <line x1="20" y1="300" x2="680" y2="300" class="d-ground" />
+    <!-- tower + receiver -->
+    <path d="M206 300 L210 80 L222 80 L226 300 Z" class="d-box" />
+    <rect x="200" y="54" width="32" height="28" rx="4" class="d-box-hot" />
+    <text x="216" y="44" text-anchor="middle" class="d-small">Receiver</text>
+    <!-- tanks -->
+    <rect x="300" y="130" width="80" height="62" rx="10" class="d-box-hot" />
+    <text x="340" y="158" text-anchor="middle" class="d-text" font-weight="600">ถังร้อน</text>
+    <text x="340" y="176" text-anchor="middle" class="d-small">~565 °C</text>
+    <rect x="300" y="222" width="80" height="62" rx="10" class="d-box-water" />
+    <text x="340" y="250" text-anchor="middle" class="d-text" font-weight="600">ถังเย็น</text>
+    <text x="340" y="268" text-anchor="middle" class="d-small">~290 °C</text>
+    <!-- salt loop -->
+    <Arrow pts={[[232, 64], [340, 64], [340, 128]]} kind="hot" />
+    <text x="286" y="56" text-anchor="middle" class="d-small">เกลือร้อน</text>
+    <Arrow pts={[[300, 253], [236, 253], [236, 84]]} kind="water" />
+    <text x="242" y="200" class="d-small">เกลือเย็น</text>
+    <Arrow pts={[[380, 161], [438, 161]]} kind="hot" />
+    <!-- steam generator -->
+    <rect x="440" y="130" width="90" height="62" rx="10" class="d-box" />
+    <text x="485" y="157" text-anchor="middle" class="d-text" font-weight="600">Steam</text>
+    <text x="485" y="174" text-anchor="middle" class="d-text" font-weight="600">generator</text>
+    <Arrow pts={[[485, 192], [485, 253], [382, 253]]} kind="water" />
+    <!-- turbine + generator -->
+    <Arrow pts={[[530, 161], [558, 161]]} kind="steam" />
+    <path d="M560 145 L610 132 L610 190 L560 177 Z" class="d-box-accent" />
+    <text x="585" y="210" text-anchor="middle" class="d-small">กังหันไอน้ำ</text>
+    <line x1="610" y1="161" x2="628" y2="161" class="d-shaft" />
+    <circle cx="652" cy="161" r="22" class="d-box-power" />
+    <text x="652" y="166" text-anchor="middle" class="d-label">G</text>
+    <text x="525" y="120" text-anchor="middle" class="d-note">วัฏจักร Rankine</text>
+  </svg>
+  <div class="d-legend">
+    <span><i style="--c: var(--d-sun)"></i>แสงอาทิตย์</span>
+    <span><i style="--c: var(--d-hot)"></i>เกลือร้อน</span>
+    <span><i style="--c: var(--d-water)"></i>เกลือเย็น</span>
+    <span><i style="--c: var(--d-steam)"></i>ไอน้ำ</span>
+  </div>
+</Figure>

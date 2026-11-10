@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import GasTurbine from '../../../../components/diagrams/GasTurbine.astro';
+import CombinedCycle from '../../../../components/diagrams/CombinedCycle.astro';
 import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
 **ระดับ:** Intermediate–Advanced
@@ -18,11 +20,7 @@ import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## กังหันก๊าซ (Gas Turbine)
 
-```
-อากาศ ─► [Compressor] ─► [Combustor + ก๊าซ] ─► [Turbine] ─► ไอเสีย 550–650 °C
-             ▲                                    │
-             └──────────── เพลาร่วม ────────────────┴──► Generator
-```
+<GasTurbine />
 
 กังหันขับคอมเพรสเซอร์ด้วย โดยใช้งานราว **ครึ่งหนึ่งหรือมากกว่า** ของงานที่กังหันผลิตได้ ส่วนที่เหลือคืองานสุทธิที่ขับเครื่องกำเนิดไฟฟ้า
 
@@ -71,14 +69,7 @@ $$
 
 ไอเสียที่ร้อน 550–650 °C ยังมีพลังงานมาก จึงนำไปผลิตไอน้ำใน **HRSG (Heat Recovery Steam Generator)** แล้วขับกังหันไอน้ำ
 
-```
-GT ─► ไอเสีย ─► HRSG [SH ◄ EVAP ◄ ECO] ─► ปล่อง (~90 °C)
-                      │
-                      ▼ ไอน้ำ HP/IP/LP
-                 Steam Turbine ─► Generator
-                      │
-                  Condenser ─► (กลับเข้า HRSG)
-```
+<CombinedCycle />
 
 ถ้าความร้อนจากไอเสียของ GT ถูกนำไปใช้ใน HRSG ด้วยสัดส่วน $\eta_{HRSG}$:
 

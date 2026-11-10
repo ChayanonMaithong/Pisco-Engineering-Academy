@@ -6,6 +6,8 @@ sidebar:
   order: 0
 ---
 
+import PathMap from '../../../../../components/diagrams/PathMap.astro';
+
 ## ภาพรวมหลักสูตร (ตัวอย่างโครงสร้างทั่วไป)
 
 | ปี | กลุ่มวิชาหลัก |
@@ -26,11 +28,7 @@ sidebar:
 
 ## เส้นทางสู่งานจริง
 
-```
-Fluid Mechanics ─┐
-Geology ─────────┼─► Drilling Engineering ─► Drilling Fluid
-Rock Mechanics ──┘                        └─► Directional Drilling
-```
+<PathMap groups={[{"courses": ["Fluid Mechanics", "Geology", "Rock Mechanics"], "apply": "Drilling Engineering: ออกแบบหลุม น้ำโคลน และการควบคุมหลุม", "tracks": [{"label": "Drilling Fluid", "href": "/industry/drilling/drilling-fluid/"}, {"label": "Directional Drilling", "href": "/industry/drilling/directional-drilling/"}, {"label": "Well Control", "href": "/industry/drilling/well-control/"}]}]} />
 
 - [Drilling Fluid](/industry/drilling/drilling-fluid/)
 - [Directional Drilling](/industry/drilling/directional-drilling/)

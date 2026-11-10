@@ -517,3 +517,141 @@ starlight-toc a { line-height: 1.5; }
   .sl-markdown-content { font-size: 1rem; }
   .sl-markdown-content h2 { font-size: 1.4rem; }
 }
+
+/* ==========================================================================
+   Diagrams (inline SVG, themed through CSS variables)
+   ========================================================================== */
+:root {
+  --d-hot: #f08a4b;
+  --d-water: #4ba8e6;
+  --d-steam: #e46a7c;
+  --d-power: #e9b43a;
+  --d-sun: #f2c14e;
+}
+:root[data-theme='light'] {
+  --d-hot: #d2642c;
+  --d-water: #1f7fc4;
+  --d-steam: #c24158;
+  --d-power: #b98208;
+  --d-sun: #e0a51c;
+}
+
+.diagram {
+  margin: 1.75rem 0;
+  padding: 1.1rem 1.1rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow);
+}
+.diagram-scroll { overflow-x: auto; }
+.diagram svg {
+  display: block;
+  width: 100%;
+  min-width: 32rem;
+  height: auto;
+  margin-inline: auto;
+  font-family: var(--sl-font);
+}
+.diagram figcaption {
+  margin-top: 0.7rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--sl-color-gray-3);
+  text-align: center;
+}
+
+/* Shapes */
+.diagram .d-box { fill: var(--surface-strong); stroke: var(--sl-color-gray-4); stroke-width: 1.5; }
+.diagram .d-box-accent { fill: var(--sl-color-accent-low); stroke: var(--sl-color-accent); stroke-width: 1.5; }
+.diagram .d-box-hot { fill: color-mix(in srgb, var(--d-hot) 16%, var(--surface)); stroke: var(--d-hot); stroke-width: 1.5; }
+.diagram .d-box-water { fill: color-mix(in srgb, var(--d-water) 14%, var(--surface)); stroke: var(--d-water); stroke-width: 1.5; }
+.diagram .d-box-power { fill: color-mix(in srgb, var(--d-power) 16%, var(--surface)); stroke: var(--d-power); stroke-width: 1.5; }
+.diagram .d-band { fill: var(--sl-color-gray-6); }
+.diagram .d-band-alt { fill: var(--sl-color-accent-low); opacity: 0.6; }
+.diagram .d-axis { stroke: var(--sl-color-gray-3); stroke-width: 1.5; fill: none; }
+.diagram .d-grid { stroke: var(--sl-color-gray-5); stroke-width: 1; fill: none; }
+.diagram .d-guide { stroke: var(--sl-color-gray-4); stroke-width: 1.2; stroke-dasharray: 4 4; fill: none; }
+.diagram .d-shaft { stroke: var(--sl-color-gray-4); stroke-width: 5; stroke-linecap: round; }
+.diagram .d-ground { stroke: var(--sl-color-gray-4); stroke-width: 2; }
+
+/* Flows */
+.diagram .d-flow { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.diagram .d-dashed { stroke-dasharray: 6 5; }
+.diagram .d-line { stroke: var(--sl-color-gray-3); }
+.diagram .d-hot { stroke: var(--d-hot); }
+.diagram .d-water { stroke: var(--d-water); }
+.diagram .d-steam { stroke: var(--d-steam); }
+.diagram .d-power { stroke: var(--d-power); }
+.diagram .d-sun { stroke: var(--d-sun); stroke-width: 1.6; }
+.diagram .d-accent { stroke: var(--sl-color-accent); }
+.diagram .d-fill-line { fill: var(--sl-color-gray-3); }
+.diagram .d-fill-hot { fill: var(--d-hot); }
+.diagram .d-fill-water { fill: var(--d-water); }
+.diagram .d-fill-steam { fill: var(--d-steam); }
+.diagram .d-fill-power { fill: var(--d-power); }
+.diagram .d-fill-sun { fill: var(--d-sun); }
+.diagram .d-fill-accent { fill: var(--sl-color-accent); }
+
+/* Text */
+.diagram .d-label { fill: var(--sl-color-white); font-size: 14px; font-weight: 600; }
+.diagram .d-text { fill: var(--sl-color-gray-2); font-size: 13px; }
+.diagram .d-note { fill: var(--sl-color-gray-3); font-size: 12px; }
+.diagram .d-small { fill: var(--sl-color-gray-3); font-size: 11px; }
+.diagram .d-t-hot { fill: var(--d-hot); }
+.diagram .d-t-water { fill: var(--d-water); }
+.diagram .d-t-steam { fill: var(--d-steam); }
+.diagram .d-t-power { fill: var(--d-power); }
+.diagram .d-t-accent { fill: var(--sl-color-text-accent); }
+
+/* Legend chips under a diagram */
+.d-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; justify-content: center; margin-top: 0.6rem; font-size: 0.8rem; color: var(--sl-color-gray-3); }
+.d-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.d-legend i { width: 1.2rem; height: 3px; border-radius: 2px; background: var(--c); }
+
+/* ---------- Path map (department pages) ---------- */
+.pathmap {
+  margin: 1.5rem 0;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.pm-head, .pm-row {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.9fr) 2rem minmax(0, 1.4fr);
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.85rem 1.1rem;
+}
+.pm-head {
+  padding-block: 0.55rem;
+  background: var(--sl-color-gray-6);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--sl-color-gray-3);
+}
+.pm-row + .pm-row { border-top: 1px solid var(--sl-color-gray-5); }
+.pm-courses { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.pm-courses li {
+  margin: 0 !important;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  border-radius: var(--radius-s);
+  background: var(--sl-color-accent-low);
+  color: var(--sl-color-accent-high);
+}
+.pm-arrow { color: var(--sl-color-gray-4); display: grid; place-items: center; }
+.pm-arrow svg { width: 1.4rem; height: 1.4rem; }
+.pm-apply { display: flex; flex-direction: column; gap: 0.3rem; }
+.pm-text { color: var(--sl-color-gray-1); font-size: 0.95rem; line-height: 1.6; }
+.pm-tracks { display: flex; flex-wrap: wrap; gap: 0.25rem 0.9rem; }
+.pm-tracks a { font-size: 0.82rem; font-weight: 600; color: var(--sl-color-text-accent); text-decoration: none; }
+.pm-tracks a:hover { text-decoration: underline; }
+@media (max-width: 40rem) {
+  .pm-head { display: none; }
+  .pm-row { grid-template-columns: 1fr; gap: 0.4rem; }
+  .pm-arrow { justify-items: start; transform: rotate(90deg); width: 1.4rem; }
+}

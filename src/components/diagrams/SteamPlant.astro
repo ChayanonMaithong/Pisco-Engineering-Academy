@@ -1,0 +1,74 @@
+---
+import Figure from './Figure.astro';
+import Arrow from './Arrow.astro';
+---
+<Figure label="แผนภาพโรงไฟฟ้าไอน้ำ" caption="โรงไฟฟ้าไอน้ำ: ไอน้ำจาก boiler ขับกังหัน HP/IP/LP แล้วควบแน่นที่ condenser น้ำถูกอุ่นด้วยไอที่ดึงจากกังหันก่อนกลับเข้า boiler">
+  <svg viewBox="0 0 700 380" role="img" aria-label="Boiler, กังหัน HP IP LP, generator, condenser, cooling tower, ปั๊มและ feedwater heater">
+    <!-- Boiler -->
+    <rect x="40" y="40" width="130" height="220" rx="10" class="d-box-hot" />
+    <text x="105" y="140" text-anchor="middle" class="d-label">Boiler</text>
+    <text x="105" y="160" text-anchor="middle" class="d-note">หม้อไอน้ำ</text>
+    <path d="M80 245 q8 -22 16 0 q8 -22 16 0 q8 -22 16 0" class="d-flow d-hot" />
+    <Arrow pts={[[10, 230], [38, 230]]} kind="hot" />
+    <text x="8" y="218" class="d-small">เชื้อเพลิง + อากาศ</text>
+    <Arrow pts={[[70, 40], [70, 8]]} kind="line" dashed />
+    <text x="80" y="20" class="d-small">ไอเสีย → ระบบควบคุมมลพิษ → ปล่อง</text>
+
+    <!-- Turbines -->
+    <path d="M240 70 L290 58 L290 122 L240 110 Z" class="d-box-accent" />
+    <line x1="290" y1="90" x2="300" y2="90" class="d-shaft" />
+    <path d="M300 66 L360 50 L360 130 L300 114 Z" class="d-box-accent" />
+    <line x1="360" y1="90" x2="370" y2="90" class="d-shaft" />
+    <path d="M370 62 L450 38 L450 142 L370 118 Z" class="d-box-accent" />
+    <text x="265" y="95" text-anchor="middle" class="d-text" font-weight="600">HP</text>
+    <text x="330" y="95" text-anchor="middle" class="d-text" font-weight="600">IP</text>
+    <text x="410" y="95" text-anchor="middle" class="d-text" font-weight="600">LP</text>
+    <text x="345" y="32" text-anchor="middle" class="d-note">กังหันไอน้ำ (Steam turbine)</text>
+    <line x1="450" y1="90" x2="532" y2="90" class="d-shaft" />
+    <circle cx="570" cy="90" r="36" class="d-box-power" />
+    <text x="570" y="88" text-anchor="middle" class="d-label">G</text>
+    <text x="570" y="106" text-anchor="middle" class="d-small">Generator</text>
+    <Arrow pts={[[606, 90], [660, 90]]} kind="power" />
+    <text x="634" y="78" text-anchor="middle" class="d-small">ไฟฟ้า</text>
+
+    <!-- Steam to HP -->
+    <Arrow pts={[[170, 75], [238, 75]]} kind="steam" />
+    <text x="176" y="64" class="d-small">ไอดง</text>
+    <!-- Condenser -->
+    <rect x="360" y="210" width="150" height="60" rx="10" class="d-box-water" />
+    <text x="435" y="238" text-anchor="middle" class="d-label">Condenser</text>
+    <text x="435" y="256" text-anchor="middle" class="d-small">คอนเดนเซอร์</text>
+    <Arrow pts={[[420, 142], [420, 208]]} kind="steam" dashed />
+
+    <!-- Cooling tower -->
+    <path d="M600 330 Q615 270 605 210 L665 210 Q655 270 670 330 Z" class="d-box" />
+    <text x="637" y="300" text-anchor="middle" class="d-small">Cooling</text>
+    <text x="637" y="314" text-anchor="middle" class="d-small">tower</text>
+    <Arrow pts={[[510, 228], [606, 228]]} kind="water" />
+    <Arrow pts={[[606, 254], [510, 254]]} kind="water" />
+    <text x="558" y="220" text-anchor="middle" class="d-small">น้ำหล่อเย็น</text>
+
+    <!-- Condensate / feedwater -->
+    <circle cx="400" cy="325" r="18" class="d-box" />
+    <text x="400" y="329" text-anchor="middle" class="d-small">P</text>
+    <Arrow pts={[[400, 270], [400, 305]]} kind="water" />
+    <text x="420" y="360" text-anchor="middle" class="d-small">Condensate pump</text>
+    <rect x="240" y="305" width="100" height="40" rx="8" class="d-box" />
+    <text x="290" y="330" text-anchor="middle" class="d-small">FW heater</text>
+    <Arrow pts={[[382, 325], [342, 325]]} kind="water" />
+    <Arrow pts={[[330, 130], [330, 303]]} kind="steam" dashed />
+    <text x="336" y="200" class="d-small">ไอที่ดึงออก</text>
+    <text x="336" y="214" class="d-small">(extraction)</text>
+    <circle cx="190" cy="325" r="18" class="d-box" />
+    <text x="190" y="329" text-anchor="middle" class="d-small">P</text>
+    <text x="190" y="360" text-anchor="middle" class="d-small">Feed pump</text>
+    <Arrow pts={[[240, 325], [210, 325]]} kind="water" />
+    <Arrow pts={[[172, 325], [130, 325], [130, 262]]} kind="water" />
+  </svg>
+  <div class="d-legend">
+    <span><i style="--c: var(--d-steam)"></i>ไอน้ำ</span>
+    <span><i style="--c: var(--d-water)"></i>น้ำ</span>
+    <span><i style="--c: var(--d-hot)"></i>เชื้อเพลิง / ความร้อน</span>
+    <span><i style="--c: var(--d-power)"></i>ไฟฟ้า</span>
+  </div>
+</Figure>

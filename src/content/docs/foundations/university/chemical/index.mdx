@@ -6,6 +6,8 @@ sidebar:
   order: 0
 ---
 
+import PathMap from '../../../../../components/diagrams/PathMap.astro';
+
 ## ภาพรวมหลักสูตร (ตัวอย่างโครงสร้างทั่วไป)
 
 | ปี | กลุ่มวิชาหลัก |
@@ -36,16 +38,7 @@ $$
 
 ## เส้นทางสู่งานจริง
 
-```
-Mass & Energy Balance ─┬─► Process Engineer (โรงกลั่น, ปิโตรเคมี, โรงแยกก๊าซ)
-Reaction Engineering ──┤
-Mass Transfer ─────────┘
-Thermodynamics ────────┬─► โรงไฟฟ้า: เคมีของน้ำ, ระบบ SCR, การเผาไหม้ (Thermal Power)
-Heat Transfer ─────────┘
-Fluid Mechanics ───────┬─► Drilling fluid, Production chemistry (Drilling / Petroleum)
-Colloid & Interface ───┘
-Process Safety ──────────► HAZOP, การป้องกันการระเบิดและสารรั่วไหล
-```
+<PathMap groups={[{"courses": ["Mass & Energy Balance", "Reaction Engineering", "Mass Transfer"], "apply": "Process engineer ในโรงกลั่น ปิโตรเคมี และโรงแยกก๊าซ"}, {"courses": ["Thermodynamics", "Heat Transfer"], "apply": "โรงไฟฟ้า: เคมีของน้ำ, ระบบ SCR, การเผาไหม้", "tracks": [{"label": "Thermal Plant O&M", "href": "/industry/thermal/thermal-plant-om/"}, {"label": "Thermal Power Overview", "href": "/industry/thermal/thermal-power-overview/"}]}, {"courses": ["Fluid Mechanics", "Colloid & Interface"], "apply": "น้ำโคลนเจาะ และเคมีในการผลิตปิโตรเลียม", "tracks": [{"label": "Drilling Fluid", "href": "/industry/drilling/drilling-fluid/"}]}, {"courses": ["Process Safety"], "apply": "HAZOP, การป้องกันการระเบิดและสารรั่วไหล"}]} />
 
 ## ตัวอย่างงานของวิศวกรเคมีในอุตสาหกรรมพลังงาน
 - **โรงไฟฟ้าความร้อน:** ควบคุม[เคมีของน้ำ](/industry/thermal/thermal-plant-om/) ระบบผลิตน้ำบริสุทธิ์ (demin) ระบบ SCR และ FGD

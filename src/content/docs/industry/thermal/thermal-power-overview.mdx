@@ -5,6 +5,7 @@ sidebar:
   order: 1
 ---
 
+import SteamPlant from '../../../../components/diagrams/SteamPlant.astro';
 import { Aside } from '@astrojs/starlight/components';
 import HeatRateCalc from '../../../../components/HeatRateCalc.astro';
 
@@ -55,12 +56,7 @@ $$
 
 ## โรงไฟฟ้าไอน้ำ (Steam Power Plant)
 
-```
-เชื้อเพลิง + อากาศ ─► Boiler ─► Superheated steam ─► HP/IP/LP Turbine ─► Generator
-                       ▲                                  │
-                       │                                  ▼
-  Feedwater heaters ◄─ Feed pump ◄─ Condensate pump ◄─ Condenser ◄─► Cooling tower / น้ำทะเล
-```
+<SteamPlant />
 
 **Boiler**
 - **Pulverized coal (PC):** บดถ่านเป็นผงละเอียดแล้วพ่นเข้าเผาในเตา

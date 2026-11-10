@@ -1,0 +1,41 @@
+---
+import Figure from './Figure.astro';
+import Arrow from './Arrow.astro';
+const modules = [0, 1, 2].flatMap((c) => [0, 1].map((r) => ({ x: 24 + c * 30, y: 70 + r * 34 })));
+const stages = [
+  { x: 150, w: 104, th: 'Combiner box', en: 'รวม string', cls: 'd-box' },
+  { x: 274, w: 104, th: 'Inverter', en: 'DC → AC', cls: 'd-box-accent' },
+  { x: 398, w: 104, th: 'หม้อแปลง MV', en: 'เพิ่มแรงดัน', cls: 'd-box-power' },
+  { x: 522, w: 104, th: 'Substation', en: 'สถานีไฟฟ้าย่อย', cls: 'd-box-power' },
+];
+---
+<Figure label="ระบบไฟฟ้าของโรงไฟฟ้า PV" caption="โครงสร้างระบบไฟฟ้าของโรงไฟฟ้า PV ขนาดใหญ่: ฝั่ง DC จากแผงถึง inverter และฝั่ง AC จาก inverter ถึงระบบสายส่ง">
+  <svg viewBox="0 0 700 250" role="img" aria-label="แผง PV ต่อเป็น string เข้า combiner box, inverter, หม้อแปลง, สถานีไฟฟ้าย่อย และ grid">
+    {modules.map((m) => (
+      <g>
+        <path d={`M${m.x + 6} ${m.y} L${m.x + 30} ${m.y} L${m.x + 24} ${m.y + 26} L${m.x} ${m.y + 26} Z`} class="d-box-accent" />
+        <path d={`M${m.x + 3} ${m.y + 13} L${m.x + 27} ${m.y + 13} M${m.x + 18} ${m.y} L${m.x + 12} ${m.y + 26}`} class="d-grid" />
+      </g>
+    ))}
+    <text x="68" y="160" text-anchor="middle" class="d-label">แผง PV</text>
+    <text x="68" y="177" text-anchor="middle" class="d-small">ต่ออนุกรมเป็น string</text>
+    <Arrow pts={[[118, 100], [148, 100]]} kind="accent" />
+    {stages.map((s, i) => (
+      <g>
+        <rect x={s.x} y="70" width={s.w} height="60" rx="10" class={s.cls} />
+        <text x={s.x + s.w / 2} y="97" text-anchor="middle" class="d-text" font-weight="600">{s.th}</text>
+        <text x={s.x + s.w / 2} y="115" text-anchor="middle" class="d-small">{s.en}</text>
+        {i < stages.length - 1 && <Arrow pts={[[s.x + s.w, 100], [stages[i + 1].x - 2, 100]]} kind={i === 0 ? 'accent' : 'power'} />}
+      </g>
+    ))}
+    <!-- grid pylon -->
+    <Arrow pts={[[626, 100], [652, 100]]} kind="power" />
+    <path d="M664 135 L674 60 L684 135 M666 120 L682 120 M668 95 L680 95 M660 70 L688 70" class="d-flow d-line" style="stroke-width:1.8" />
+    <text x="674" y="152" text-anchor="middle" class="d-small">Grid</text>
+    <!-- DC / AC brackets -->
+    <path d="M20 200 L20 210 L326 210 L326 200" class="d-flow d-accent" style="stroke-width:1.6" />
+    <text x="173" y="232" text-anchor="middle" class="d-text d-t-accent" font-weight="600">ฝั่ง DC (≤ 1,500 V)</text>
+    <path d="M326 200 L326 210 L690 210 L690 200" class="d-flow d-power" style="stroke-width:1.6" />
+    <text x="508" y="232" text-anchor="middle" class="d-text d-t-power" font-weight="600">ฝั่ง AC</text>
+  </svg>
+</Figure>

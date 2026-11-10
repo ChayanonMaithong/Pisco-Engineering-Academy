@@ -1,0 +1,48 @@
+---
+import Figure from './Figure.astro';
+// Illustrative single-diode-like I–V curve, normalised.
+const Isc = 1, Voc = 1, a = 0.075;
+const I = (v: number) => Math.max(0, Isc * (1 - (Math.exp(v / a) - 1) / (Math.exp(Voc / a) - 1)));
+let vmp = 0, pmax = 0;
+for (let v = 0; v <= Voc; v += 0.001) { const pw = v * I(v); if (pw > pmax) { pmax = pw; vmp = v; } }
+const imp = I(vmp);
+const X0 = 70, X1 = 560, Y0 = 260, Y1 = 40;
+const x = (v: number) => X0 + (v / 1.12) * (X1 - X0);
+const y = (i: number) => Y0 - (i / 1.18) * (Y0 - Y1);
+const yp = (pw: number) => Y0 - (pw / (pmax * 1.18)) * (Y0 - Y1);
+const iv: string[] = [], pv: string[] = [];
+for (let k = 0; k <= 1000; k++) {
+  const v = k / 1000;
+  iv.push(`${k ? 'L' : 'M'}${x(v).toFixed(1)} ${y(I(v)).toFixed(1)}`);
+  pv.push(`${k ? 'L' : 'M'}${x(v).toFixed(1)} ${yp(v * I(v)).toFixed(1)}`);
+}
+const ff = pmax / (Isc * Voc);
+---
+<Figure label="IV curve ของเซลล์แสงอาทิตย์" caption={`IV curve (เส้นทึบ) และกำลัง P = V × I (เส้นประ) จุด MPP คือจุดที่ให้กำลังสูงสุด — พื้นที่สี่เหลี่ยมแรเงาเทียบกับ Isc × Voc คือ Fill Factor (ในตัวอย่างนี้ ≈ ${(ff * 100).toFixed(0)}%)`}>
+  <svg viewBox="0 0 640 310" role="img" aria-label="กราฟกระแสและกำลังเทียบแรงดันของเซลล์แสงอาทิตย์">
+    <rect x={X0} y={y(Isc)} width={x(Voc) - X0} height={Y0 - y(Isc)} class="d-band" />
+    <rect x={X0} y={y(imp)} width={x(vmp) - X0} height={Y0 - y(imp)} class="d-band-alt" />
+    <path d={`M${X0} ${Y1 - 10} L${X0} ${Y0} L${X1 + 10} ${Y0}`} class="d-axis" />
+    <path d={`M${X1 + 10} ${Y1 - 10} L${X1 + 10} ${Y0}`} class="d-axis" style="opacity:0.5" />
+    <path d={pv.join(' ')} class="d-flow d-power d-dashed" />
+    <path d={iv.join(' ')} class="d-flow d-accent" style="stroke-width:3" />
+    <line x1={x(vmp)} y1={Y0} x2={x(vmp)} y2={y(imp)} class="d-guide" />
+    <line x1={X0} y1={y(imp)} x2={x(vmp)} y2={y(imp)} class="d-guide" />
+    <line x1={x(vmp)} y1={y(imp)} x2={x(vmp)} y2={yp(pmax)} class="d-guide" />
+    <circle cx={x(vmp)} cy={y(imp)} r="6" class="d-fill-accent" />
+    <circle cx={x(vmp)} cy={yp(pmax)} r="5" class="d-fill-power" />
+    <text x={x(vmp) + 12} y={y(imp) + 18} class="d-text" font-weight="600">MPP</text>
+    <text x={x(vmp) + 12} y={yp(pmax) - 8} class="d-small d-t-power">P<tspan dy="3" font-size="9">max</tspan></text>
+    <text x={X0 - 10} y={y(Isc) + 4} text-anchor="end" class="d-text" font-weight="600">I<tspan dy="3" font-size="10">sc</tspan></text>
+    <text x={X0 - 10} y={y(imp) + 4} text-anchor="end" class="d-small">I<tspan dy="3" font-size="9">mp</tspan></text>
+    <text x={x(vmp)} y={Y0 + 18} text-anchor="middle" class="d-small">V<tspan dy="3" font-size="9">mp</tspan></text>
+    <text x={x(Voc)} y={Y0 + 18} text-anchor="middle" class="d-text" font-weight="600">V<tspan dy="3" font-size="10">oc</tspan></text>
+    <text x={(X0 + X1) / 2} y={Y0 + 42} text-anchor="middle" class="d-note">แรงดัน V</text>
+    <text transform={`translate(22 ${(Y0 + Y1) / 2}) rotate(-90)`} text-anchor="middle" class="d-note">กระแส I</text>
+    <text transform={`translate(${X1 + 32} ${(Y0 + Y1) / 2}) rotate(90)`} text-anchor="middle" class="d-note d-t-power">กำลัง P</text>
+  </svg>
+  <div class="d-legend">
+    <span><i style="--c: var(--sl-color-accent)"></i>กระแส I</span>
+    <span><i style="--c: var(--d-power)"></i>กำลัง P = V × I</span>
+  </div>
+</Figure>

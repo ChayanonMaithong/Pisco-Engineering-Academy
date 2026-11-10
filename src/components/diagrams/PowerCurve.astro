@@ -1,0 +1,61 @@
+---
+import Figure from './Figure.astro';
+// Generic power curve: cut-in 3, rated 11.5, cut-out 25 m/s (illustrative).
+const X0 = 60, X1 = 640, Y0 = 270, Y1 = 50, VMAX = 30;
+const x = (v: number) => X0 + (v / VMAX) * (X1 - X0);
+const y = (p: number) => Y0 - p * (Y0 - Y1) * 0.82;
+const cutIn = 3, rated = 11.5, cutOut = 25;
+const k = 14;
+const smin = (a: number, b: number) => -Math.log(Math.exp(-k * a) + Math.exp(-k * b)) / k;
+const p = (v: number) => (v < cutIn || v > cutOut ? 0 : Math.max(0, smin((v ** 3 - cutIn ** 3) / (rated ** 3 - cutIn ** 3), 1)));
+const pts: string[] = [];
+for (let i = 0; i <= VMAX * 10; i++) {
+  const v = i / 10;
+  pts.push(`${i ? 'L' : 'M'}${x(v).toFixed(1)} ${y(p(v)).toFixed(1)}`);
+}
+const avail: string[] = [];
+for (let v = 0; v <= 14; v += 0.1) {
+  const pv = (v / rated) ** 3 * 1.06;
+  if (pv > 1.2) break;
+  avail.push(`${avail.length ? 'L' : 'M'}${x(v).toFixed(1)} ${y(pv).toFixed(1)}`);
+}
+const regions = [
+  { from: 0, to: cutIn, n: '1', t: 'หยุด' },
+  { from: cutIn, to: rated, n: '2', t: 'Torque control' },
+  { from: rated, to: cutOut, n: '3', t: 'Pitch control' },
+  { from: cutOut, to: VMAX, n: '4', t: 'หยุด' },
+];
+---
+<Figure label="Power curve ของกังหันลม" caption="Power curve ทั่วไป: กำลังเพิ่มตาม v³ ใน Region 2 แล้วคงที่ที่กำลังพิกัดใน Region 3 (ตัวเลขเป็นตัวอย่าง)">
+  <svg viewBox="0 0 680 320" role="img" aria-label="กราฟกำลังของกังหันลมเทียบความเร็วลม แบ่งเป็น 4 ช่วง">
+    {regions.map((r, i) => (
+      <g>
+        <rect x={x(r.from)} y={Y1 - 10} width={x(r.to) - x(r.from)} height={Y0 - Y1 + 10} class={i % 2 ? 'd-band-alt' : 'd-band'} />
+        <text x={(x(r.from) + x(r.to)) / 2} y={Y1 + 8} text-anchor="middle" class="d-text" font-weight="600">Region {r.n}</text>
+        <text x={(x(r.from) + x(r.to)) / 2} y={Y1 + 24} text-anchor="middle" class="d-small">{r.t}</text>
+      </g>
+    ))}
+    <!-- axes -->
+    <path d={`M${X0} ${Y1 - 14} L${X0} ${Y0} L${X1 + 10} ${Y0}`} class="d-axis" />
+    {[0, 5, 10, 15, 20, 25, 30].map((v) => (
+      <g><line x1={x(v)} y1={Y0} x2={x(v)} y2={Y0 + 5} class="d-axis" /><text x={x(v)} y={Y0 + 19} text-anchor="middle" class="d-small">{v}</text></g>
+    ))}
+    <text x={(X0 + X1) / 2} y={Y0 + 40} text-anchor="middle" class="d-note">ความเร็วลมที่ hub height (m/s)</text>
+    <text x={X0 - 12} y={y(1) + 4} text-anchor="end" class="d-small">P rated</text>
+    <text x={X0 - 12} y={Y0} text-anchor="end" class="d-small">0</text>
+    <text transform={`translate(18 ${(Y0 + Y1) / 2}) rotate(-90)`} text-anchor="middle" class="d-note">กำลังไฟฟ้า</text>
+    <line x1={X0} y1={y(1)} x2={X1} y2={y(1)} class="d-guide" />
+    <!-- available power -->
+    <path d={avail.join(' ')} class="d-flow d-line d-dashed" />
+    <text x={x(8.6)} y={y(0.62)} text-anchor="end" class="d-small">พลังงานในลม ∝ v³</text>
+    <!-- power curve -->
+    <path d={pts.join(' ')} class="d-flow d-accent" style="stroke-width:3" />
+    <!-- markers -->
+    {[[cutIn, 'cut-in'], [rated, 'rated'], [cutOut, 'cut-out']].map(([v, t]) => (
+      <g>
+        <line x1={x(Number(v))} y1={Y0} x2={x(Number(v))} y2={y(1)} class="d-guide" />
+        <text x={x(Number(v)) + (t === 'cut-out' ? -6 : 6)} y={y(1) + 18} text-anchor={t === 'cut-out' ? 'end' : 'start'} class="d-small d-t-accent" font-weight="600">{t}</text>
+      </g>
+    ))}
+  </svg>
+</Figure>

@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import IVCurve from '../../../../components/diagrams/IVCurve.astro';
+
 **ระดับ:** Beginner–Intermediate
 **ความรู้ที่ต้องมีก่อน:** ฟิสิกส์ (แสงและอิเล็กทรอนิกส์เบื้องต้น) · [Electrical Engineering](/foundations/university/electrical/) (Electronics) · [Thermodynamics](/foundations/university/mechanical/thermodynamics/) (การถ่ายเทความร้อน)
 
@@ -43,15 +45,7 @@ $\theta_z$ คือมุมเซนิธของดวงอาทิตย
 
 ## IV Curve
 
-```
-  I
-  │ Isc ───────────────╮
-  │                     ╲  ● MPP (Vmp, Imp)
-  │                      ╲
-  │                       ╲
-  └────────────────────────┴──► V
-                          Voc
-```
+<IVCurve />
 
 | พารามิเตอร์ | ความหมาย |
 |---|---|

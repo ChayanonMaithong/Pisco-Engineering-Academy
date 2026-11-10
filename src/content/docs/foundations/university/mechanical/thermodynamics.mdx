@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import RankineCycle from '../../../../../components/diagrams/RankineCycle.astro';
+
 **ระดับ:** Beginner
 **ทบทวนจาก ม.ปลาย:** [ฟิสิกส์ ม.6](/foundations/high-school/physics/) (ความร้อนและแก๊ส), [เคมี ม.5](/foundations/high-school/chemistry/) (แก๊สและสมบัติของแก๊ส)
 **ใช้ต่อใน:** [Thermal Power Plants](/industry/thermal/thermal-power-overview/), [Gas Turbine & Combined Cycle](/industry/thermal/gas-turbine-combined-cycle/), [Concentrated Solar Power](/industry/solar/concentrated-solar-power/), ระบบระบายความร้อนของกังหันลม
@@ -41,11 +43,7 @@ $$
 
 ## วัฏจักร Rankine (โรงไฟฟ้าไอน้ำ)
 
-```
-  ปั๊ม ──► หม้อไอน้ำ (รับความร้อน) ──► กังหันไอน้ำ (ให้งาน) ──► คอนเดนเซอร์ (คายความร้อน) ──┐
-   ▲                                                                                    │
-   └────────────────────────────────────────────────────────────────────────────────────┘
-```
+<RankineCycle />
 
 $$
 \eta = \frac{W_{\text{turbine}} - W_{\text{pump}}}{Q_{\text{in}}}

@@ -1,0 +1,28 @@
+---
+// "Course → application → industry lesson" map for department pages (HTML so Thai text wraps).
+interface Group { courses: string[]; apply: string; tracks?: { label: string; href: string }[] }
+interface Props { groups: Group[] }
+const { groups } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<div class="pathmap not-content">
+  <div class="pm-head" aria-hidden="true">
+    <span>รายวิชา</span><span></span><span>นำไปใช้กับงาน</span>
+  </div>
+  {groups.map((g) => (
+    <div class="pm-row">
+      <ul class="pm-courses">{g.courses.map((c) => <li>{c}</li>)}</ul>
+      <span class="pm-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6" /></svg>
+      </span>
+      <div class="pm-apply">
+        <span class="pm-text">{g.apply}</span>
+        {g.tracks && g.tracks.length > 0 && (
+          <span class="pm-tracks">
+            {g.tracks.map((t) => <a href={base + t.href}>{t.label} →</a>)}
+          </span>
+        )}
+      </div>
+    </div>
+  ))}
+</div>

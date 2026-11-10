@@ -5,6 +5,7 @@ sidebar:
   order: 2
 ---
 
+import PvSystem from '../../../../components/diagrams/PvSystem.astro';
 import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 import PvStringCalc from '../../../../components/PvStringCalc.astro';
 
@@ -20,11 +21,7 @@ import PvStringCalc from '../../../../components/PvStringCalc.astro';
 
 ## ภาพรวมระบบ
 
-```
-แผง PV ─► String ─► (Combiner box) ─► Inverter ─► หม้อแปลง MV ─► สถานีไฟฟ้าย่อย ─► Grid
-  │                                     │
-  └───── DC side (≤ 1,500 V) ───────────┘└──────── AC side ────────►
-```
+<PvSystem />
 
 <Tabs>
   <TabItem label="Central inverter">

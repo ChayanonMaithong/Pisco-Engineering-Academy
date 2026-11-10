@@ -1,0 +1,48 @@
+---
+import Figure from './Figure.astro';
+import Arrow from './Arrow.astro';
+---
+<Figure label="แผนภาพกังหันก๊าซ" caption="กังหันก๊าซ: คอมเพรสเซอร์อัดอากาศ → เผาไหม้กับก๊าซ → ขยายตัวในกังหัน กังหันขับทั้งคอมเพรสเซอร์และเครื่องกำเนิดไฟฟ้าผ่านเพลาร่วม">
+  <svg viewBox="0 0 680 270" role="img" aria-label="Generator, compressor, combustor, turbine และไอเสีย">
+    <!-- Shaft -->
+    <line x1="96" y1="135" x2="520" y2="135" class="d-shaft" />
+    <!-- Generator -->
+    <circle cx="60" cy="135" r="36" class="d-box-power" />
+    <text x="60" y="133" text-anchor="middle" class="d-label">G</text>
+    <text x="60" y="151" text-anchor="middle" class="d-small">Generator</text>
+    <Arrow pts={[[60, 99], [60, 52]]} kind="power" />
+    <text x="60" y="42" text-anchor="middle" class="d-small">ไฟฟ้า</text>
+
+    <!-- Compressor (narrows) -->
+    <path d="M130 70 L270 100 L270 170 L130 200 Z" class="d-box-water" />
+    <text x="200" y="131" text-anchor="middle" class="d-label">Compressor</text>
+    <text x="200" y="150" text-anchor="middle" class="d-small">อัดอากาศ</text>
+    <Arrow pts={[[150, 14], [150, 40], [140, 72]]} kind="water" />
+    <text x="162" y="26" class="d-small">อากาศเข้า (1)</text>
+
+    <!-- Combustor -->
+    <rect x="290" y="100" width="90" height="70" rx="10" class="d-box-hot" />
+    <text x="335" y="132" text-anchor="middle" class="d-label">Combustor</text>
+    <text x="335" y="152" text-anchor="middle" class="d-small">ห้องเผาไหม้</text>
+    <Arrow pts={[[335, 40], [335, 98]]} kind="hot" />
+    <text x="347" y="56" class="d-small">ก๊าซธรรมชาติ</text>
+    <Arrow pts={[[270, 118], [288, 118]]} kind="water" size={7} />
+    <Arrow pts={[[380, 118], [398, 118]]} kind="hot" size={7} />
+
+    <!-- Turbine (widens) -->
+    <path d="M400 100 L540 70 L540 200 L400 170 Z" class="d-box-hot" />
+    <text x="470" y="131" text-anchor="middle" class="d-label">Turbine</text>
+    <text x="470" y="150" text-anchor="middle" class="d-small">ขยายตัว ให้งาน</text>
+
+    <!-- Exhaust -->
+    <Arrow pts={[[540, 135], [650, 135]]} kind="hot" size={11} />
+    <text x="595" y="122" text-anchor="middle" class="d-text d-t-hot">ไอเสีย (4)</text>
+    <text x="595" y="160" text-anchor="middle" class="d-small">550–650 °C</text>
+
+    <!-- State labels -->
+    <text x="270" y="92" text-anchor="middle" class="d-small">(2)</text>
+    <text x="400" y="92" text-anchor="middle" class="d-small">(3) TIT</text>
+    <text x="330" y="232" text-anchor="middle" class="d-note">เพลาร่วม: กังหันใช้งานราวครึ่งหนึ่งหรือมากกว่าเพื่อขับคอมเพรสเซอร์</text>
+    <path d="M200 205 L200 215 L470 215 L470 205" class="d-guide" />
+  </svg>
+</Figure>

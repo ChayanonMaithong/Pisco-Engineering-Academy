@@ -6,6 +6,8 @@ sidebar:
   order: 0
 ---
 
+import PathMap from '../../../../../components/diagrams/PathMap.astro';
+
 ## ภาพรวมหลักสูตร (ตัวอย่างโครงสร้างทั่วไป)
 
 | ปี | กลุ่มวิชาหลัก |
@@ -43,14 +45,7 @@ $$
 
 ## เส้นทางสู่งานจริง
 
-```
-Statistics / QC ─────────┬─► Performance monitoring, P50/P90, วิเคราะห์ข้อมูล SCADA
-Reliability Engineering ─┼─► วางแผนบำรุงรักษา (Wind / Solar / Thermal O&M)
-Maintenance Management ──┘   อะไหล่สำรอง, MTBF/MTTR, Availability
-Operations Research ─────┬─► จัดตารางเครนและเรือติดตั้ง, เส้นทางขนส่ง, ตารางเดินเครื่องโรงไฟฟ้า
-Engineering Economy ─────┴─► วิเคราะห์ความคุ้มค่าโครงการ, NPV, LCOE
-Safety & Ergonomics ───────► ระบบความปลอดภัยในงานก่อสร้าง งานบนที่สูง งานเจาะ
-```
+<PathMap groups={[{"courses": ["Statistics", "Quality Control"], "apply": "ติดตามสมรรถนะ, P50/P90, วิเคราะห์ข้อมูล SCADA", "tracks": [{"label": "Layout & Energy Yield", "href": "/industry/wind/wind-farm-layout-energy-yield/"}, {"label": "Solar PV O&M", "href": "/industry/solar/solar-pv-om/"}]}, {"courses": ["Reliability Engineering", "Maintenance Management"], "apply": "วางแผนบำรุงรักษา, อะไหล่สำรอง, MTBF/MTTR, Availability", "tracks": [{"label": "Wind Farm O&M", "href": "/industry/wind/wind-farm-om/"}, {"label": "Thermal Plant O&M", "href": "/industry/thermal/thermal-plant-om/"}]}, {"courses": ["Operations Research"], "apply": "จัดตารางเครนและเรือติดตั้ง, เส้นทางขนส่ง, ตารางเดินเครื่องโรงไฟฟ้า", "tracks": [{"label": "Wind Farm Construction", "href": "/industry/wind/wind-farm-construction/"}]}, {"courses": ["Engineering Economy"], "apply": "วิเคราะห์ความคุ้มค่าโครงการ, NPV, LCOE", "tracks": [{"label": "Wind Farm Development", "href": "/industry/wind/wind-farm-development/"}]}, {"courses": ["Safety Engineering", "Ergonomics"], "apply": "ความปลอดภัยในงานก่อสร้าง งานบนที่สูง และงานเจาะ", "tracks": [{"label": "Wind Farm Construction", "href": "/industry/wind/wind-farm-construction/"}, {"label": "Well Control", "href": "/industry/drilling/well-control/"}]}]} />
 
 ## ตัวอย่างงานของวิศวกรอุตสาหการในอุตสาหกรรมพลังงาน
 - **Asset management / Reliability engineer:** วิเคราะห์ข้อมูลความเสียหาย (FMEA, RCA, Weibull analysis ของอายุชิ้นส่วน) กำหนดกลยุทธ์บำรุงรักษา

@@ -5,6 +5,7 @@ sidebar:
   order: 4
 ---
 
+import CspPlant from '../../../../components/diagrams/CspPlant.astro';
 import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 **ระดับ:** Intermediate
@@ -19,11 +20,7 @@ import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 ## หลักการ
 CSP ใช้กระจกรวมแสงอาทิตย์ไปที่ตัวรับความร้อน (receiver) เพื่อให้ความร้อนแก่ของไหล (HTF: Heat Transfer Fluid) แล้วนำความร้อนไปผลิตไอน้ำขับกังหัน ตาม **วัฏจักร Rankine** เหมือนโรงไฟฟ้าความร้อนทั่วไป
 
-```
-ดวงอาทิตย์ ─► กระจกรวมแสง ─► Receiver (HTF ร้อน) ─┬─► ถังเก็บความร้อน (molten salt)
-                                                  │            │
-                                                  └────────────┴─► เครื่องผลิตไอน้ำ ─► กังหันไอน้ำ ─► Generator
-```
+<CspPlant />
 
 <Aside type="caution">
 CSP ใช้ได้เฉพาะ **DNI** (แสงตรง) เพราะรวมแสงกระจายไม่ได้ จึงเหมาะกับพื้นที่แห้งแล้งท้องฟ้าใส โดยทั่วไปต้องมี DNI เกินราว 2,000 kWh/m²/ปี เช่น ทะเลทรายในตะวันออกกลาง แอฟริกาเหนือ ชิลี สเปน และตะวันตกเฉียงใต้ของสหรัฐฯ ประเทศไทยมีความชื้นและเมฆมาก สัดส่วนรังสีกระจายสูง CSP จึงมักแข่งขันกับ PV ไม่ได้

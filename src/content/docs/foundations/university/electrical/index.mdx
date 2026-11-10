@@ -6,6 +6,8 @@ sidebar:
   order: 0
 ---
 
+import PathMap from '../../../../../components/diagrams/PathMap.astro';
+
 ## ภาพรวมหลักสูตร (ตัวอย่างโครงสร้างทั่วไป)
 
 | ปี | กลุ่มวิชาหลัก |
@@ -25,12 +27,7 @@ sidebar:
 
 ## เส้นทางสู่งานจริง
 
-```
-Electrical Machines ─┐
-Power Electronics ───┼─► Wind Turbine Generator & Converter ─► Wind Farm O&M
-Power Systems ───────┤
-Protection ──────────┴─► Substation & Grid Connection ──────► Wind Farm Development
-```
+<PathMap groups={[{"courses": ["Electrical Machines", "Power Electronics", "Power Systems"], "apply": "เครื่องกำเนิดไฟฟ้าและ converter ของกังหันลม", "tracks": [{"label": "Wind Turbine Technology", "href": "/industry/wind/wind-turbine-technology/"}, {"label": "Wind Farm O&M", "href": "/industry/wind/wind-farm-om/"}]}, {"courses": ["Power Systems", "Protection"], "apply": "สถานีไฟฟ้าย่อยและการเชื่อมต่อระบบ", "tracks": [{"label": "Wind Farm Development", "href": "/industry/wind/wind-farm-development/"}, {"label": "PV Plant Design", "href": "/industry/solar/pv-plant-design/"}]}]} />
 
 ## ตัวอย่างงานของวิศวกรไฟฟ้าในฟาร์มกังหันลม
 - ออกแบบระบบสายเคเบิลภายในฟาร์ม (collector system) และสถานีไฟฟ้าย่อย

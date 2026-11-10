@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import TurbineAnatomy from '../../../../components/diagrams/TurbineAnatomy.astro';
+import PowerCurve from '../../../../components/diagrams/PowerCurve.astro';
 import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 **ระดับ:** Intermediate
@@ -18,15 +20,7 @@ import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## ส่วนประกอบหลัก
 
-```
-                 ┌──────────── Nacelle ────────────┐
-   Blade ──┐     │ Main bearing → Gearbox → Generator │──► Converter ─► Transformer ─► สายเคเบิลในฟาร์ม
-   Blade ──┼─ Hub│ (main shaft)                       │
-   Blade ──┘ (pitch system)       Yaw system ▼        │
-                 └───────────────────────────────────┘
-                                 Tower
-                               Foundation
-```
+<TurbineAnatomy />
 
 | ส่วนประกอบ | หน้าที่ | ประเด็นทางวิศวกรรม |
 |---|---|---|
@@ -80,16 +74,7 @@ $$
 
 ## Power Curve
 
-```
- P
- │            ┌────────────────────┐ Rated power
- │           /                     │
- │          /   Region 2           │ Region 3
- │        _/    (≈ v³)             │ (pitch)
- │______/                          └──── cut-out
- └──┴─────────┴────────────────────┴──► v
-  cut-in    rated                 25 m/s
-```
+<PowerCurve />
 
 power curve ที่ผู้ผลิตรับประกันวัดตาม **IEC 61400-12-1** ที่ความหนาแน่นอากาศอ้างอิง ถ้าไซต์อยู่สูงหรือร้อน อากาศจะเบาลง ต้องปรับ power curve ตามความหนาแน่นจริงก่อนใช้คำนวณพลังงาน
 
