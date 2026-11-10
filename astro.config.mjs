@@ -4,6 +4,7 @@ import starlight from '@astrojs/starlight';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeBaseLinks from './src/plugins/rehype-base-links.mjs';
+import rehypeLesson from './src/plugins/rehype-lesson.mjs';
 
 // GitHub Pages project site: https://chayanonmaithong.github.io/Pisco-Engineering-Academy/
 const site = 'https://chayanonmaithong.github.io';
@@ -14,7 +15,7 @@ export default defineConfig({
   base,
   markdown: {
     remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex, [rehypeBaseLinks, { base }]],
+    rehypePlugins: [rehypeKatex, rehypeLesson, [rehypeBaseLinks, { base }]],
   },
   integrations: [
     starlight({
@@ -25,7 +26,18 @@ export default defineConfig({
         root: { label: 'ไทย', lang: 'th' },
         en: { label: 'English', lang: 'en' },
       },
-      customCss: ['katex/dist/katex.min.css', './src/styles/custom.css'],
+      logo: { src: './src/assets/logo.svg' },
+      editLink: { baseUrl: 'https://github.com/ChayanonMaithong/Pisco-Engineering-Academy/edit/main/' },
+      customCss: [
+        '@fontsource/ibm-plex-sans-thai-looped/400.css',
+        '@fontsource/ibm-plex-sans-thai-looped/500.css',
+        '@fontsource/ibm-plex-sans-thai-looped/600.css',
+        '@fontsource/ibm-plex-sans-thai/600.css',
+        '@fontsource/ibm-plex-sans-thai/700.css',
+        '@fontsource/ibm-plex-mono/400.css',
+        'katex/dist/katex.min.css',
+        './src/styles/custom.css',
+      ],
       sidebar: [
         { label: 'เริ่มต้นที่นี่', translations: { en: 'Start here' }, items: [{ autogenerate: { directory: 'guides' } }] },
         {

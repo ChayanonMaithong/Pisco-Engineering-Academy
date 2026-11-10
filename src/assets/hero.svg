@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" fill="none" role="img" aria-label="กังหันลม แผงโซลาร์ โรงไฟฟ้า และแท่นเจาะ">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3aa6d0" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#3aa6d0" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="16" width="448" height="300" rx="28" fill="url(#sky)"/>
+  <!-- sun -->
+  <circle cx="390" cy="78" r="26" fill="#f5b544" fill-opacity="0.9"/>
+  <g stroke="#f5b544" stroke-width="3" stroke-linecap="round" opacity="0.7">
+    <path d="M390 36v-10M390 130v-10M348 78h-10M442 78h-10M360 48l-7-7M427 115l-7-7M420 48l7-7M353 115l7-7"/>
+  </g>
+  <!-- ground -->
+  <path d="M24 300 H456" stroke="#7f8c97" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <!-- wind turbines -->
+  <g stroke="#3aa6d0" stroke-width="4" stroke-linecap="round">
+    <path d="M110 300 L114 120 L118 300"/>
+    <path d="M114 118 L114 46"/><path d="M114 118 L176 154"/><path d="M114 118 L52 154"/>
+  </g>
+  <circle cx="114" cy="118" r="6" fill="#3aa6d0"/>
+  <g stroke="#3aa6d0" stroke-width="3" stroke-linecap="round" opacity="0.6">
+    <path d="M196 300 L199 176 L202 300"/>
+    <path d="M199 174 L199 126"/><path d="M199 174 L240 198"/><path d="M199 174 L158 198"/>
+  </g>
+  <circle cx="199" cy="174" r="4.5" fill="#3aa6d0" opacity="0.7"/>
+  <!-- solar panels -->
+  <g stroke="#0b6e99" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M250 284 L282 248 H346 L314 284 Z" fill="#0b6e99" fill-opacity="0.18"/>
+    <path d="M266 266 H330 M298 248 L282 284 M320 248 L304 284" opacity="0.7"/>
+    <path d="M282 284 V300 M314 284 V300"/>
+  </g>
+  <!-- power plant -->
+  <g stroke="#7f8c97" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M362 300 V232 H404 V300"/>
+    <path d="M412 300 L418 196 H436 L442 300"/>
+  </g>
+  <g fill="#7f8c97" opacity="0.35">
+    <circle cx="430" cy="176" r="10"/><circle cx="444" cy="160" r="8"/><circle cx="452" cy="142" r="6"/>
+  </g>
+  <!-- drilling derrick -->
+  <g stroke="#e07b39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M30 300 L52 190 L74 300"/>
+    <path d="M38 262 H66 M44 228 H60 M41 262 L60 228 M63 262 L44 228"/>
+    <path d="M52 190 V178"/>
+  </g>
+</svg>

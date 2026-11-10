@@ -1,0 +1,51 @@
+---
+// Industry track cards with topic icons for the home page.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const tracks = [
+  { key: 'wind', title: 'Wind Energy', count: 7, color: '#3aa6d0', href: '/industry/wind/wind-turbine-technology/',
+    topics: 'Turbine Technology · Resource Assessment · Layout & Energy Yield · Development · Construction · O&M · Offshore' },
+  { key: 'solar', title: 'Solar Energy', count: 4, color: '#e3a21a', href: '/industry/solar/solar-fundamentals/',
+    topics: 'Fundamentals · PV Plant Design · PV O&M · Concentrated Solar Power' },
+  { key: 'thermal', title: 'Thermal Power', count: 3, color: '#d0603a', href: '/industry/thermal/thermal-power-overview/',
+    topics: 'Overview & Heat Rate · Gas Turbine & Combined Cycle · Thermal Plant O&M' },
+  { key: 'drilling', title: 'Drilling', count: 3, color: '#7d6bd6', href: '/industry/drilling/drilling-fluid/',
+    topics: 'Drilling Fluid · Directional Drilling · Well Control' },
+];
+const icons: Record<string, string> = {
+  wind: '<path d="M12 11v10M9 21h6M12 11V3M12 11l7 4M12 11l-7 4"/><circle cx="12" cy="11" r="1.4" fill="currentColor"/>',
+  solar: '<circle cx="12" cy="7" r="3"/><path d="M12 1.5v1.5M6.5 7H5M19 7h-1.5M8.1 3.1l1 1M15.9 3.1l-1 1"/><path d="M4 21l3-8h10l3 8z"/><path d="M5.5 17h13M12 13v8"/>',
+  thermal: '<path d="M4 21V12h6v9M12 21l1-12h4l1 12"/><path d="M15 7c0-1.5 1.5-2 1.5-3.5M2.5 21h19"/>',
+  drilling: '<path d="M6 21L12 3l6 18M8.3 14h7.4M9.8 9.5h4.4M8.3 14l5.9-4.5M15.7 14 9.8 9.5"/>',
+};
+---
+<div class="tracks not-content">
+  {tracks.map((t) => (
+    <a class="track" href={base + t.href} style={`--track:${t.color}`}>
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.key]} />
+      </span>
+      <span class="text">
+        <span class="title">{t.title}<span class="count">{t.count} บทเรียน</span></span>
+        <span class="topics">{t.topics}</span>
+      </span>
+    </a>
+  ))}
+</div>
+<style>
+  .tracks { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); margin-top: 1.5rem; }
+  .track {
+    display: flex; gap: 1rem; align-items: flex-start; padding: 1.2rem 1.25rem; text-decoration: none; color: inherit;
+    background: var(--surface); border: 1px solid var(--sl-color-gray-5); border-radius: var(--radius-l);
+    box-shadow: var(--shadow); transition: border-color 0.15s, transform 0.15s;
+  }
+  .track:hover { border-color: var(--track); transform: translateY(-2px); }
+  .icon {
+    flex: none; width: 3rem; height: 3rem; border-radius: 0.8rem; display: grid; place-items: center;
+    color: var(--track); background: color-mix(in srgb, var(--track) 14%, transparent);
+  }
+  .icon svg { width: 1.75rem; height: 1.75rem; }
+  .text { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+  .title { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 600; color: var(--sl-color-white); display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+  .count { font-family: var(--sl-font); font-size: 0.8rem; font-weight: 500; color: var(--track); }
+  .topics { font-size: 0.88rem; line-height: 1.65; color: var(--sl-color-gray-3); }
+</style>

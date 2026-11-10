@@ -3,6 +3,9 @@ title: Pisco Engineering Academy
 description: สื่อการเรียนการสอนวิศวกรรม ตั้งแต่พื้นฐาน หลักสูตรภาควิชา จนถึงงานจริงในอุตสาหกรรม
 template: splash
 hero:
+  title: Pisco Engineering Academy
+  image:
+    file: ../../assets/hero.svg
   tagline: เรียนวิศวกรรมจาก ม.ปลาย → มหาวิทยาลัย → งานจริงในภาคสนาม ทุกบทเรียนเชื่อมโยงกลับไปหาหลักการที่ใช้
   actions:
     - text: เริ่มจาก ม.ปลาย
@@ -13,44 +16,32 @@ hero:
       variant: minimal
 ---
 
-import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import HomePath from '../../components/HomePath.astro';
+import TrackCards from '../../components/TrackCards.astro';
 
-## โครงสร้าง 2 ชั้น
+## เส้นทางการเรียน
 
-<CardGrid>
-  <Card title="ชั้น 1 · Foundations: มัธยมปลาย" icon="open-book">
-    คณิตศาสตร์ ฟิสิกส์ เคมี ชีววิทยา ม.4–ม.6 พร้อมชี้ว่าแต่ละหัวข้อไปใช้ที่ไหนในงานจริง
-  </Card>
-  <Card title="ชั้น 1 · Foundations: มหาวิทยาลัย" icon="list-format">
-    หลักสูตร 6 ภาควิชา: ไฟฟ้า โยธา เครื่องกล ปิโตรเลียม เคมี อุตสาหการ
-  </Card>
-  <Card title="ชั้น 2 · Industry Practice" icon="rocket">
-    งานจริงในอุตสาหกรรม: Wind, Solar, Thermal Power (Gas/Steam) และ Drilling
-  </Card>
-</CardGrid>
+เริ่มจากพื้นฐาน ม.ปลาย ต่อด้วยวิชาของภาควิชา แล้วไปถึงงานจริงในภาคสนาม ทุกบทเรียนมีลิงก์ย้อนกลับไปหาหลักการที่ใช้
 
-## สายงานในชั้น 2
+<HomePath />
+
+## สายงานในอุตสาหกรรม
+
+<TrackCards />
+
+## บทเรียนที่มีเครื่องคำนวณ
 
 <CardGrid>
-  <Card title="Wind Energy" icon="random">
-    7 บทเรียน: Turbine Technology, Resource Assessment, Layout & Energy Yield, Development, Construction, O&M, Offshore
-  </Card>
-  <Card title="Solar Energy" icon="star">
-    4 บทเรียน: Fundamentals, PV Plant Design, PV O&M, Concentrated Solar Power
-  </Card>
-  <Card title="Thermal Power" icon="seti:config">
-    3 บทเรียน: Overview & Heat Rate, Gas Turbine & Combined Cycle, Thermal Plant O&M
-  </Card>
-  <Card title="Drilling" icon="setting">
-    3 บทเรียน: Drilling Fluid, Directional Drilling, Well Control
-  </Card>
+  <LinkCard title="Wind Resource Assessment" href="/industry/wind/wind-resource-assessment/" description="Weibull, MCP — คำนวณพลังงานรายปีพร้อมกราฟ" />
+  <LinkCard title="PV Plant Design" href="/industry/solar/pv-plant-design/" description="String sizing, DC/AC ratio, Performance Ratio" />
+  <LinkCard title="Thermal Power Plant Overview" href="/industry/thermal/thermal-power-overview/" description="Heat rate และต้นทุนเชื้อเพลิง" />
+  <LinkCard title="Directional Drilling" href="/industry/drilling/directional-drilling/" description="Minimum Curvature — คำนวณตำแหน่งหลุมจาก survey" />
 </CardGrid>
 
-## เริ่มจากบทเรียนแนะนำ
+## ทุกบทเรียนออกแบบมาเพื่อการเรียน
 
-<CardGrid>
-  <LinkCard title="Wind Resource Assessment" href="/industry/wind/wind-resource-assessment/" description="Weibull, MCP — มีเครื่องคำนวณ AEP" />
-  <LinkCard title="PV Plant Design" href="/industry/solar/pv-plant-design/" description="String sizing, DC/AC ratio, Performance Ratio — มีเครื่องคำนวณ" />
-  <LinkCard title="Gas Turbine & Combined Cycle" href="/industry/thermal/gas-turbine-combined-cycle/" description="Brayton, HRSG, pinch point, CCGT efficiency" />
-  <LinkCard title="Directional Drilling" href="/industry/drilling/directional-drilling/" description="Minimum Curvature — มีเครื่องคำนวณ survey" />
-</CardGrid>
+- **ระดับและความรู้ที่ต้องมีก่อน** อยู่ด้านบนสุด รู้ทันทีว่าบทนี้เหมาะกับเราหรือยัง
+- **วัตถุประสงค์การเรียนรู้** บอกว่าอ่านจบแล้วควรทำอะไรได้
+- **ตัวอย่างจากงานจริง** พร้อมตัวเลขที่ใช้ในภาคสนาม
+- **แบบฝึกหัดพร้อมเฉลยที่ซ่อนไว้** ลองคิดก่อน แล้วค่อยกดดูเฉลย

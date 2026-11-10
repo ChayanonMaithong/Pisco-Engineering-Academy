@@ -1,0 +1,41 @@
+---
+// Three-step learning path for the home page.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const steps = [
+  { n: 1, title: 'มัธยมปลาย', sub: 'ม.4–ม.6', body: 'คณิตศาสตร์ ฟิสิกส์ เคมี ชีววิทยา พร้อมชี้ว่าแต่ละหัวข้อไปใช้ที่ไหนในงานจริง', href: '/foundations/high-school/' },
+  { n: 2, title: 'มหาวิทยาลัย', sub: '6 ภาควิชา', body: 'ไฟฟ้า โยธา เครื่องกล ปิโตรเลียม เคมี อุตสาหการ — หลักสูตรและวิชาพื้นฐาน', href: '/foundations/university/mechanical/' },
+  { n: 3, title: 'งานจริง', sub: '17 บทเรียน', body: 'Wind, Solar, Thermal Power และ Drilling พร้อมเครื่องคำนวณแบบโต้ตอบ', href: '/industry/wind/wind-turbine-technology/' },
+];
+---
+<ol class="path not-content">
+  {steps.map((s) => (
+    <li>
+      <a href={base + s.href}>
+        <span class="num">{s.n}</span>
+        <span class="head"><strong>{s.title}</strong><span class="sub">{s.sub}</span></span>
+        <span class="body">{s.body}</span>
+        <span class="go">เริ่มเรียน →</span>
+      </a>
+    </li>
+  ))}
+</ol>
+<style>
+  .path { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+  .path li { margin: 0 !important; }
+  .path a {
+    position: relative; display: flex; flex-direction: column; gap: 0.5rem; height: 100%;
+    padding: 1.35rem 1.35rem 1.15rem; text-decoration: none; color: inherit;
+    background: var(--surface); border: 1px solid var(--sl-color-gray-5); border-radius: var(--radius-l);
+    box-shadow: var(--shadow); transition: border-color 0.15s, transform 0.15s;
+  }
+  .path a:hover { border-color: var(--sl-color-accent); transform: translateY(-2px); }
+  .num {
+    width: 2.25rem; height: 2.25rem; border-radius: 50%; display: grid; place-items: center;
+    font-weight: 700; color: #fff; background: var(--sl-color-accent);
+  }
+  .head { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.35rem; }
+  .head strong { font-family: var(--font-heading); font-size: 1.25rem; color: var(--sl-color-white); }
+  .sub { font-size: 0.85rem; color: var(--sl-color-gray-3); }
+  .body { color: var(--sl-color-gray-3); font-size: 0.95rem; line-height: 1.7; flex: 1; }
+  .go { font-size: 0.9rem; font-weight: 600; color: var(--sl-color-text-accent); }
+</style>
