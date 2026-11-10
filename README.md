@@ -29,7 +29,12 @@ src/components/    เครื่องคำนวณแบบโต้ตอ�
 
 ## Deploy ขึ้น GitHub Pages
 
-1. สร้าง repo แล้ว push ขึ้น branch `main`
-2. ไปที่ Settings → Pages → Source: **GitHub Actions**
-3. ใน `astro.config.mjs` เพิ่ม `site: 'https://<user>.github.io'` และ `base: '/<repo-name>'`
-   (หากใช้ `base` ต้องปรับลิงก์ภายในให้มี prefix ด้วย หรือใช้ custom domain / Cloudflare Pages แทน)
+เว็บตั้งค่าไว้สำหรับ https://chayanonmaithong.github.io/Pisco-Engineering-Academy/ แล้ว
+
+1. Push ขึ้น branch `main`
+2. ไปที่ **Settings → Pages → Build and deployment → Source** แล้วเลือก **GitHub Actions**
+3. ทุกครั้งที่ push เข้า `main` เว็บจะ build และ deploy ให้อัตโนมัติ (`.github/workflows/deploy.yml`)
+
+**ลิงก์ภายใน:** ในเนื้อหา Markdown ให้เขียนแบบ `/industry/wind/...` ได้ตามปกติ ปลั๊กอิน `src/plugins/rehype-base-links.mjs` จะเติม `/Pisco-Engineering-Academy` ให้เอง ยกเว้นลิงก์ใน frontmatter (เช่น ปุ่ม hero) ที่ต้องเขียน prefix เอง
+
+ถ้าย้ายไปใช้โดเมนของตัวเองหรือ Cloudflare Pages ให้แก้ `site` และลบ `base` ใน `astro.config.mjs` แล้วลบ prefix ออกจากลิงก์ hero

@@ -3,11 +3,18 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import rehypeBaseLinks from './src/plugins/rehype-base-links.mjs';
+
+// GitHub Pages project site: https://chayanonmaithong.github.io/Pisco-Engineering-Academy/
+const site = 'https://chayanonmaithong.github.io';
+const base = '/Pisco-Engineering-Academy';
 
 export default defineConfig({
+  site,
+  base,
   markdown: {
     remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex],
+    rehypePlugins: [rehypeKatex, [rehypeBaseLinks, { base }]],
   },
   integrations: [
     starlight({
