@@ -25,17 +25,32 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
     หลักสูตรของแต่ละภาควิชา รายวิชา ลำดับการเรียน และวิชาที่ต้องเรียนก่อน
   </Card>
   <Card title="ชั้น 3 · Industry Practice" icon="rocket">
-    งานจริง: Wind Farm Development, O&M, Directional Drilling, Drilling Fluid และอื่น ๆ
+    งานจริงในอุตสาหกรรม: Wind, Solar, Thermal Power (Gas/Steam) และ Drilling
   </Card>
 </CardGrid>
 
-## บทเรียนตัวอย่าง
+## สายงานในชั้น 3
 
 <CardGrid>
-  <LinkCard title="Wind Farm Development" href="/industry/wind/wind-farm-development/" description="จากการหาพื้นที่จนถึง COD — มีเครื่องคำนวณกำลังกังหันลม" />
-  <LinkCard title="Wind Farm O&M" href="/industry/wind/wind-farm-om/" description="Availability, SCADA, Preventive vs Predictive maintenance" />
-  <LinkCard title="Drilling Fluid" href="/industry/drilling/drilling-fluid/" description="หน้าที่ของน้ำโคลน, rheology, pressure window — มีเครื่องคำนวณแรงดัน" />
-  <LinkCard title="Directional Drilling" href="/industry/drilling/directional-drilling/" description="Build section, Minimum Curvature, anti-collision, torque & drag — มีเครื่องคำนวณ survey" />
-  <LinkCard title="Well Control" href="/industry/drilling/well-control/" description="Kick, BOP, shut-in, Kill mud weight — มีเครื่องคำนวณ" />
-  <LinkCard title="Thermodynamics" href="/foundations/thermodynamics/" description="กฎข้อ 1–2, Carnot, Rankine, การถ่ายเทความร้อน" />
+  <Card title="Wind Energy" icon="random">
+    7 บทเรียน: Turbine Technology, Resource Assessment, Layout & Energy Yield, Development, Construction, O&M, Offshore
+  </Card>
+  <Card title="Solar Energy" icon="star">
+    4 บทเรียน: Fundamentals, PV Plant Design, PV O&M, Concentrated Solar Power
+  </Card>
+  <Card title="Thermal Power" icon="seti:config">
+    3 บทเรียน: Overview & Heat Rate, Gas Turbine & Combined Cycle, Thermal Plant O&M
+  </Card>
+  <Card title="Drilling" icon="setting">
+    3 บทเรียน: Drilling Fluid, Directional Drilling, Well Control
+  </Card>
+</CardGrid>
+
+## เริ่มจากบทเรียนแนะนำ
+
+<CardGrid>
+  <LinkCard title="Wind Resource Assessment" href="/industry/wind/wind-resource-assessment/" description="Weibull, MCP — มีเครื่องคำนวณ AEP" />
+  <LinkCard title="PV Plant Design" href="/industry/solar/pv-plant-design/" description="String sizing, DC/AC ratio, Performance Ratio — มีเครื่องคำนวณ" />
+  <LinkCard title="Gas Turbine & Combined Cycle" href="/industry/thermal/gas-turbine-combined-cycle/" description="Brayton, HRSG, pinch point, CCGT efficiency" />
+  <LinkCard title="Directional Drilling" href="/industry/drilling/directional-drilling/" description="Minimum Curvature — มีเครื่องคำนวณ survey" />
 </CardGrid>

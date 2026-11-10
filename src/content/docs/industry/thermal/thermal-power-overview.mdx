@@ -1,0 +1,95 @@
+---
+title: Thermal Power Plant Overview
+description: ภาพรวมโรงไฟฟ้าพลังความร้อน ชนิดเชื้อเพลิง ประสิทธิภาพ heat rate และบทบาทในระบบไฟฟ้า
+sidebar:
+  order: 1
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import HeatRateCalc from '../../../../components/HeatRateCalc.astro';
+
+**ระดับ:** Beginner–Intermediate
+**ความรู้ที่ต้องมีก่อน:** [Thermodynamics](/foundations/thermodynamics/) · [Mechanical Engineering](/disciplines/mechanical-engineering/)
+
+## วัตถุประสงค์การเรียนรู้
+- จำแนกโรงไฟฟ้าความร้อนตามวัฏจักรและเชื้อเพลิง
+- แปลงค่าระหว่างประสิทธิภาพกับ heat rate และเข้าใจความต่างของ LHV กับ HHV
+- อธิบายบทบาท base load, intermediate และ peaking
+- บอกส่วนประกอบหลักของโรงไฟฟ้าไอน้ำ (boiler, steam turbine, condenser)
+
+## ชนิดของโรงไฟฟ้าความร้อน
+
+| ชนิด | วัฏจักร | เชื้อเพลิง | ประสิทธิภาพสุทธิโดยประมาณ (LHV) | บทบาท |
+|---|---|---|---|---|
+| **Combined Cycle (CCGT)** | Brayton + Rankine | ก๊าซธรรมชาติ | 55–63% | Base / intermediate load |
+| **Open Cycle Gas Turbine (OCGT)** | Brayton | ก๊าซ, น้ำมันดีเซล | 33–42% | Peaking, สำรอง |
+| **Gas Engine (Reciprocating)** | Otto / Diesel | ก๊าซ, น้ำมัน | 42–48% | Peaking, โรงไฟฟ้าขนาดเล็ก, ตอบสนองเร็ว |
+| **Steam (Coal) Subcritical** | Rankine | ถ่านหิน | 33–38% | Base load |
+| **Supercritical / Ultra-supercritical** | Rankine | ถ่านหิน | 40–47% | Base load |
+| **Biomass** | Rankine | แกลบ, ชานอ้อย, เศษไม้ | 20–30% (ขนาดเล็ก) | Base load, พลังงานหมุนเวียน |
+| **Cogeneration (CHP)** | หลายแบบ | ก๊าซ, ชีวมวล | ใช้พลังงานรวมได้ 70–85% (ไฟฟ้า + ความร้อน) | นิคมอุตสาหกรรม |
+| **Geothermal** | Flash / ORC | ความร้อนใต้พิภพ | 10–20% | Base load |
+
+<Aside type="note">
+ระบบไฟฟ้าของประเทศไทยใช้ก๊าซธรรมชาติผลิตไฟฟ้าในสัดส่วนสูงที่สุด และมีโรงไฟฟ้า cogeneration ของผู้ผลิตรายเล็ก (SPP) จำนวนมากในนิคมอุตสาหกรรม ซึ่งขายทั้งไฟฟ้าและไอน้ำให้โรงงาน ส่วนชีวมวลจากแกลบและชานอ้อยเป็นพลังงานหมุนเวียนที่สำคัญ
+</Aside>
+
+## Heat Rate
+
+**Heat rate** คือพลังงานเชื้อเพลิงที่ใช้ต่อไฟฟ้า 1 kWh ค่ายิ่งต่ำยิ่งดี
+
+$$
+HR\;[\text{kJ/kWh}] = \frac{3600}{\eta}, \qquad
+HR\;[\text{Btu/kWh}] = \frac{3412}{\eta}
+$$
+
+**LHV กับ HHV:**
+- **HHV** (Higher Heating Value) นับความร้อนแฝงของไอน้ำในไอเสียที่ควบแน่นด้วย
+- **LHV** (Lower Heating Value) ไม่นับส่วนนั้น
+- สำหรับก๊าซธรรมชาติ HHV ≈ 1.11 × LHV ดังนั้นประสิทธิภาพที่อ้างแบบ LHV จะสูงกว่าแบบ HHV ราว 10%
+- ผู้ผลิตกังหันก๊าซมักอ้างแบบ LHV ขณะที่การซื้อขายก๊าซ (เช่น ราคาต่อ MMBtu) มักคิดแบบ HHV **ต้องตรวจทุกครั้งว่าตัวเลขอ้างอิงแบบใด**
+
+**Gross กับ Net:** Net คือกำลังที่เหลือหลังหักการใช้ไฟภายในโรงไฟฟ้า (auxiliary load) เช่น ปั๊มน้ำป้อน พัดลม และระบบหล่อเย็น ซึ่งโรงไฟฟ้าถ่านหินใช้ราว 5–10% ส่วน CCGT ใช้ราว 2–3%
+
+<HeatRateCalc />
+
+## โรงไฟฟ้าไอน้ำ (Steam Power Plant)
+
+```
+เชื้อเพลิง + อากาศ ─► Boiler ─► Superheated steam ─► HP/IP/LP Turbine ─► Generator
+                       ▲                                  │
+                       │                                  ▼
+  Feedwater heaters ◄─ Feed pump ◄─ Condensate pump ◄─ Condenser ◄─► Cooling tower / น้ำทะเล
+```
+
+**Boiler**
+- **Pulverized coal (PC):** บดถ่านเป็นผงละเอียดแล้วพ่นเข้าเผาในเตา
+- **Circulating Fluidized Bed (CFB):** เผาในชั้นทรายที่ถูกพ่นลมให้ลอยตัว ใช้เชื้อเพลิงคุณภาพต่ำหรือชีวมวลได้หลากหลาย และฉีดหินปูนดักกำมะถันได้ในเตา
+- **Subcritical / Supercritical:** ถ้าแรงดันไอน้ำเกินจุดวิกฤตของน้ำ (ราว 22.1 MPa) จะไม่มีการเดือดแยกเฟส ต้องใช้ once-through boiler ที่ไม่มีถังแยกไอน้ำ (drum) ประสิทธิภาพสูงขึ้นเพราะอุณหภูมิและแรงดันสูงขึ้น
+
+**เทคนิคเพิ่มประสิทธิภาพของวัฏจักร Rankine**
+- **Superheat และ Reheat:** เพิ่มอุณหภูมิเฉลี่ยที่รับความร้อน และลดความชื้นที่ปลายกังหัน LP ซึ่งกัดกร่อนใบกังหัน
+- **Regenerative feedwater heating:** ดึงไอน้ำบางส่วนจากกังหัน (extraction) ไปอุ่นน้ำป้อน
+- **ลดแรงดัน condenser:** น้ำหล่อเย็นยิ่งเย็น ประสิทธิภาพยิ่งสูง
+
+**ระบบควบคุมมลพิษ:** ESP หรือ fabric filter ดักฝุ่น, FGD ดักกำมะถัน, SCR หรือ low-NOx burner ลด NOx
+
+## ชีวมวล (Biomass): ประเด็นเฉพาะ
+- เชื้อเพลิงมีความชื้นสูงและคุณภาพไม่สม่ำเสมอ ต้องจัดการการจัดเก็บ ตากแห้ง และป้อนเชื้อเพลิง
+- โลหะอัลคาไลและคลอรีนในชีวมวลทำให้เถ้าเกาะผนังเตา (slagging / fouling) และกัดกร่อน superheater จึงมักต้องจำกัดอุณหภูมิไอน้ำ
+- ความมั่นคงของการจัดหาเชื้อเพลิงตามฤดูเก็บเกี่ยวเป็นความเสี่ยงทางธุรกิจหลัก
+
+## บทบาทในระบบไฟฟ้า
+- **Base load:** เดินเครื่องต่อเนื่อง ต้นทุนเชื้อเพลิงต่อหน่วยต่ำ
+- **Intermediate / Load following:** ปรับกำลังตามความต้องการรายวัน
+- **Peaking:** เดินเครื่องเฉพาะช่วงความต้องการสูงสุด ต้องเริ่มเครื่องได้เร็ว
+- เมื่อพลังงานหมุนเวียนเพิ่มขึ้น โรงไฟฟ้าความร้อนต้อง **cycling** (เริ่มและหยุดเครื่องบ่อย ปรับกำลังเร็ว) มากขึ้น ทำให้ชิ้นส่วนเกิดความล้าจากความร้อนเร็วขึ้น ดู [Thermal Plant O&M](/industry/thermal/thermal-plant-om/)
+
+## แบบฝึกหัด
+1. โรงไฟฟ้ามี heat rate 7,000 kJ/kWh (LHV) มีประสิทธิภาพเท่าใด (เฉลย: ≈ 51.4%)
+2. CCGT มีประสิทธิภาพ 60% แบบ LHV คิดเป็นแบบ HHV ประมาณเท่าใด (เฉลย: ≈ 54%)
+3. ใช้เครื่องคำนวณด้านบน: ถ้าราคาก๊าซเพิ่มจาก 8 เป็น 12 USD/MMBtu ต้นทุนเชื้อเพลิงของโรงไฟฟ้าประสิทธิภาพ 58% เทียบกับ 40% ต่างกันเท่าใดต่อ MWh
+
+## อ่านต่อ
+- [Gas Turbine & Combined Cycle](/industry/thermal/gas-turbine-combined-cycle/)
+- [Concentrated Solar Power](/industry/solar/concentrated-solar-power/) — ใช้วัฏจักร Rankine เช่นกัน

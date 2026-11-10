@@ -1,0 +1,38 @@
+---
+// PV string sizing against inverter voltage limits
+---
+<div class="calc not-content" data-calc="pvstring">
+  <strong>🧮 ออกแบบความยาว String ของแผง PV</strong>
+  <div class="calc-grid">
+    <label>Voc ของแผงที่ STC (V)<input type="number" name="voc" value="49.5" step="0.1" /></label>
+    <label>Vmp ของแผงที่ STC (V)<input type="number" name="vmp" value="41.6" step="0.1" /></label>
+    <label>β Voc (%/°C)<input type="number" name="bvoc" value="-0.26" step="0.01" /></label>
+    <label>β Vmp (%/°C) ≈ β Pmax<input type="number" name="bvmp" value="-0.30" step="0.01" /></label>
+    <label>อุณหภูมิเซลล์ต่ำสุด (°C)<input type="number" name="tmin" value="15" /></label>
+    <label>อุณหภูมิเซลล์สูงสุด (°C)<input type="number" name="tmax" value="70" /></label>
+    <label>แรงดัน DC สูงสุดของ inverter (V)<input type="number" name="vmax" value="1500" /></label>
+    <label>MPPT ต่ำสุดของ inverter (V)<input type="number" name="vmin" value="860" /></label>
+  </div>
+  <output></output>
+</div>
+<style>
+  .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0 1rem; }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-calc="pvstring"]').forEach((el) => {
+    const g = (n: string) => Number(el.querySelector<HTMLInputElement>(`input[name="${n}"]`)!.value);
+    const out = el.querySelector('output')!;
+    const update = () => {
+      const vocCold = g('voc') * (1 + (g('bvoc') / 100) * (g('tmin') - 25));
+      const vmpHot = g('vmp') * (1 + (g('bvmp') / 100) * (g('tmax') - 25));
+      const nmax = Math.floor(g('vmax') / vocCold);
+      const nmin = Math.ceil(g('vmin') / vmpHot);
+      const ok = nmin <= nmax;
+      out.innerHTML = `Voc ที่อุณหภูมิต่ำสุด ≈ ${vocCold.toFixed(1)} V → ไม่เกิน <b>${nmax}</b> แผง/string<br>` +
+        `Vmp ที่อุณหภูมิสูงสุด ≈ ${vmpHot.toFixed(1)} V → อย่างน้อย <b>${nmin}</b> แผง/string<br>` +
+        (ok ? `✅ เลือกได้ ${nmin}–${nmax} แผงต่อ string` : `⚠️ ไม่มีจำนวนที่ใช้ได้ — ต้องเปลี่ยนแผงหรือ inverter`);
+    };
+    el.querySelectorAll('input').forEach((i) => i.addEventListener('input', update));
+    update();
+  });
+</script>

@@ -1,0 +1,26 @@
+---
+// Jensen (Park) wake model: deficit = (1 - sqrt(1 - Ct)) * (D / (D + 2 k x))^2
+---
+<div class="calc not-content" data-calc="jensen">
+  <strong>🧮 Jensen Wake Model: ความเร็วลมหลังกังหัน</strong>
+  <label>ความเร็วลมอิสระ, U₀ (m/s)<input type="number" name="u" value="9" step="0.5" min="0" /></label>
+  <label>Thrust coefficient, Cₜ<input type="number" name="ct" value="0.8" step="0.05" min="0" max="0.99" /></label>
+  <label>ระยะห่างท้ายลม (เท่าของ D)<input type="number" name="x" value="7" step="0.5" min="0.5" /></label>
+  <label>Wake decay constant, k (บก ≈ 0.075, ทะเล ≈ 0.04)<input type="number" name="k" value="0.075" step="0.005" min="0.01" /></label>
+  <output></output>
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-calc="jensen"]').forEach((el) => {
+    const g = (n: string) => Number(el.querySelector<HTMLInputElement>(`input[name="${n}"]`)!.value);
+    const out = el.querySelector('output')!;
+    const update = () => {
+      const u = g('u'), ct = Math.min(g('ct'), 0.99), x = g('x'), k = g('k');
+      const def = (1 - Math.sqrt(1 - ct)) / (1 + 2 * k * x) ** 2;
+      const uw = u * (1 - def);
+      out.innerHTML = `Velocity deficit ≈ ${(def * 100).toFixed(1)}% → U ≈ ${uw.toFixed(2)} m/s<br>` +
+        `กำลังที่กังหันต้นหลังได้รับ (ถ้ายังต่ำกว่า rated) ≈ ${((uw / u) ** 3 * 100).toFixed(0)}% ของต้นหน้า`;
+    };
+    el.querySelectorAll('input').forEach((i) => i.addEventListener('input', update));
+    update();
+  });
+</script>

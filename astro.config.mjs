@@ -36,6 +36,8 @@ export default defineConfig({
           translations: { en: 'Tier 3 · Industry Practice' },
           items: [
             { label: 'Wind Energy', items: [{ autogenerate: { directory: 'industry/wind' } }] },
+            { label: 'Solar Energy', items: [{ autogenerate: { directory: 'industry/solar' } }] },
+            { label: 'Thermal Power (Gas / Steam)', items: [{ autogenerate: { directory: 'industry/thermal' } }] },
             { label: 'Drilling', items: [{ autogenerate: { directory: 'industry/drilling' } }] },
           ],
         },

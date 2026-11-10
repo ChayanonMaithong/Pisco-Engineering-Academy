@@ -17,7 +17,7 @@ src/content/docs/
 ├── guides/        เริ่มต้นที่นี่ + แม่แบบบทเรียน
 ├── foundations/   ชั้น 1 · พื้นฐานร่วม
 ├── disciplines/   ชั้น 2 · หลักสูตรภาควิชา
-├── industry/      ชั้น 3 · งานจริง (wind/, drilling/)
+├── industry/      ชั้น 3 · งานจริง (wind/, solar/, thermal/, drilling/)
 └── en/            ฉบับภาษาอังกฤษ (หน้าที่ยังไม่แปลจะแสดงภาษาไทย)
 src/components/    เครื่องคำนวณแบบโต้ตอบ
 ```

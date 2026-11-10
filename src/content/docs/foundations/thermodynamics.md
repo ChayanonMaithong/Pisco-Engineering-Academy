@@ -6,7 +6,7 @@ sidebar:
 ---
 
 **ระดับ:** Beginner
-**ใช้ต่อใน:** Power plants, Geothermal, ระบบระบายความร้อนของกังหันลม (gearbox, generator, converter)
+**ใช้ต่อใน:** [Thermal Power Plants](/industry/thermal/thermal-power-overview/), [Gas Turbine & Combined Cycle](/industry/thermal/gas-turbine-combined-cycle/), [Concentrated Solar Power](/industry/solar/concentrated-solar-power/), ระบบระบายความร้อนของกังหันลม
 
 ## วัตถุประสงค์การเรียนรู้
 - ใช้กฎข้อที่ 1 ทำสมดุลพลังงานของระบบเปิด

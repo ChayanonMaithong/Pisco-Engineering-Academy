@@ -1,0 +1,121 @@
+---
+title: Wind Turbine Technology
+description: ส่วนประกอบ ระบบส่งกำลัง ระบบควบคุม และ power curve ของกังหันลมสมัยใหม่
+sidebar:
+  order: 1
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+**ระดับ:** Intermediate
+**ความรู้ที่ต้องมีก่อน:** [Fluid Mechanics](/foundations/fluid-mechanics/) · [Electrical Engineering](/disciplines/electrical-engineering/) (Electrical Machines, Power Electronics) · [Mechanical Engineering](/disciplines/mechanical-engineering/)
+
+## วัตถุประสงค์การเรียนรู้
+- บอกส่วนประกอบหลักของกังหันลมแกนนอน (HAWT) และหน้าที่ของแต่ละส่วน
+- เปรียบเทียบระบบส่งกำลังแบบมีเกียร์กับแบบขับตรง (direct drive)
+- อธิบายช่วงการทำงาน (operating regions) และการควบคุม pitch / torque / yaw
+- อ่าน power curve และเข้าใจ IEC wind class
+
+## ส่วนประกอบหลัก
+
+```
+                 ┌──────────── Nacelle ────────────┐
+   Blade ──┐     │ Main bearing → Gearbox → Generator │──► Converter ─► Transformer ─► สายเคเบิลในฟาร์ม
+   Blade ──┼─ Hub│ (main shaft)                       │
+   Blade ──┘ (pitch system)       Yaw system ▼        │
+                 └───────────────────────────────────┘
+                                 Tower
+                               Foundation
+```
+
+| ส่วนประกอบ | หน้าที่ | ประเด็นทางวิศวกรรม |
+|---|---|---|
+| **Blades** | เปลี่ยนพลังงานลมเป็นแรงบิด | วัสดุคอมโพสิต (glass/carbon fibre), การกัดกร่อนขอบนำ, ฟ้าผ่า, ความล้า |
+| **Hub & Pitch system** | ยึดใบพัดและหมุนปรับมุมใบ | ระบบไฟฟ้าหรือไฮดรอลิก, ต้องมีแบตเตอรี่/accumulator สำรองไว้หมุนใบไปตำแหน่ง feather ได้เมื่อไฟดับ |
+| **Main shaft & bearing** | รับน้ำหนักโรเตอร์และส่งแรงบิด | ภาระสูงมาก การเปลี่ยนต้องใช้เครนใหญ่ |
+| **Gearbox** | เพิ่มรอบจากราว 10 rpm เป็นหลายร้อยถึงราว 1,500 rpm | ความเสียหายของ bearing และฟันเฟือง, คุณภาพน้ำมัน |
+| **Generator** | เปลี่ยนพลังงานกลเป็นไฟฟ้า | DFIG หรือ PMSG, การระบายความร้อน |
+| **Power converter** | ควบคุมความถี่ แรงดัน และกำลังรีแอกทีฟ | อิเล็กทรอนิกส์กำลัง (IGBT), เป็นจุดที่เสียบ่อย |
+| **Yaw system** | หมุน nacelle ให้หันหน้ารับลม | Yaw bearing, เบรก, มอเตอร์ |
+| **Tower** | ยกโรเตอร์ขึ้นสู่ระดับที่ลมแรงกว่า | เหล็กเป็นท่อน, คอนกรีต หรือแบบไฮบริด; ต้องออกแบบไม่ให้ความถี่ธรรมชาติตรงกับ 1P/3P |
+| **Foundation** | ถ่ายแรงลงดิน | ฐานแผ่ (spread footing) หรือเสาเข็ม; ใบพัด 3 ใบจึงเกิดแรงกระทำที่ความถี่ 3P |
+
+<Aside type="tip">
+**1P** คือความถี่การหมุนของโรเตอร์ ส่วน **3P** คือความถี่ที่ใบพัดผ่านหน้าเสา (3 ครั้งต่อรอบ) เสาส่วนใหญ่ออกแบบเป็น *soft-stiff* ให้ความถี่ธรรมชาติอยู่ระหว่าง 1P กับ 3P
+</Aside>
+
+## ระบบส่งกำลัง (Drivetrain)
+
+<Tabs>
+  <TabItem label="Geared + DFIG (Type 3)">
+    กล่องเกียร์ 3 ขั้นต่อกับ **Doubly-Fed Induction Generator** โดย converter ต่อเฉพาะวงจรโรเตอร์ จึงมีขนาดราว 30% ของกำลังพิกัด ราคาถูกกว่า แต่มีแปรงถ่าน/slip ring ที่ต้องดูแล และรับมือกับไฟตกจากระบบ (fault ride-through) ได้ยากกว่า
+  </TabItem>
+  <TabItem label="Geared + Full Converter (Type 4)">
+    กล่องเกียร์ต่อกับเครื่องกำเนิดไฟฟ้าแบบ synchronous หรือ induction ผ่าน converter เต็มพิกัด ใช้ได้ทั้งเกียร์ความเร็วสูงและ **medium-speed** (เกียร์ 1–2 ขั้น) ซึ่งนิยมในกังหันขนาดใหญ่ ควบคุมระบบไฟฟ้าได้ดี
+  </TabItem>
+  <TabItem label="Direct Drive (Type 4)">
+    ไม่มีเกียร์ โรเตอร์ขับ **Permanent Magnet Synchronous Generator (PMSG)** ขนาดใหญ่โดยตรง มีชิ้นส่วนหมุนน้อย จึงเหมาะกับงานนอกชายฝั่งที่ซ่อมยาก แต่เครื่องกำเนิดไฟฟ้าหนักและต้องใช้แม่เหล็กหายาก
+  </TabItem>
+</Tabs>
+
+## Tip Speed Ratio และประสิทธิภาพของโรเตอร์
+
+$$
+\lambda = \frac{\omega R}{v}
+$$
+
+ค่า $C_p$ ของโรเตอร์ขึ้นกับ $\lambda$ และมุม pitch $\theta$ ใบพัดสามใบสมัยใหม่ได้ $C_p$ สูงสุดที่ $\lambda$ ราว 7–9 ความเร็วปลายใบมักถูกจำกัดไว้ราว 80–90 m/s เพื่อควบคุมเสียงและการกัดกร่อนขอบนำ
+
+## ช่วงการทำงานและการควบคุม
+
+| ช่วง | ความเร็วลม (ตัวอย่าง) | การควบคุม | เป้าหมาย |
+|---|---|---|---|
+| Region 1 | ต่ำกว่า cut-in (~3 m/s) | หยุดหรือหมุนตัวเปล่า | — |
+| **Region 2** | cut-in ถึง rated (~3–11 m/s) | **Torque control**: $T_{gen} = K\omega^2$, pitch คงที่ | รักษา $\lambda$ ให้เหมาะสม → ได้ $C_{p,\max}$ |
+| Region 2½ | ใกล้ rated | จำกัดความเร็วรอบ | เปลี่ยนผ่านอย่างราบรื่น |
+| **Region 3** | rated ถึง cut-out (~11–25 m/s) | **Pitch control**: เพิ่มมุมใบเพื่อทิ้งพลังงานส่วนเกิน | กำลังคงที่ที่พิกัด |
+| Region 4 | เกิน cut-out | Feather ใบ หยุดเครื่อง | ความปลอดภัย |
+
+ระบบ **yaw** หมุน nacelle ตามทิศลมอย่างช้า ๆ (ราว 0.5°/s) โดยดูค่าเฉลี่ยของทิศลมเพื่อไม่ให้หมุนตามลมกระโชกทุกครั้ง ถ้าหันผิดทิศ (yaw misalignment) จะเสียพลังงานประมาณตาม $\cos^2$ ถึง $\cos^3$ ของมุมคลาด
+
+## Power Curve
+
+```
+ P
+ │            ┌────────────────────┐ Rated power
+ │           /                     │
+ │          /   Region 2           │ Region 3
+ │        _/    (≈ v³)             │ (pitch)
+ │______/                          └──── cut-out
+ └──┴─────────┴────────────────────┴──► v
+  cut-in    rated                 25 m/s
+```
+
+power curve ที่ผู้ผลิตรับประกันวัดตาม **IEC 61400-12-1** ที่ความหนาแน่นอากาศอ้างอิง ถ้าไซต์อยู่สูงหรือร้อน อากาศจะเบาลง ต้องปรับ power curve ตามความหนาแน่นจริงก่อนใช้คำนวณพลังงาน
+
+## IEC Wind Class
+
+ออกแบบกังหันให้เหมาะกับสภาพลมของไซต์ตาม **IEC 61400-1**:
+
+| Class | $V_{ref}$ (ลมสุดขั้ว 10 นาที ในรอบ 50 ปี) | ความเร็วลมเฉลี่ยที่ออกแบบ |
+|---|---|---|
+| I | 50 m/s | 10 m/s |
+| II | 42.5 m/s | 8.5 m/s |
+| III | 37.5 m/s | 7.5 m/s |
+| S | ผู้ออกแบบกำหนดเอง | — |
+
+ประเภทความปั่นป่วน (turbulence category) A+, A, B, C มีค่า $I_{ref}$ = 0.18, 0.16, 0.14, 0.12 ตามลำดับ ไซต์ลมอ่อน เช่น พื้นที่ส่วนใหญ่ของประเทศไทย มักใช้กังหัน **Class III หรือ S** ที่มีใบพัดยาวเมื่อเทียบกับกำลังพิกัด (low specific power) เพื่อจับลมความเร็วต่ำได้มากขึ้น
+
+$$
+\text{Specific power} = \frac{P_{rated}}{A} \quad [\text{W/m}^2]
+$$
+
+## แบบฝึกหัด
+1. โรเตอร์เส้นผ่านศูนย์กลาง 150 m หมุน 9 rpm ที่ลม 8 m/s มี tip speed ratio เท่าใด (เฉลย: $\omega = 0.942$ rad/s → $\lambda \approx 8.8$)
+2. กังหัน 4.2 MW ใบพัด 150 m มี specific power เท่าใด (เฉลย: ≈ 238 W/m²)
+3. ทำไมกังหันในทะเลจึงนิยมระบบ direct drive หรือ medium-speed มากกว่าเกียร์ 3 ขั้น
+
+## อ่านต่อ / มาตรฐาน
+- IEC 61400-1 — Design requirements
+- IEC 61400-21-1 — Electrical characteristics
+- [Wind Resource Assessment](/industry/wind/wind-resource-assessment/)

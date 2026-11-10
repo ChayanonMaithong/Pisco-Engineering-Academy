@@ -1,0 +1,30 @@
+---
+// Efficiency <-> heat rate, fuel use and fuel cost
+---
+<div class="calc not-content" data-calc="heatrate">
+  <strong>🧮 ประสิทธิภาพ ↔ Heat Rate ↔ ต้นทุนเชื้อเพลิง</strong>
+  <div class="calc-grid">
+    <label>ประสิทธิภาพสุทธิ (%, LHV)<input type="number" name="eta" value="58" step="0.5" min="1" max="100" /></label>
+    <label>กำลังผลิตสุทธิ (MW)<input type="number" name="mw" value="700" min="0" /></label>
+    <label>ราคาก๊าซ (USD/MMBtu)<input type="number" name="price" value="8" step="0.1" min="0" /></label>
+  </div>
+  <output></output>
+</div>
+<style>
+  .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0 1rem; }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-calc="heatrate"]').forEach((el) => {
+    const g = (n: string) => Number(el.querySelector<HTMLInputElement>(`input[name="${n}"]`)!.value);
+    const out = el.querySelector('output')!;
+    const update = () => {
+      const eta = g('eta') / 100, mw = g('mw'), price = g('price');
+      const hrKj = 3600 / eta, hrBtu = 3412.14 / eta;
+      const mmbtuPerH = mw * 1000 * hrBtu / 1e6;
+      out.innerHTML = `Heat rate ≈ ${Math.round(hrKj).toLocaleString('en-US')} kJ/kWh ≈ ${Math.round(hrBtu).toLocaleString('en-US')} Btu/kWh<br>` +
+        `ใช้เชื้อเพลิง ≈ ${Math.round(mmbtuPerH).toLocaleString('en-US')} MMBtu/h · ต้นทุนเชื้อเพลิง ≈ ${(hrBtu / 1000 * price).toFixed(1)} USD/MWh`;
+    };
+    el.querySelectorAll('input').forEach((i) => i.addEventListener('input', update));
+    update();
+  });
+</script>

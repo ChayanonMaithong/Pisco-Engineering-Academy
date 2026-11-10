@@ -1,0 +1,66 @@
+---
+// Weibull distribution + simplified power curve -> gross AEP & capacity factor
+---
+<div class="calc not-content" data-calc="weibull">
+  <strong>🧮 Weibull → พลังงานรายปี (AEP) ของกังหัน 1 ต้น</strong>
+  <div class="calc-grid">
+    <label>Scale factor, c (m/s)<input type="number" name="c" value="7.5" step="0.1" min="1" /></label>
+    <label>Shape factor, k<input type="number" name="k" value="2.0" step="0.1" min="1" /></label>
+    <label>Rated power (MW)<input type="number" name="pr" value="4.2" step="0.1" min="0.1" /></label>
+    <label>Rotor diameter (m)<input type="number" name="d" value="150" min="10" /></label>
+  </div>
+  <svg viewBox="0 0 335 132" role="img" aria-label="Weibull distribution chart" class="wb-svg"></svg>
+  <output></output>
+  <small>Power curve อย่างง่าย: cut-in 3 m/s, Cp = 0.45 จนถึง rated power, cut-out 25 m/s, ρ = 1.225 kg/m³ — ใช้เพื่อการเรียนเท่านั้น</small>
+</div>
+<style>
+  .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0 1rem; }
+  .wb-svg { width: 100%; max-width: 32rem; margin-top: 0.75rem; display: block; }
+  .wb-svg :global(.pdf) { fill: none; stroke: var(--sl-color-accent); stroke-width: 2; }
+  .wb-svg :global(.pc) { fill: none; stroke: var(--sl-color-gray-3); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .wb-svg :global(text) { font-size: 9px; fill: var(--sl-color-gray-3); }
+  .wb-svg :global(line) { stroke: var(--sl-color-gray-4); }
+</style>
+<script>
+  // Lanczos approximation of the gamma function
+  function gamma(z: number): number {
+    const g = 7, p = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313,
+      -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];
+    if (z < 0.5) return Math.PI / (Math.sin(Math.PI * z) * gamma(1 - z));
+    z -= 1; let x = p[0];
+    for (let i = 1; i < g + 2; i++) x += p[i] / (z + i);
+    const t = z + g + 0.5;
+    return Math.sqrt(2 * Math.PI) * Math.pow(t, z + 0.5) * Math.exp(-t) * x;
+  }
+  document.querySelectorAll<HTMLElement>('[data-calc="weibull"]').forEach((el) => {
+    const g = (n: string) => Number(el.querySelector<HTMLInputElement>(`input[name="${n}"]`)!.value);
+    const out = el.querySelector('output')!;
+    const svg = el.querySelector('svg')!;
+    const update = () => {
+      const c = g('c'), k = g('k'), pr = g('pr') * 1e6, d = g('d');
+      if (!(c > 0 && k > 0 && pr > 0 && d > 0)) return;
+      const A = Math.PI * d * d / 4;
+      const pdf = (v: number) => (k / c) * Math.pow(v / c, k - 1) * Math.exp(-Math.pow(v / c, k));
+      const power = (v: number) => (v < 3 || v > 25) ? 0 : Math.min(pr, 0.5 * 1.225 * A * v ** 3 * 0.45);
+      let e = 0; const dv = 0.05; const pts: string[] = []; const pcs: string[] = [];
+      let maxf = 0; for (let v = 0.01; v <= 30; v += 0.1) maxf = Math.max(maxf, pdf(v));
+      for (let v = dv / 2; v < 30; v += dv) e += power(v) * pdf(v) * dv;
+      for (let v = 0; v <= 30; v += 0.25) {
+        const x = 20 + v * 10;
+        pts.push(`${x},${110 - (pdf(Math.max(v, 0.01)) / maxf) * 95}`);
+        pcs.push(`${x},${110 - (power(v) / pr) * 95}`);
+      }
+      const mean = c * gamma(1 + 1 / k);
+      const pd = 0.5 * 1.225 * c ** 3 * gamma(1 + 3 / k);
+      const aep = e * 8760 / 1e6; // MWh
+      svg.innerHTML = `<line x1="20" y1="110" x2="320" y2="110"/>` +
+        [0, 5, 10, 15, 20, 25, 30].map((v) => `<text x="${17 + v * 10}" y="122">${v}</text>`).join('') +
+        `<text x="250" y="10">— pdf  - - power curve</text><text x="140" y="130">m/s</text>` +
+        `<polyline class="pdf" points="${pts.join(' ')}"/><polyline class="pc" points="${pcs.join(' ')}"/>`;
+      out.innerHTML = `ความเร็วลมเฉลี่ย ≈ ${mean.toFixed(2)} m/s · Wind power density ≈ ${Math.round(pd)} W/m²<br>` +
+        `Gross AEP ≈ ${Math.round(aep).toLocaleString('en-US')} MWh/ปี · Gross capacity factor ≈ ${(aep / (pr / 1e6 * 8760) * 100).toFixed(1)}%`;
+    };
+    el.querySelectorAll('input').forEach((i) => i.addEventListener('input', update));
+    update();
+  });
+</script>

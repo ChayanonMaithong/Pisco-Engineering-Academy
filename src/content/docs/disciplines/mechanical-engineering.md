@@ -24,6 +24,7 @@ sidebar:
 Machine Design ────────┐
 Mechanical Vibration ──┼─► Drivetrain (gearbox, bearing) ─► Wind Farm O&M / CMS
 Fatigue & Fracture ────┤
+Thermodynamics ────────┼─► Gas turbine, HRSG, Steam turbine ─► Thermal Power
 Fluid Mechanics ───────┴─► Pumps, Mud system, Drill string ─► Drilling
 ```
 
@@ -31,4 +32,4 @@ Fluid Mechanics ───────┴─► Pumps, Mud system, Drill string �
 - **พลังงานลม:** วิเคราะห์การสั่นสะเทือนของ gearbox และ bearing, ตรวจความเสียหายของใบพัด, วางแผนบำรุงรักษาตามรอบ, ประเมินอายุความล้าของเสาและฐานราก
 - **งานเจาะ:** ออกแบบและเลือกก้านเจาะ, คำนวณ torque & drag, ดูแลปั๊มน้ำโคลนและอุปกรณ์บนแท่น
 
-ลิงก์: [Wind Farm O&M](/industry/wind/wind-farm-om/) · [Directional Drilling](/industry/drilling/directional-drilling/)
+ลิงก์: [Wind Turbine Technology](/industry/wind/wind-turbine-technology/) · [Wind Farm O&M](/industry/wind/wind-farm-om/) · [Gas Turbine & Combined Cycle](/industry/thermal/gas-turbine-combined-cycle/) · [Thermal Plant O&M](/industry/thermal/thermal-plant-om/) · [Directional Drilling](/industry/drilling/directional-drilling/)

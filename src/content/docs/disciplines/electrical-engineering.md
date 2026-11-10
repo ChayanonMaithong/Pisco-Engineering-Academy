@@ -33,4 +33,4 @@ Protection ──────────┴─► Substation & Grid Connection 
 - ดูแล converter, transformer และระบบป้องกัน
 - วิเคราะห์ข้อมูล SCADA เมื่อมี alarm ทางไฟฟ้า
 
-ลิงก์: [Wind Farm Development](/industry/wind/wind-farm-development/) · [Wind Farm O&M](/industry/wind/wind-farm-om/)
+ลิงก์: [Wind Turbine Technology](/industry/wind/wind-turbine-technology/) · [Wind Farm Development](/industry/wind/wind-farm-development/) · [Wind Farm O&M](/industry/wind/wind-farm-om/) · [PV Plant Design](/industry/solar/pv-plant-design/)
