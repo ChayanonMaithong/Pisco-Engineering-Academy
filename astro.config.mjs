@@ -11,7 +11,7 @@ export default defineConfig({
   },
   integrations: [
     starlight({
-      title: 'Engineering Academy',
+      title: 'Pisco Engineering Academy',
       description: 'สื่อการเรียนการสอนวิศวกรรม ตั้งแต่พื้นฐาน ภาควิชา จนถึงงานจริงในอุตสาหกรรม',
       defaultLocale: 'root',
       locales: {

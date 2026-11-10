@@ -1,4 +1,4 @@
-# Engineering Academy
+# Pisco Engineering Academy
 
 เว็บไซต์สื่อการเรียนการสอนวิศวกรรม สร้างด้วย [Astro Starlight](https://starlight.astro.build)
 
