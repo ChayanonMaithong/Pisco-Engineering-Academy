@@ -1,0 +1,73 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import CourseIcon from '../../components/course/CourseIcon.astro';
+import { courses, tiers, coursePath } from '../../data/courses.mjs';
+import { exams } from '../../data/exams.mjs';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<StarlightPage frontmatter={{ title: 'คอร์สทั้งหมด', description: 'เลือกคอร์สที่ต้องการ แล้วเรียนตามลำดับบทเรียนจนครบ และสอบท้ายคอร์สเพื่อรับประกาศนียบัตร', tableOfContents: false }}>
+  <p class="intro">
+    แต่ละคอร์สเรียนตามลำดับ: <strong>ภาพรวมคอร์ส → บทเรียนทีละบท → แบบทดสอบท้ายคอร์ส</strong>{" "}
+    เรียนครบทุกบทและสอบผ่าน 70% ขึ้นไป จึงนับว่าจบคอร์ส ความคืบหน้าบันทึกไว้ในเบราว์เซอร์ของคุณ
+  </p>
+  {tiers.map((tier) => (
+    <section class="tier" id={tier.id}>
+      <h2>{tier.title}</h2>
+      <p class="tier-sub">{tier.subtitle}</p>
+      <div class="course-grid not-content">
+        {courses.filter((c) => c.tier === tier.id).map((c) => (
+          <a class="course-card" href={base + coursePath(c)} data-course={c.id} data-lessons={JSON.stringify(c.lessons)} style={`--c:${c.color}`}>
+            <div class="cc-head">
+              <CourseIcon icon={c.icon} color={c.color} />
+              <div>
+                <div class="cc-title">{c.title}</div>
+                <div class="cc-meta">{c.lessons.length} บทเรียน · แบบทดสอบ {exams[c.id].length} ข้อ</div>
+              </div>
+            </div>
+            <p class="cc-desc">{c.description}</p>
+            <div class="cc-bar"><i data-bar /></div>
+            <div class="cc-status" data-status>ยังไม่เริ่ม</div>
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
+</StarlightPage>
+
+<script>
+  import { load } from '../../scripts/progress';
+  const p = load();
+  document.querySelectorAll<HTMLElement>('.course-card').forEach((card) => {
+    const lessons: string[] = JSON.parse(card.dataset.lessons!);
+    const done = lessons.filter((l) => p.lessons[l]).length;
+    const exam = p.exams[card.dataset.course!];
+    const complete = exam?.passed && done === lessons.length;
+    const pct = ((done + (complete ? 1 : 0)) / (lessons.length + 1)) * 100;
+    card.querySelector<HTMLElement>('[data-bar]')!.style.width = pct + '%';
+    const status = card.querySelector<HTMLElement>('[data-status]')!;
+    if (complete) { status.textContent = `จบคอร์สแล้ว ✓ · คะแนน ${exam.percent}%`; card.classList.add('complete'); }
+    else if (done === lessons.length) status.textContent = 'เรียนครบแล้ว · รอทำแบบทดสอบ';
+    else if (done > 0) status.textContent = `กำลังเรียน ${done}/${lessons.length} บท`;
+  });
+</script>
+
+<style>
+  .intro { color: var(--sl-color-gray-2); }
+  .tier h2 { margin-bottom: 0.2rem; }
+  .tier-sub { margin-top: 0 !important; color: var(--sl-color-gray-3); }
+  .course-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); margin-top: 1.25rem; }
+  .course-card {
+    display: flex; flex-direction: column; gap: 0.7rem; padding: 1.2rem; text-decoration: none; color: inherit;
+    background: var(--surface); border: 1px solid var(--sl-color-gray-5); border-radius: var(--radius-l);
+    box-shadow: var(--shadow); transition: border-color 0.15s, transform 0.15s;
+  }
+  .course-card:hover { border-color: var(--c); transform: translateY(-2px); }
+  .cc-head { display: flex; gap: 0.9rem; align-items: center; }
+  .cc-title { font-family: var(--font-heading); font-weight: 600; font-size: 1.1rem; color: var(--sl-color-white); line-height: 1.4; }
+  .cc-meta { font-size: 0.8rem; color: var(--sl-color-gray-3); }
+  .cc-desc { margin: 0; font-size: 0.9rem; line-height: 1.65; color: var(--sl-color-gray-3); flex: 1; }
+  .cc-bar { height: 6px; border-radius: 3px; background: var(--sl-color-gray-5); overflow: hidden; }
+  .cc-bar i { display: block; height: 100%; width: 0; background: var(--c); border-radius: 3px; }
+  .cc-status { font-size: 0.8rem; font-weight: 600; color: var(--sl-color-gray-3); }
+  .course-card.complete .cc-status { color: var(--level-1); }
+</style>

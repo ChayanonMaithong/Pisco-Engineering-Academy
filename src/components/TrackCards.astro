@@ -2,13 +2,13 @@
 // Industry track cards with topic icons for the home page.
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const tracks = [
-  { key: 'wind', title: 'Wind Energy', count: 7, color: '#3aa6d0', href: '/industry/wind/wind-turbine-technology/',
+  { key: 'wind', title: 'Wind Energy', count: 7, color: '#3aa6d0', href: '/courses/wind/',
     topics: 'Turbine Technology · Resource Assessment · Layout & Energy Yield · Development · Construction · O&M · Offshore' },
-  { key: 'solar', title: 'Solar Energy', count: 4, color: '#e3a21a', href: '/industry/solar/solar-fundamentals/',
+  { key: 'solar', title: 'Solar Energy', count: 4, color: '#e3a21a', href: '/courses/solar/',
     topics: 'Fundamentals · PV Plant Design · PV O&M · Concentrated Solar Power' },
-  { key: 'thermal', title: 'Thermal Power', count: 3, color: '#d0603a', href: '/industry/thermal/thermal-power-overview/',
+  { key: 'thermal', title: 'Thermal Power', count: 3, color: '#d0603a', href: '/courses/thermal/',
     topics: 'Overview & Heat Rate · Gas Turbine & Combined Cycle · Thermal Plant O&M' },
-  { key: 'drilling', title: 'Drilling', count: 3, color: '#7d6bd6', href: '/industry/drilling/drilling-fluid/',
+  { key: 'drilling', title: 'Drilling', count: 3, color: '#7d6bd6', href: '/courses/drilling/',
     topics: 'Drilling Fluid · Directional Drilling · Well Control' },
 ];
 const icons: Record<string, string> = {

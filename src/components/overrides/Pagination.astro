@@ -1,0 +1,81 @@
+---
+// Inside a course lesson: a "finished this lesson → next" call to action that records progress.
+// Everywhere else: Starlight's default prev/next links.
+import Default from '@astrojs/starlight/components/Pagination.astro';
+import { courseForLesson } from '../../data/courses.mjs';
+
+const route = Astro.locals.starlightRoute;
+const id = route.id.replace(/^en\//, '');
+const course = courseForLesson(id);
+const { prev, next } = route.pagination;
+const isLast = course ? course.lessons.at(-1) === id : false;
+---
+{course ? (
+  <div class="lesson-next" data-lesson={id}>
+    <div class="ln-card">
+      <div class="ln-text">
+        <strong data-ln-title>อ่านบทนี้จบแล้วหรือยัง?</strong>
+        <span data-ln-sub>{isLast ? 'นี่คือบทสุดท้าย กดเพื่อบันทึกแล้วไปทำแบบทดสอบท้ายคอร์ส' : 'กดเพื่อบันทึกความคืบหน้า แล้วไปบทถัดไป'}</span>
+      </div>
+      {next && (
+        <a class="ln-btn" href={next.href} data-ln-go>
+          ✓ เรียนจบบทนี้ · {isLast ? 'ไปทำแบบทดสอบ' : 'บทถัดไป'} →
+        </a>
+      )}
+    </div>
+    <div class="ln-links">
+      {prev ? <a href={prev.href}>← {prev.label}</a> : <span />}
+      {next && <a href={next.href} data-ln-skip>ข้ามไป: {next.label} →</a>}
+    </div>
+    <button type="button" class="ln-undo" data-ln-undo hidden>ยกเลิกสถานะ "เรียนจบ" ของบทนี้</button>
+  </div>
+) : (
+  <Default />
+)}
+
+<script>
+  import { markLesson, unmarkLesson, isDone } from '../../scripts/progress';
+  const box = document.querySelector<HTMLElement>('.lesson-next');
+  if (box) {
+    const id = box.dataset.lesson!;
+    const go = box.querySelector<HTMLAnchorElement>('[data-ln-go]');
+    const undo = box.querySelector<HTMLButtonElement>('[data-ln-undo]')!;
+    const refresh = () => {
+      const done = isDone(id);
+      box.classList.toggle('is-done', done);
+      box.querySelector('[data-ln-title]')!.textContent = done ? 'คุณเรียนบทนี้จบแล้ว ✓' : 'อ่านบทนี้จบแล้วหรือยัง?';
+      undo.hidden = !done;
+    };
+    go?.addEventListener('click', () => markLesson(id));
+    undo.addEventListener('click', () => { unmarkLesson(id); refresh(); });
+    refresh();
+  }
+</script>
+
+<style>
+  .lesson-next { margin-top: 2.5rem; }
+  .ln-card {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 1.15rem 1.25rem; border-radius: var(--radius-l);
+    background: var(--sl-color-accent-low); border: 1px solid color-mix(in srgb, var(--sl-color-accent) 35%, transparent);
+  }
+  .lesson-next.is-done .ln-card {
+    background: color-mix(in srgb, var(--level-1) 12%, var(--surface));
+    border-color: color-mix(in srgb, var(--level-1) 45%, transparent);
+  }
+  .ln-text { display: flex; flex-direction: column; gap: 0.2rem; min-width: 14rem; flex: 1; }
+  .ln-text strong { color: var(--sl-color-white); font-size: 1.05rem; }
+  .ln-text span { color: var(--sl-color-gray-3); font-size: 0.9rem; }
+  .ln-btn {
+    display: inline-flex; align-items: center; padding: 0.7rem 1.15rem; border-radius: 999px;
+    font-weight: 600; text-decoration: none; color: #fff; background: var(--sl-color-accent);
+    box-shadow: var(--shadow); transition: transform 0.15s, filter 0.15s;
+  }
+  :root[data-theme='light'] .ln-btn { color: #fff; }
+  .ln-btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
+  .lesson-next.is-done .ln-btn { background: var(--level-1); }
+  .ln-links { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 0.85rem; font-size: 0.88rem; }
+  .ln-links a { color: var(--sl-color-gray-3); text-decoration: none; }
+  .ln-links a:hover { color: var(--sl-color-text-accent); text-decoration: underline; }
+  .ln-undo { margin-top: 0.6rem; background: none; border: none; padding: 0; font: inherit; font-size: 0.8rem; color: var(--sl-color-gray-4); cursor: pointer; text-decoration: underline; }
+</style>

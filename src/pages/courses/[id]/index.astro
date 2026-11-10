@@ -1,0 +1,166 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+import CourseIcon from '../../../components/course/CourseIcon.astro';
+import Certificate from '../../../components/course/Certificate.astro';
+import { courses, tiers, lessonPath, examPath, PASS_PERCENT } from '../../../data/courses.mjs';
+import { exams } from '../../../data/exams.mjs';
+
+export function getStaticPaths() {
+  return courses.map((course) => ({ params: { id: course.id }, props: { course } }));
+}
+const { course } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const docs = new Map((await getCollection('docs')).map((d) => [d.id, d]));
+const lessons = course.lessons.map((id: string) => {
+  const d = docs.get(id)!;
+  return { id, href: base + lessonPath(id), title: d.data.title, description: d.data.description };
+});
+const tier = tiers.find((t) => t.id === course.tier)!;
+const questions = exams[course.id].length;
+---
+<StarlightPage frontmatter={{ title: course.title, description: course.description, tableOfContents: false }}>
+  <div class="ch not-content" data-course={course.id} data-lessons={JSON.stringify(course.lessons)} data-exam-href={base + examPath(course)} style={`--c:${course.color}`}>
+    <div class="ch-hero">
+      <CourseIcon icon={course.icon} color={course.color} size="3.5rem" />
+      <div class="ch-hero-text">
+        <span class="ch-tier">{tier.title}</span>
+        <p class="ch-desc">{course.description}</p>
+        <div class="ch-pills">
+          <span>{lessons.length} บทเรียน</span><span>แบบทดสอบ {questions} ข้อ</span><span>เกณฑ์ผ่าน {PASS_PERCENT}%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ch-progress">
+      <div class="ch-progress-top">
+        <span data-progress-label>ยังไม่เริ่มเรียน</span>
+        <span data-progress-pct>0%</span>
+      </div>
+      <div class="ch-bar"><i data-progress-bar /></div>
+      <a class="ch-cta" href={lessons[0].href} data-cta>เริ่มเรียนบทที่ 1 →</a>
+    </div>
+
+    <div class="ch-outcomes">
+      <h3>เรียนจบคอร์สนี้แล้วคุณจะ</h3>
+      <ul>{course.outcomes.map((o: string) => <li>{o}</li>)}</ul>
+    </div>
+
+    <h3 class="ch-journey-title">เส้นทางการเรียน</h3>
+    <ol class="journey">
+      {lessons.map((l, i) => (
+        <li class="step" data-step={l.id}>
+          <span class="dot">{i + 1}</span>
+          <a href={l.href} class="step-body">
+            <span class="step-title">{l.title}</span>
+            {l.description && <span class="step-desc">{l.description}</span>}
+            <span class="step-status" data-step-status>ยังไม่ได้เรียน</span>
+          </a>
+        </li>
+      ))}
+      <li class="step exam" data-exam-step>
+        <span class="dot">★</span>
+        <a href={base + examPath(course)} class="step-body">
+          <span class="step-title">แบบทดสอบท้ายคอร์ส</span>
+          <span class="step-desc">{questions} ข้อ · ต้องได้ {PASS_PERCENT}% ขึ้นไป · เปิดให้สอบเมื่อเรียนครบทุกบท</span>
+          <span class="step-status" data-exam-status>🔒 ยังไม่เปิด</span>
+        </a>
+      </li>
+    </ol>
+  </div>
+  <Certificate courseId={course.id} title={course.title} lessons={course.lessons} />
+</StarlightPage>
+
+<script>
+  import { load } from '../../../scripts/progress';
+  const root = document.querySelector<HTMLElement>('.ch')!;
+  const p = load();
+  const lessons: string[] = JSON.parse(root.dataset.lessons!);
+  const done = lessons.filter((l) => p.lessons[l]).length;
+  const exam = p.exams[root.dataset.course!];
+  const allDone = done === lessons.length;
+  const complete = allDone && exam?.passed;
+  const pct = Math.round(((done + (complete ? 1 : 0)) / (lessons.length + 1)) * 100);
+  root.querySelector<HTMLElement>('[data-progress-bar]')!.style.width = pct + '%';
+  root.querySelector('[data-progress-pct]')!.textContent = pct + '%';
+  const label = root.querySelector('[data-progress-label]')!;
+  const cta = root.querySelector<HTMLAnchorElement>('[data-cta]')!;
+  const stepLinks = [...root.querySelectorAll<HTMLElement>('[data-step]')];
+  let nextIndex = lessons.findIndex((l) => !p.lessons[l]);
+
+  stepLinks.forEach((li, i) => {
+    const isDone = Boolean(p.lessons[li.dataset.step!]);
+    li.classList.toggle('done', isDone);
+    li.classList.toggle('next', i === nextIndex);
+    li.querySelector('[data-step-status]')!.textContent = isDone ? 'เรียนจบแล้ว ✓' : i === nextIndex ? 'บทถัดไปของคุณ' : 'ยังไม่ได้เรียน';
+  });
+  const examStep = root.querySelector<HTMLElement>('[data-exam-step]')!;
+  const examStatus = root.querySelector('[data-exam-status]')!;
+  if (complete) {
+    label.textContent = 'จบคอร์สแล้ว 🎉';
+    examStep.classList.add('done');
+    examStatus.textContent = `สอบผ่านแล้ว ✓ คะแนน ${exam.score}/${exam.total} (${exam.percent}%)`;
+    cta.textContent = 'ดูประกาศนียบัตร ↓';
+    cta.href = '#cert';
+    document.querySelector('.certificate')?.setAttribute('id', 'cert');
+  } else if (allDone) {
+    label.textContent = `เรียนครบ ${done}/${lessons.length} บทแล้ว`;
+    examStep.classList.add('next');
+    examStatus.textContent = exam ? `ครั้งล่าสุด ${exam.percent}% · ยังไม่ผ่าน ลองใหม่ได้` : 'พร้อมสอบแล้ว';
+    cta.textContent = 'ไปทำแบบทดสอบท้ายคอร์ส →';
+    cta.href = root.dataset.examHref!;
+  } else {
+    label.textContent = done ? `เรียนแล้ว ${done}/${lessons.length} บท` : 'ยังไม่เริ่มเรียน';
+    const nextLink = stepLinks[nextIndex].querySelector<HTMLAnchorElement>('a')!;
+    cta.href = nextLink.href;
+    cta.textContent = done ? `เรียนต่อ: บทที่ ${nextIndex + 1} →` : 'เริ่มเรียนบทที่ 1 →';
+  }
+</script>
+
+<style>
+  .ch-hero { display: flex; gap: 1.1rem; align-items: flex-start; }
+  .ch-tier { display: inline-block; font-size: 0.8rem; font-weight: 600; color: var(--c); }
+  .ch-desc { margin: 0.2rem 0 0; color: var(--sl-color-gray-2); line-height: 1.7; }
+  .ch-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.7rem; }
+  .ch-pills span { font-size: 0.8rem; padding: 0.15rem 0.65rem; border-radius: 999px; background: var(--sl-color-gray-6); color: var(--sl-color-gray-2); }
+  .ch-progress {
+    margin-top: 1.5rem; padding: 1.1rem 1.25rem; border-radius: var(--radius-l);
+    background: var(--surface); border: 1px solid var(--sl-color-gray-5); box-shadow: var(--shadow);
+  }
+  .ch-progress-top { display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600; color: var(--sl-color-gray-2); }
+  .ch-bar { margin-top: 0.5rem; height: 8px; border-radius: 4px; background: var(--sl-color-gray-5); overflow: hidden; }
+  .ch-bar i { display: block; height: 100%; width: 0; background: var(--c); border-radius: 4px; transition: width 0.4s; }
+  .ch-cta {
+    display: inline-flex; margin-top: 1rem; padding: 0.65rem 1.2rem; border-radius: 999px; font-weight: 600;
+    text-decoration: none; color: #fff; background: var(--sl-color-accent); box-shadow: var(--shadow);
+  }
+  .ch-cta:hover { filter: brightness(1.08); }
+  .ch-outcomes { margin-top: 1.5rem; padding: 1rem 1.2rem; border-radius: var(--radius-m); background: var(--sl-color-accent-low); }
+  .ch-outcomes h3, .ch-journey-title { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; color: var(--sl-color-white); margin: 0; }
+  .ch-outcomes ul { margin: 0.5rem 0 0; padding-inline-start: 1.2rem; color: var(--sl-color-gray-1); }
+  .ch-outcomes li + li { margin-top: 0.25rem; }
+  .ch-journey-title { margin-top: 2rem; }
+  .journey { list-style: none; padding: 0; margin: 1rem 0 0; position: relative; }
+  .journey::before { content: ''; position: absolute; left: 1.05rem; top: 0.5rem; bottom: 0.5rem; width: 2px; background: var(--sl-color-gray-5); }
+  .step { position: relative; display: flex; gap: 1rem; margin: 0 !important; padding-bottom: 0.75rem; }
+  .dot {
+    position: relative; z-index: 1; flex: none; width: 2.1rem; height: 2.1rem; border-radius: 50%; display: grid; place-items: center;
+    font-weight: 700; font-size: 0.9rem; color: var(--sl-color-gray-3); background: var(--surface); border: 2px solid var(--sl-color-gray-5);
+  }
+  .step.done .dot { color: #fff; background: var(--level-1); border-color: var(--level-1); font-size: 0; }
+  .step.done .dot::after { content: '✓'; font-size: 0.95rem; }
+  .step.next .dot { color: var(--sl-color-accent); border-color: var(--sl-color-accent); box-shadow: 0 0 0 4px var(--sl-color-accent-low); }
+  .step.exam .dot { color: var(--level-2); border-color: color-mix(in srgb, var(--level-2) 60%, transparent); }
+  .step.exam.done .dot { background: var(--level-2); border-color: var(--level-2); }
+  .step-body {
+    flex: 1; display: flex; flex-direction: column; gap: 0.2rem; padding: 0.75rem 1rem; text-decoration: none; color: inherit;
+    border-radius: var(--radius-m); background: var(--surface); border: 1px solid var(--sl-color-gray-5); transition: border-color 0.15s;
+  }
+  .step-body:hover { border-color: var(--sl-color-accent); }
+  .step.next .step-body { border-color: var(--sl-color-accent); }
+  .step-title { font-weight: 600; color: var(--sl-color-white); }
+  .step-desc { font-size: 0.85rem; color: var(--sl-color-gray-3); line-height: 1.6; }
+  .step-status { font-size: 0.78rem; font-weight: 600; color: var(--sl-color-gray-4); }
+  .step.done .step-status { color: var(--level-1); }
+  .step.next .step-status { color: var(--sl-color-text-accent); }
+</style>

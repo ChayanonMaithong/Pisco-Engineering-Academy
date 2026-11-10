@@ -1,0 +1,72 @@
+---
+// Page title + (inside a course lesson) a progress strip showing where the learner is in the journey.
+import Default from '@astrojs/starlight/components/PageTitle.astro';
+import { courseForLesson, coursePath } from '../../data/courses.mjs';
+
+const id = Astro.locals.starlightRoute.id.replace(/^en\//, '');
+const course = courseForLesson(id);
+const index = course ? course.lessons.indexOf(id) : -1;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+{course && (
+  <a class="course-chip" href={base + coursePath(course)} style={`--c:${course.color}`}>
+    <span set:html={`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${course.icon}</svg>`} />
+    คอร์ส {course.title}
+  </a>
+)}
+<Default />
+{course && (
+  <div class="course-strip" data-lessons={JSON.stringify(course.lessons)} data-current={id}>
+    <div class="cs-top">
+      <span>บทที่ <strong>{index + 1}</strong> จาก {course.lessons.length}</span>
+      <span class="cs-done" data-done-label></span>
+    </div>
+    <div class="cs-steps" aria-hidden="true">
+      {course.lessons.map((l, i) => (
+        <span class:list={['cs-step', { current: i === index }]} data-step={l} />
+      ))}
+      <span class="cs-step exam" title="แบบทดสอบ" />
+    </div>
+  </div>
+)}
+
+<script>
+  import { load } from '../../scripts/progress';
+  const p = load();
+  // Tick completed lessons in the sidebar.
+  document.querySelectorAll<HTMLElement>('#starlight__sidebar a[data-lesson]').forEach((a) => {
+    if (p.lessons[a.dataset.lesson!]) a.classList.add('is-done');
+  });
+  document.querySelectorAll<HTMLElement>('#starlight__sidebar a[data-exam]').forEach((a) => {
+    if (p.exams[a.dataset.exam!]?.passed) a.classList.add('is-done');
+  });
+  // Progress strip.
+  const strip = document.querySelector<HTMLElement>('.course-strip');
+  if (strip) {
+    const lessons: string[] = JSON.parse(strip.dataset.lessons!);
+    strip.querySelectorAll<HTMLElement>('[data-step]').forEach((s) => {
+      if (p.lessons[s.dataset.step!]) s.classList.add('done');
+    });
+    const done = lessons.filter((l) => p.lessons[l]).length;
+    strip.querySelector('[data-done-label]')!.textContent = `เรียนจบแล้ว ${done}/${lessons.length} บท`;
+  }
+</script>
+
+<style>
+  .course-chip {
+    display: inline-flex; align-items: center; gap: 0.45rem; margin-top: 0.75rem;
+    padding: 0.2rem 0.75rem 0.2rem 0.55rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600;
+    text-decoration: none; color: var(--c); background: color-mix(in srgb, var(--c) 13%, transparent);
+  }
+  .course-chip:hover { background: color-mix(in srgb, var(--c) 22%, transparent); }
+  .course-chip :global(svg) { width: 1rem; height: 1rem; display: block; }
+  .course-strip { margin-top: 1rem; }
+  .cs-top { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.85rem; color: var(--sl-color-gray-3); }
+  .cs-top strong { color: var(--sl-color-white); }
+  .cs-steps { display: flex; gap: 4px; margin-top: 0.45rem; }
+  .cs-step { flex: 1; height: 6px; border-radius: 3px; background: var(--sl-color-gray-5); }
+  .cs-step.done { background: var(--level-1); }
+  .cs-step.current { background: var(--sl-color-accent); }
+  .cs-step.current.done { background: linear-gradient(90deg, var(--level-1), var(--sl-color-accent)); }
+  .cs-step.exam { flex: 0 0 1.5rem; background: color-mix(in srgb, var(--level-2) 45%, var(--sl-color-gray-5)); }
+</style>

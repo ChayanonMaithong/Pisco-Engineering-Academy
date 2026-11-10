@@ -655,3 +655,27 @@ starlight-toc a { line-height: 1.5; }
   .pm-row { grid-template-columns: 1fr; gap: 0.4rem; }
   .pm-arrow { justify-items: start; transform: rotate(90deg); width: 1.4rem; }
 }
+
+/* ---------- Course journey: completed lessons in the sidebar ---------- */
+#starlight__sidebar a.is-done::after {
+  content: '✓';
+  margin-inline-start: auto;
+  padding-inline-start: 0.5rem;
+  font-weight: 700;
+  color: var(--level-1);
+}
+#starlight__sidebar a[aria-current='page'].is-done::after { color: inherit; }
+
+/* ---------- Printing a certificate ---------- */
+@media print {
+  body.printing-cert * { visibility: hidden !important; }
+  body.printing-cert .certificate.printing .cert-paper,
+  body.printing-cert .certificate.printing .cert-paper * { visibility: visible !important; }
+  body.printing-cert .certificate.printing .cert-paper {
+    position: fixed; inset: 0; margin: auto; height: fit-content; max-width: 46rem;
+    box-shadow: none; background: #fff; color: #111;
+  }
+}
+
+/* The `hidden` attribute must always win over component display rules. */
+[hidden] { display: none !important; }

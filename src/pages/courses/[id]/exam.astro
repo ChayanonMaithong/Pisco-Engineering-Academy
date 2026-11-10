@@ -1,0 +1,219 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+import Certificate from '../../../components/course/Certificate.astro';
+import { courses, lessonPath, coursePath, PASS_PERCENT } from '../../../data/courses.mjs';
+import { exams } from '../../../data/exams.mjs';
+
+export function getStaticPaths() {
+  return courses.map((course) => ({ params: { id: course.id }, props: { course } }));
+}
+const { course } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const docs = new Map((await getCollection('docs')).map((d) => [d.id, d]));
+const lessons = course.lessons.map((id: string) => ({ id, href: base + lessonPath(id), title: docs.get(id)!.data.title }));
+// Shuffle choices with a seed derived from the question text: stable across builds,
+// but the correct answer no longer sits in a predictable position.
+function shuffled(q: { question: string; choices: string[]; answer: number; explain: string }) {
+  let seed = [...q.question].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 7);
+  const rand = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 2 ** 32);
+  const order = q.choices.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+  return { ...q, choices: order.map((i) => q.choices[i]), answer: order.indexOf(q.answer) };
+}
+const questions = exams[course.id].map(shuffled);
+---
+<StarlightPage frontmatter={{ title: `แบบทดสอบท้ายคอร์ส: ${course.title}`, description: `${questions.length} ข้อ · เกณฑ์ผ่าน ${PASS_PERCENT}%`, tableOfContents: false }}>
+  <div class="exam not-content" data-course={course.id} data-lessons={JSON.stringify(course.lessons)} data-pass={PASS_PERCENT}>
+    <div class="ex-info">
+      <div><strong>{questions.length}</strong><span>ข้อ</span></div>
+      <div><strong>{PASS_PERCENT}%</strong><span>เกณฑ์ผ่าน</span></div>
+      <div><strong>ไม่จำกัด</strong><span>เวลาและจำนวนครั้ง</span></div>
+      <div data-best><strong>—</strong><span>คะแนนสูงสุดของคุณ</span></div>
+    </div>
+
+    <div class="ex-lock" data-lock hidden>
+      <strong>🔒 เรียนให้ครบทุกบทก่อนทำแบบทดสอบ</strong>
+      <p>บทที่ยังไม่ได้ทำเครื่องหมายว่าเรียนจบ:</p>
+      <ul data-missing>
+        {lessons.map((l) => <li data-missing-item={l.id}><a href={l.href}>{l.title}</a></li>)}
+      </ul>
+      <button type="button" class="ex-btn ghost" data-practice>ลองทำแบบฝึก (ไม่นับเป็นการจบคอร์ส)</button>
+    </div>
+
+    <div class="ex-practice-note" data-practice-note hidden>โหมดฝึกทำ: ผลคะแนนจะไม่ถูกบันทึก และยังไม่นับว่าจบคอร์ส</div>
+
+    <form class="ex-form" data-form hidden>
+      {questions.map((q, i) => (
+        <fieldset class="ex-q" data-answer={q.answer}>
+          <legend><span class="ex-num">{i + 1}</span>{q.question}</legend>
+          <div class="ex-choices">
+            {q.choices.map((c, j) => (
+              <label class="ex-choice">
+                <input type="radio" name={`q${i}`} value={j} required />
+                <span>{c}</span>
+              </label>
+            ))}
+          </div>
+          <div class="ex-explain" hidden><strong data-verdict></strong> {q.explain}</div>
+        </fieldset>
+      ))}
+      <div class="ex-submit">
+        <span data-unanswered></span>
+        <button type="submit" class="ex-btn">ส่งคำตอบ</button>
+      </div>
+    </form>
+
+    <div class="ex-result" data-result hidden>
+      <div class="ex-score" data-score></div>
+      <p data-result-text></p>
+      <div class="ex-result-actions">
+        <button type="button" class="ex-btn" data-retry>ทำใหม่อีกครั้ง</button>
+        <a class="ex-btn ghost" href={base + coursePath(course)}>กลับหน้าคอร์ส</a>
+      </div>
+    </div>
+  </div>
+  <Certificate courseId={course.id} title={course.title} lessons={course.lessons} />
+</StarlightPage>
+
+<script>
+  import { load, recordExam } from '../../../scripts/progress';
+  const root = document.querySelector<HTMLElement>('.exam')!;
+  const courseId = root.dataset.course!;
+  const pass = Number(root.dataset.pass);
+  const lessons: string[] = JSON.parse(root.dataset.lessons!);
+  const form = root.querySelector<HTMLFormElement>('[data-form]')!;
+  const result = root.querySelector<HTMLElement>('[data-result]')!;
+  const fieldsets = [...form.querySelectorAll<HTMLFieldSetElement>('.ex-q')];
+  let practice = false;
+
+  function refreshHeader() {
+    const p = load();
+    const best = p.exams[courseId];
+    root.querySelector('[data-best] strong')!.textContent = best ? `${best.percent}%${best.passed ? ' ✓' : ''}` : '—';
+    const missing = lessons.filter((l) => !p.lessons[l]);
+    root.querySelectorAll<HTMLElement>('[data-missing-item]').forEach((li) => { li.hidden = !missing.includes(li.dataset.missingItem!); });
+    return missing.length === 0;
+  }
+
+  function start() {
+    const ready = refreshHeader();
+    root.querySelector<HTMLElement>('[data-lock]')!.hidden = ready || practice;
+    root.querySelector<HTMLElement>('[data-practice-note]')!.hidden = !practice;
+    form.hidden = !(ready || practice);
+  }
+
+  root.querySelector('[data-practice]')!.addEventListener('click', () => { practice = true; start(); });
+
+  form.addEventListener('change', () => {
+    const left = fieldsets.filter((f) => !f.querySelector('input:checked')).length;
+    root.querySelector('[data-unanswered]')!.textContent = left ? `เหลืออีก ${left} ข้อ` : 'ตอบครบแล้ว';
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let score = 0;
+    fieldsets.forEach((f) => {
+      const answer = Number(f.dataset.answer);
+      const chosen = Number(f.querySelector<HTMLInputElement>('input:checked')?.value ?? -1);
+      const ok = chosen === answer;
+      if (ok) score++;
+      f.classList.add('graded', ok ? 'right' : 'wrong');
+      f.querySelectorAll<HTMLInputElement>('input').forEach((inp, j) => {
+        inp.disabled = true;
+        inp.closest('label')!.classList.toggle('is-answer', j === answer);
+      });
+      const ex = f.querySelector<HTMLElement>('.ex-explain')!;
+      ex.hidden = false;
+      ex.querySelector('[data-verdict]')!.textContent = ok ? 'ถูกต้อง ✓' : 'ยังไม่ถูก ✗';
+    });
+    const total = fieldsets.length;
+    const percent = Math.round((score / total) * 100);
+    const passed = percent >= pass;
+    if (!practice) recordExam(courseId, { score, total, percent, passed, date: new Date().toISOString() });
+    form.querySelector<HTMLElement>('.ex-submit')!.hidden = true;
+    result.hidden = false;
+    result.classList.toggle('passed', passed);
+    result.querySelector('[data-score]')!.textContent = `${score}/${total} · ${percent}%`;
+    result.querySelector('[data-result-text]')!.textContent = practice
+      ? `ผลการฝึกทำ (ไม่บันทึก) — เรียนให้ครบทุกบทแล้วกลับมาสอบจริงเพื่อจบคอร์ส`
+      : passed
+        ? '🎉 ยินดีด้วย! คุณสอบผ่านและจบคอร์สนี้แล้ว ดูประกาศนียบัตรด้านล่าง'
+        : `ยังไม่ผ่าน (ต้องได้ ${pass}% ขึ้นไป) ทบทวนคำอธิบายของแต่ละข้อด้านบน แล้วลองใหม่ได้`;
+    refreshHeader();
+    window.dispatchEvent(new Event('progress-changed'));
+    result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  root.querySelector('[data-retry]')!.addEventListener('click', () => {
+    form.reset();
+    fieldsets.forEach((f) => {
+      f.classList.remove('graded', 'right', 'wrong');
+      f.querySelectorAll<HTMLInputElement>('input').forEach((inp) => { inp.disabled = false; inp.closest('label')!.classList.remove('is-answer'); });
+      f.querySelector<HTMLElement>('.ex-explain')!.hidden = true;
+    });
+    form.querySelector<HTMLElement>('.ex-submit')!.hidden = false;
+    root.querySelector('[data-unanswered]')!.textContent = '';
+    result.hidden = true;
+    start();
+    form.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  start();
+</script>
+
+<style>
+  .ex-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: 0.75rem; }
+  .ex-info > div {
+    display: flex; flex-direction: column; padding: 0.8rem 1rem; border-radius: var(--radius-m);
+    background: var(--surface); border: 1px solid var(--sl-color-gray-5);
+  }
+  .ex-info strong { font-family: var(--font-heading); font-size: 1.3rem; color: var(--sl-color-white); }
+  .ex-info span { font-size: 0.8rem; color: var(--sl-color-gray-3); }
+  .ex-lock {
+    margin-top: 1.5rem; padding: 1.2rem 1.3rem; border-radius: var(--radius-l);
+    background: color-mix(in srgb, var(--level-2) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--level-2) 40%, transparent);
+  }
+  .ex-lock strong { font-size: 1.05rem; color: var(--sl-color-white); }
+  .ex-lock p { margin: 0.5rem 0 0.25rem; color: var(--sl-color-gray-2); }
+  .ex-lock ul { margin: 0 0 1rem; padding-inline-start: 1.2rem; }
+  .ex-lock a { color: var(--sl-color-text-accent); }
+  .ex-practice-note { margin-top: 1.25rem; padding: 0.6rem 0.9rem; border-radius: var(--radius-s); font-size: 0.88rem; background: var(--sl-color-gray-6); color: var(--sl-color-gray-2); }
+  .ex-form { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+  .ex-q { margin: 0; padding: 1.1rem 1.2rem; border-radius: var(--radius-l); background: var(--surface); border: 1px solid var(--sl-color-gray-5); }
+  .ex-q legend { display: flex; gap: 0.7rem; padding: 0; font-weight: 600; color: var(--sl-color-white); line-height: 1.65; float: left; width: 100%; }
+  .ex-num {
+    flex: none; width: 1.7rem; height: 1.7rem; border-radius: 50%; display: grid; place-items: center; font-size: 0.85rem;
+    color: var(--sl-color-accent-high); background: var(--sl-color-accent-low);
+  }
+  .ex-choices { clear: both; display: grid; gap: 0.5rem; padding-top: 0.8rem; }
+  .ex-choice {
+    display: flex; gap: 0.7rem; align-items: flex-start; padding: 0.6rem 0.8rem; border-radius: var(--radius-m); cursor: pointer;
+    border: 1px solid var(--sl-color-gray-5); color: var(--sl-color-gray-2); line-height: 1.6; transition: border-color 0.15s, background 0.15s;
+  }
+  .ex-choice:hover { border-color: var(--sl-color-gray-4); }
+  .ex-choice input { margin-top: 0.35rem; accent-color: var(--sl-color-accent); }
+  .ex-choice:has(input:checked) { border-color: var(--sl-color-accent); background: var(--sl-color-accent-low); color: var(--sl-color-white); }
+  .graded .ex-choice { cursor: default; }
+  .graded .ex-choice.is-answer { border-color: var(--level-1); background: color-mix(in srgb, var(--level-1) 12%, transparent); color: var(--sl-color-white); }
+  .graded.wrong .ex-choice:has(input:checked):not(.is-answer) { border-color: var(--level-3); background: color-mix(in srgb, var(--level-3) 10%, transparent); }
+  .ex-q.right { border-color: color-mix(in srgb, var(--level-1) 50%, transparent); }
+  .ex-q.wrong { border-color: color-mix(in srgb, var(--level-3) 50%, transparent); }
+  .ex-explain { margin-top: 0.75rem; padding: 0.6rem 0.85rem; border-radius: var(--radius-s); font-size: 0.9rem; line-height: 1.65; background: var(--sl-color-gray-6); color: var(--sl-color-gray-2); }
+  .right .ex-explain strong { color: var(--level-1); }
+  .wrong .ex-explain strong { color: var(--level-3); }
+  .ex-submit { display: flex; justify-content: flex-end; align-items: center; gap: 1rem; flex-wrap: wrap; font-size: 0.88rem; color: var(--sl-color-gray-3); }
+  .ex-btn {
+    display: inline-flex; align-items: center; font: inherit; font-weight: 600; padding: 0.65rem 1.3rem; border-radius: 999px; cursor: pointer;
+    color: #fff; background: var(--sl-color-accent); border: 1px solid var(--sl-color-accent); text-decoration: none; box-shadow: var(--shadow);
+  }
+  .ex-btn.ghost { color: var(--sl-color-text-accent); background: transparent; box-shadow: none; }
+  .ex-result {
+    margin-top: 1.5rem; padding: 1.4rem; text-align: center; border-radius: var(--radius-l);
+    background: color-mix(in srgb, var(--level-3) 8%, var(--surface)); border: 1px solid color-mix(in srgb, var(--level-3) 40%, transparent);
+  }
+  .ex-result.passed { background: color-mix(in srgb, var(--level-1) 10%, var(--surface)); border-color: color-mix(in srgb, var(--level-1) 45%, transparent); }
+  .ex-score { font-family: var(--font-heading); font-size: 2rem; font-weight: 700; color: var(--sl-color-white); }
+  .ex-result p { color: var(--sl-color-gray-2); }
+  .ex-result-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 0.75rem; }
+</style>
