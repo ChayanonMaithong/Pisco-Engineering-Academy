@@ -28,3 +28,4 @@ Rock Mechanics ──┘                        └─► Directional Drilling
 
 - [Drilling Fluid](/industry/drilling/drilling-fluid/)
 - [Directional Drilling](/industry/drilling/directional-drilling/)
+- [Well Control](/industry/drilling/well-control/)

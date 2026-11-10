@@ -14,6 +14,6 @@
 .meta-box dt { font-weight: 600; }
 .calc { border: 1px solid var(--sl-color-accent); border-radius: 0.5rem; padding: 1rem; margin-block: 1.5rem; }
 .calc label { display: block; margin-top: 0.5rem; font-size: 0.9rem; }
-.calc input { width: 100%; max-width: 14rem; padding: 0.35rem 0.5rem; border-radius: 0.3rem;
+.calc input { display: block; margin-top: 0.2rem; width: 100%; max-width: 14rem; padding: 0.35rem 0.5rem; border-radius: 0.3rem;
   border: 1px solid var(--sl-color-gray-4); background: var(--sl-color-bg); color: var(--sl-color-text); }
 .calc output { display: block; margin-top: 0.75rem; font-size: 1.1rem; font-weight: 600; color: var(--sl-color-text-accent); }

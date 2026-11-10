@@ -1,0 +1,38 @@
+---
+// Minimum Curvature Method between two survey stations
+---
+<div class="calc not-content" data-calc="mincurv">
+  <strong>🧮 Minimum Curvature: คำนวณตำแหน่งระหว่าง 2 survey station</strong>
+  <div class="calc-grid">
+    <label>ΔMD (ft)<input type="number" name="dmd" value="100" min="0" /></label>
+    <label>Inclination I₁ (°)<input type="number" name="i1" value="30" step="0.1" /></label>
+    <label>Inclination I₂ (°)<input type="number" name="i2" value="33" step="0.1" /></label>
+    <label>Azimuth A₁ (°)<input type="number" name="a1" value="45" step="0.1" /></label>
+    <label>Azimuth A₂ (°)<input type="number" name="a2" value="47" step="0.1" /></label>
+  </div>
+  <output></output>
+</div>
+<style>
+  .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0 1rem; }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-calc="mincurv"]').forEach((el) => {
+    const g = (n: string) => Number(el.querySelector<HTMLInputElement>(`input[name="${n}"]`)!.value);
+    const out = el.querySelector('output')!;
+    const r = Math.PI / 180;
+    const update = () => {
+      const dmd = g('dmd'), i1 = g('i1') * r, i2 = g('i2') * r, a1 = g('a1') * r, a2 = g('a2') * r;
+      const cosB = Math.cos(i2 - i1) - Math.sin(i1) * Math.sin(i2) * (1 - Math.cos(a2 - a1));
+      const b = Math.acos(Math.min(1, Math.max(-1, cosB)));
+      const rf = b < 1e-9 ? 1 : (2 / b) * Math.tan(b / 2);
+      const h = (dmd / 2) * rf;
+      const dN = h * (Math.sin(i1) * Math.cos(a1) + Math.sin(i2) * Math.cos(a2));
+      const dE = h * (Math.sin(i1) * Math.sin(a1) + Math.sin(i2) * Math.sin(a2));
+      const dV = h * (Math.cos(i1) + Math.cos(i2));
+      const dls = dmd > 0 ? (b / r) * 100 / dmd : 0;
+      out.innerHTML = `ΔN = ${dN.toFixed(2)} ft · ΔE = ${dE.toFixed(2)} ft · ΔTVD = ${dV.toFixed(2)} ft<br>Dogleg = ${(b / r).toFixed(3)}° · DLS = ${dls.toFixed(2)}°/100 ft · RF = ${rf.toFixed(5)}`;
+    };
+    el.querySelectorAll('input').forEach((i) => i.addEventListener('input', update));
+    update();
+  });
+</script>

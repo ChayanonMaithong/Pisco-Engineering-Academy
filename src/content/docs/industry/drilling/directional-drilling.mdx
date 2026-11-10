@@ -1,0 +1,167 @@
+---
+title: Directional Drilling
+description: การเจาะหลุมแบบควบคุมทิศทาง ตั้งแต่ออกแบบแนวหลุม คำนวณ survey จนถึง anti-collision และ torque & drag
+sidebar:
+  order: 2
+---
+
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+import MinCurvCalc from '../../../../components/MinCurvCalc.astro';
+
+**ระดับ:** Advanced
+**ความรู้ที่ต้องมีก่อน:** [Drilling Fluid](/industry/drilling/drilling-fluid/) · ตรีโกณมิติ 3 มิติ · Statics (แรงเสียดทาน)
+
+## วัตถุประสงค์การเรียนรู้
+- อธิบายเหตุผลและรูปแบบของหลุมเจาะเอียง
+- คำนวณรัศมีและระยะของช่วงเพิ่มมุม (build section)
+- คำนวณตำแหน่งหลุมจากข้อมูล survey ด้วย Minimum Curvature Method
+- อธิบายหลักการ anti-collision และ torque & drag
+
+## ทำไมต้องเจาะเอียง
+- เข้าถึงแหล่งกักเก็บใต้พื้นที่ที่ตั้งแท่นไม่ได้ เช่น ใต้ชุมชน ภูเขา หรือทะเล
+- เจาะหลายหลุมจากแท่นเดียว (pad / platform drilling) ช่วยลดต้นทุนและพื้นที่ผิวดิน
+- เจาะแนวนอนในชั้นกักเก็บเพื่อเพิ่มพื้นที่สัมผัส
+- หลบปัญหาทางธรณี เช่น salt dome หรือรอยเลื่อน
+- เจาะหลุมช่วยระงับเหตุ (relief well) ไปตัดหลุมที่ควบคุมไม่ได้
+- Sidetrack เมื่อหลุมเดิมมีปัญหา เช่น ก้านเจาะติดค้าง (fish)
+
+## คำศัพท์สำคัญ
+
+| คำ | ความหมาย |
+|---|---|
+| MD (Measured Depth) | ความยาวตามแนวหลุม |
+| TVD (True Vertical Depth) | ความลึกแนวดิ่ง |
+| Inclination ($I$) | มุมเอียงจากแนวดิ่ง (0° = ตั้งตรง, 90° = แนวนอน) |
+| Azimuth ($A$) | ทิศของหลุมเทียบกับทิศเหนือ วัดตามเข็มนาฬิกา 0–360° |
+| KOP (Kick-off Point) | จุดที่เริ่มเบี่ยงหลุมออกจากแนวดิ่ง |
+| BUR (Build-up Rate) | อัตราการเพิ่มมุมเอียง (°/100 ft หรือ °/30 m) |
+| DLS (Dogleg Severity) | อัตราการเปลี่ยนทิศทางรวม ทั้งมุมเอียงและ azimuth |
+| Horizontal Displacement / Departure | ระยะทางแนวราบจากปากหลุม |
+| Vertical Section (VS) | ระยะแนวราบที่ฉายลงบนทิศทางเป้าหมาย |
+| MWD / LWD | เครื่องมือวัดทิศทางและคุณสมบัติชั้นหินขณะเจาะ ส่งข้อมูลขึ้นผิวดินด้วย mud pulse |
+
+## รูปแบบของหลุม
+
+<Tabs>
+  <TabItem label="J-type (Build & Hold)">
+    เจาะตรงลงไปถึง KOP แล้วเพิ่มมุมจนได้มุมที่ต้องการ จากนั้นรักษามุมนั้นไว้จนถึงเป้าหมาย เป็นรูปแบบที่ง่ายและพบบ่อยที่สุด
+  </TabItem>
+  <TabItem label="S-type">
+    Build แล้ว hold แล้วลดมุม (drop) กลับใกล้แนวดิ่ง ใช้เมื่อต้องเข้าชั้นกักเก็บในแนวเกือบตั้ง หรือต้องตัดผ่านหลายเป้าหมาย
+  </TabItem>
+  <TabItem label="Horizontal">
+    เพิ่มมุมจนเกือบ 90° แล้วเจาะต่อในแนวนอนภายในชั้นกักเก็บ นิยมใช้ในแหล่ง tight/shale ร่วมกับ hydraulic fracturing
+  </TabItem>
+  <TabItem label="Extended Reach (ERD)">
+    หลุมที่ระยะแนวราบมากกว่า TVD หลายเท่า ข้อจำกัดหลักคือ torque, drag และการทำความสะอาดหลุม
+  </TabItem>
+</Tabs>
+
+## ออกแบบช่วงเพิ่มมุม (Build Section)
+
+ถ้าเพิ่มมุมด้วยอัตราคงที่ แนวหลุมจะเป็นส่วนโค้งของวงกลมที่มีรัศมี
+
+$$
+R = \frac{180}{\pi} \cdot \frac{100}{BUR} = \frac{5729.58}{BUR} \quad [\text{ft}], \; BUR\;[^\circ/100\,\text{ft}]
+$$
+
+เมื่อเพิ่มมุมจาก 0 ถึงมุม $I$:
+
+$$
+\Delta MD = \frac{I}{BUR} \times 100, \qquad
+\Delta TVD = R \sin I, \qquad
+\Delta H = R\,(1 - \cos I)
+$$
+
+**ตัวอย่าง:** KOP ที่ 2,000 ft TVD เพิ่มมุมด้วย BUR 3°/100 ft จนได้ 60°
+- $R = 5729.58 / 3 \approx 1{,}910$ ft
+- $\Delta MD = 60/3 \times 100 = 2{,}000$ ft → ปลายช่วง build อยู่ที่ MD 4,000 ft
+- $\Delta TVD = 1910 \times \sin 60^\circ \approx 1{,}654$ ft → TVD 3,654 ft
+- $\Delta H = 1910 \times (1 - \cos 60^\circ) \approx 955$ ft
+
+## คำนวณตำแหน่งหลุมจาก Survey: Minimum Curvature Method
+
+เครื่องมือ MWD วัด inclination และ azimuth ทุก ๆ ราว 90 ft (หนึ่ง stand) วิธีที่เป็นมาตรฐานอุตสาหกรรมคือสมมติว่าระหว่างสองจุดวัด หลุมเป็นส่วนโค้งของวงกลมที่ราบเรียบที่สุด
+
+<Steps>
+
+1. หามุม dogleg $\beta$ ระหว่างสองสถานี
+
+   $$
+   \cos\beta = \cos(I_2 - I_1) - \sin I_1 \sin I_2 \,[1 - \cos(A_2 - A_1)]
+   $$
+
+2. หา Ratio Factor (ถ้า $\beta = 0$ ให้ $RF = 1$)
+
+   $$
+   RF = \frac{2}{\beta}\tan\frac{\beta}{2} \quad (\beta \text{ เป็นเรเดียน})
+   $$
+
+3. คำนวณระยะที่เปลี่ยนไป
+
+   $$
+   \begin{aligned}
+   \Delta N &= \tfrac{\Delta MD}{2}\,(\sin I_1\cos A_1 + \sin I_2\cos A_2)\,RF \\
+   \Delta E &= \tfrac{\Delta MD}{2}\,(\sin I_1\sin A_1 + \sin I_2\sin A_2)\,RF \\
+   \Delta TVD &= \tfrac{\Delta MD}{2}\,(\cos I_1 + \cos I_2)\,RF
+   \end{aligned}
+   $$
+
+4. หา Dogleg Severity
+
+   $$
+   DLS = \frac{\beta\,[^\circ] \times 100}{\Delta MD} \quad [^\circ/100\,\text{ft}]
+   $$
+
+</Steps>
+
+<MinCurvCalc />
+
+<Aside type="caution">
+DLS สูงเกินไปทำให้เกิดความล้าในก้านเจาะ ร่องที่ผนังหลุม (key seat) และทำให้ใส่ casing ได้ยาก ข้อกำหนด DLS สูงสุดขึ้นอยู่กับการออกแบบแต่ละหลุม
+</Aside>
+
+## เครื่องมือบังคับทิศ
+
+| เครื่องมือ | หลักการ | ข้อดี | ข้อจำกัด |
+|---|---|---|---|
+| **Whipstock** | ลิ่มเหล็กเบี่ยงหัวเจาะ | ใช้ทำ sidetrack ในหลุมที่มี casing | ทำได้ครั้งเดียวต่อตำแหน่ง |
+| **Mud Motor (Bent Housing)** | น้ำโคลนหมุนหัวเจาะผ่านมอเตอร์ที่มีมุมงอเล็กน้อย | ราคาถูกและเชื่อถือได้ | ต้องสลับโหมด *sliding* กับ *rotating* หลุมจึงไม่เรียบ (tortuosity) |
+| **Rotary Steerable System (RSS)** | บังคับทิศขณะก้านเจาะหมุนตลอด แบบ push-the-bit หรือ point-the-bit | หลุมเรียบ เจาะเร็ว ทำความสะอาดหลุมได้ดี | ราคาสูง |
+
+**Sliding** คือหยุดหมุนก้านเจาะจากผิวดิน ปล่อยให้มอเตอร์หมุนหัวเจาะเพียงอย่างเดียว หลุมจึงเลี้ยวไปทางที่ bent housing ชี้ ทิศนี้เรียกว่า **toolface** ส่วน **Rotating** คือหมุนก้านเจาะทั้งชุด ผลของมุมงอจะเฉลี่ยออกไป ทำให้หลุมเดินเกือบตรง
+
+## Anti-collision
+
+ในแท่นที่มีหลายหลุม ตำแหน่งของแต่ละหลุมมีความไม่แน่นอน ซึ่งแทนด้วย **ellipsoid of uncertainty** ขนาดของ ellipsoid ขึ้นกับความแม่นของเครื่องมือ survey และขยายใหญ่ขึ้นตามความลึก
+
+$$
+SF = \frac{\text{ระยะระหว่างศูนย์กลางหลุม}}{\text{ผลรวมรัศมีความไม่แน่นอนของทั้งสองหลุม}}
+$$
+
+ค่า Separation Factor ยิ่งต่ำยิ่งเสี่ยงชน แต่ละบริษัทกำหนดเกณฑ์ไว้ เช่น ต้องเพิ่มการเฝ้าระวัง ต้องปิดหลุมข้างเคียง หรือต้องหยุดเจาะ การชนหลุมที่กำลังผลิตอยู่อาจทำให้ไฮโดรคาร์บอนรั่วขึ้นผิวดินได้
+
+## Torque & Drag
+
+แรงเสียดทานระหว่างก้านเจาะกับผนังหลุมเพิ่มขึ้นตามมุมเอียงและ DLS แบบจำลองพื้นฐานคือ *soft-string model* ซึ่งในช่วงที่มุมคงที่ แรงดึงที่เปลี่ยนไปเท่ากับ
+
+$$
+\Delta F = w\,\Delta L\,(\cos I \pm \mu \sin I)
+$$
+
+- $w$ น้ำหนักของก้านเจาะต่อหน่วยความยาวในน้ำโคลน (buoyed weight)
+- $\mu$ friction factor ซึ่งมักอยู่ราว 0.2–0.3 ใน cased hole และ 0.3–0.4 ใน open hole ขึ้นกับชนิดน้ำโคลน
+- ใช้ $+$ เมื่อดึงขึ้น (pick-up) และ $-$ เมื่อหย่อนลง (slack-off)
+
+นำค่าที่วัดได้จริงไปพล็อตเทียบกับค่าที่จำลองไว้ (**broomstick chart**) ถ้าค่าจริงเบี่ยงออกจากเส้นจำลอง อาจเป็นสัญญาณว่าหลุมสกปรกหรือก้านเจาะใกล้ติด
+
+## แบบฝึกหัด
+1. BUR = 2.5°/100 ft จงหารัศมีความโค้ง (เฉลย: ≈ 2,292 ft)
+2. จากข้อ 1 ถ้าเพิ่มมุมจาก 0° ถึง 45° ช่วง build ยาวกี่ ft MD และได้ระยะแนวราบเท่าใด (เฉลย: 1,800 ft MD, ΔH ≈ 671 ft)
+3. Survey สองจุดห่างกัน 100 ft: $I_1 = 30^\circ$, $I_2 = 33^\circ$, $A_1 = 45^\circ$, $A_2 = 47^\circ$ จงหา DLS (เฉลย: ≈ 3.2°/100 ft — ตรวจคำตอบด้วยเครื่องคำนวณด้านบน)
+4. ทำไมหลุมที่เจาะด้วย RSS จึงมี torque และ drag ต่ำกว่าหลุมที่เจาะด้วย mud motor
+
+## อ่านต่อ / มาตรฐาน
+- ISCWSA (Industry Steering Committee on Wellbore Survey Accuracy) — แบบจำลองความไม่แน่นอนของ survey
+- API RP 7G — Drill stem design
+- [Well Control](/industry/drilling/well-control/)

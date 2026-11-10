@@ -1,0 +1,24 @@
+---
+// Kill Mud Weight = OMW + SIDPP / (0.052 × TVD)
+---
+<div class="calc not-content" data-calc="kill">
+  <strong>🧮 คำนวณ Kill Mud Weight และ Formation Pressure</strong>
+  <label>น้ำหนักน้ำโคลนเดิม, OMW (ppg)<input type="number" name="omw" value="10" step="0.1" min="0" /></label>
+  <label>SIDPP (psi)<input type="number" name="sidpp" value="400" min="0" /></label>
+  <label>TVD ของหลุม (ft)<input type="number" name="tvd" value="10000" min="1" /></label>
+  <output></output>
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-calc="kill"]').forEach((el) => {
+    const g = (n: string) => Number(el.querySelector<HTMLInputElement>(`input[name="${n}"]`)!.value);
+    const out = el.querySelector('output')!;
+    const update = () => {
+      const omw = g('omw'), sidpp = g('sidpp'), tvd = g('tvd');
+      const kmw = omw + sidpp / (0.052 * tvd);
+      const pf = 0.052 * omw * tvd + sidpp;
+      out.innerHTML = `KMW ≈ ${kmw.toFixed(2)} ppg (ปัดขึ้นเป็น ${(Math.ceil(kmw * 10) / 10).toFixed(1)} ppg)<br>Formation pressure ≈ ${Math.round(pf).toLocaleString('en-US')} psi`;
+    };
+    el.querySelectorAll('input').forEach((i) => i.addEventListener('input', update));
+    update();
+  });
+</script>

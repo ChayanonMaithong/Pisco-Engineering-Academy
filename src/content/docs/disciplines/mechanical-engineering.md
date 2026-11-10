@@ -1,13 +1,34 @@
 ---
 title: Mechanical Engineering (วิศวกรรมเครื่องกล)
-description: กำลังจัดทำ
+description: ภาพรวมหลักสูตรและเส้นทางสู่งานพลังงานลมและงานเจาะ
 sidebar:
   order: 3
-  badge:
-    text: เร็ว ๆ นี้
-    variant: caution
 ---
 
-:::note
-หน้านี้กำลังจัดทำ วิชาที่เชื่อมกับงาน Wind O&M เช่น Machine Design, Vibration, Tribology, Fatigue
+## ภาพรวมหลักสูตร (ตัวอย่างโครงสร้างทั่วไป)
+
+| ปี | กลุ่มวิชาหลัก |
+|---|---|
+| 1 | Calculus, Physics, Chemistry, Engineering Drawing, Workshop |
+| 2 | Statics, Dynamics, Strength of Materials, [Thermodynamics](/foundations/thermodynamics/), [Fluid Mechanics](/foundations/fluid-mechanics/) |
+| 3 | **Machine Design**, **Mechanical Vibration**, Heat Transfer, Control, Materials |
+| 4 | **Fatigue & Fracture**, Maintenance Engineering, Finite Element Analysis, Project |
+
+:::caution
+โครงสร้างข้างต้นเป็นตัวอย่างทั่วไป รายวิชาจริงต่างกันไปในแต่ละมหาวิทยาลัย ควรเทียบกับ มคอ. ของหลักสูตรที่ต้องการ
 :::
+
+## เส้นทางสู่งานจริง
+
+```
+Machine Design ────────┐
+Mechanical Vibration ──┼─► Drivetrain (gearbox, bearing) ─► Wind Farm O&M / CMS
+Fatigue & Fracture ────┤
+Fluid Mechanics ───────┴─► Pumps, Mud system, Drill string ─► Drilling
+```
+
+## ตัวอย่างงานของวิศวกรเครื่องกล
+- **พลังงานลม:** วิเคราะห์การสั่นสะเทือนของ gearbox และ bearing, ตรวจความเสียหายของใบพัด, วางแผนบำรุงรักษาตามรอบ, ประเมินอายุความล้าของเสาและฐานราก
+- **งานเจาะ:** ออกแบบและเลือกก้านเจาะ, คำนวณ torque & drag, ดูแลปั๊มน้ำโคลนและอุปกรณ์บนแท่น
+
+ลิงก์: [Wind Farm O&M](/industry/wind/wind-farm-om/) · [Directional Drilling](/industry/drilling/directional-drilling/)
