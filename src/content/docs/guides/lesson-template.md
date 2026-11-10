@@ -16,7 +16,7 @@ sidebar:
 ---
 
 **ระดับ:** Intermediate
-**ความรู้ที่ต้องมีก่อน:** [Fluid Mechanics](/foundations/fluid-mechanics/)
+**ความรู้ที่ต้องมีก่อน:** [Fluid Mechanics](/foundations/university/mechanical/fluid-mechanics/)
 
 ## วัตถุประสงค์การเรียนรู้
 - ...

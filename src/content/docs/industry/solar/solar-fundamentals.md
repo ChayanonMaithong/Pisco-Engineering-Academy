@@ -6,7 +6,7 @@ sidebar:
 ---
 
 **ระดับ:** Beginner–Intermediate
-**ความรู้ที่ต้องมีก่อน:** ฟิสิกส์ (แสงและอิเล็กทรอนิกส์เบื้องต้น) · [Electrical Engineering](/disciplines/electrical-engineering/) (Electronics) · [Thermodynamics](/foundations/thermodynamics/) (การถ่ายเทความร้อน)
+**ความรู้ที่ต้องมีก่อน:** ฟิสิกส์ (แสงและอิเล็กทรอนิกส์เบื้องต้น) · [Electrical Engineering](/foundations/university/electrical/) (Electronics) · [Thermodynamics](/foundations/university/mechanical/thermodynamics/) (การถ่ายเทความร้อน)
 
 ## วัตถุประสงค์การเรียนรู้
 - แยกองค์ประกอบของรังสีอาทิตย์: GHI, DNI, DHI และ POA

@@ -6,7 +6,7 @@ sidebar:
 ---
 
 **ระดับ:** Intermediate
-**ความรู้ที่ต้องมีก่อน:** [Wind Turbine Technology](/industry/wind/wind-turbine-technology/) · [Wind Farm Development](/industry/wind/wind-farm-development/) · [Mechanical Engineering](/disciplines/mechanical-engineering/) (Vibration) · [Electrical Engineering](/disciplines/electrical-engineering/)
+**ความรู้ที่ต้องมีก่อน:** [Wind Turbine Technology](/industry/wind/wind-turbine-technology/) · [Wind Farm Development](/industry/wind/wind-farm-development/) · [Mechanical Engineering](/foundations/university/mechanical/) (Vibration) · [Electrical Engineering](/foundations/university/electrical/)
 
 ## วัตถุประสงค์การเรียนรู้
 - แยกความต่างของ Corrective, Preventive และ Predictive maintenance

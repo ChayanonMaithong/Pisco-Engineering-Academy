@@ -15,9 +15,10 @@ npm run build    # สร้างเว็บไว้ที่ dist/
 ```
 src/content/docs/
 ├── guides/        เริ่มต้นที่นี่ + แม่แบบบทเรียน
-├── foundations/   ชั้น 1 · พื้นฐานร่วม
-├── disciplines/   ชั้น 2 · หลักสูตรภาควิชา
-├── industry/      ชั้น 3 · งานจริง (wind/, solar/, thermal/, drilling/)
+├── foundations/
+│   ├── high-school/   ชั้น 1 · ม.4–ม.6 (คณิต ฟิสิกส์ เคมี ชีวะ)
+│   └── university/    ชั้น 1 · ภาควิชา (electrical, civil, mechanical, petroleum, chemical, industrial)
+├── industry/      ชั้น 2 · งานจริง (wind/, solar/, thermal/, drilling/)
 └── en/            ฉบับภาษาอังกฤษ (หน้าที่ยังไม่แปลจะแสดงภาษาไทย)
 src/components/    เครื่องคำนวณแบบโต้ตอบ
 ```

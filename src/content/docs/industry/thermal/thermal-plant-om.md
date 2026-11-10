@@ -6,7 +6,7 @@ sidebar:
 ---
 
 **ระดับ:** Advanced
-**ความรู้ที่ต้องมีก่อน:** [Gas Turbine & Combined Cycle](/industry/thermal/gas-turbine-combined-cycle/) · [Mechanical Engineering](/disciplines/mechanical-engineering/) (Vibration, Fatigue, Materials)
+**ความรู้ที่ต้องมีก่อน:** [Gas Turbine & Combined Cycle](/industry/thermal/gas-turbine-combined-cycle/) · [Mechanical Engineering](/foundations/university/mechanical/) (Vibration, Fatigue, Materials)
 
 ## วัตถุประสงค์การเรียนรู้
 - อธิบายการตรวจซ่อมกังหันก๊าซตามรอบ (CI, HGPI, MI) และการนับชั่วโมงเทียบเท่า

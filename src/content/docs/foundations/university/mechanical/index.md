@@ -2,7 +2,8 @@
 title: Mechanical Engineering (วิศวกรรมเครื่องกล)
 description: ภาพรวมหลักสูตรและเส้นทางสู่งานพลังงานลมและงานเจาะ
 sidebar:
-  order: 3
+  label: ภาพรวมหลักสูตร
+  order: 0
 ---
 
 ## ภาพรวมหลักสูตร (ตัวอย่างโครงสร้างทั่วไป)
@@ -10,13 +11,21 @@ sidebar:
 | ปี | กลุ่มวิชาหลัก |
 |---|---|
 | 1 | Calculus, Physics, Chemistry, Engineering Drawing, Workshop |
-| 2 | Statics, Dynamics, Strength of Materials, [Thermodynamics](/foundations/thermodynamics/), [Fluid Mechanics](/foundations/fluid-mechanics/) |
+| 2 | Statics, Dynamics, Strength of Materials, [Thermodynamics](/foundations/university/mechanical/thermodynamics/), [Fluid Mechanics](/foundations/university/mechanical/fluid-mechanics/) |
 | 3 | **Machine Design**, **Mechanical Vibration**, Heat Transfer, Control, Materials |
 | 4 | **Fatigue & Fracture**, Maintenance Engineering, Finite Element Analysis, Project |
 
 :::caution
 โครงสร้างข้างต้นเป็นตัวอย่างทั่วไป รายวิชาจริงต่างกันไปในแต่ละมหาวิทยาลัย ควรเทียบกับ มคอ. ของหลักสูตรที่ต้องการ
 :::
+
+## ความรู้ ม.ปลาย ที่ใช้มากที่สุด
+- [ฟิสิกส์](/foundations/high-school/physics/): กลศาสตร์ทั้งหมดของ ม.4, ฮาร์มอนิกอย่างง่าย, ความร้อนและแก๊ส, ของแข็งและของไหล
+- [คณิตศาสตร์](/foundations/high-school/math/): เวกเตอร์, ตรีโกณมิติ, แคลคูลัส
+
+## บทเรียนวิชาพื้นฐานในภาควิชานี้
+- [Fluid Mechanics](/foundations/university/mechanical/fluid-mechanics/)
+- [Thermodynamics](/foundations/university/mechanical/thermodynamics/)
 
 ## เส้นทางสู่งานจริง
 

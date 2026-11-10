@@ -6,6 +6,7 @@ sidebar:
 ---
 
 **ระดับ:** Beginner
+**ทบทวนจาก ม.ปลาย:** [ฟิสิกส์ ม.6](/foundations/high-school/physics/) (ของแข็งและของไหล), [ฟิสิกส์ ม.4](/foundations/high-school/physics/) (งานและพลังงาน)
 **ใช้ต่อใน:** [Wind Farm Development](/industry/wind/wind-farm-development/), [Drilling Fluid](/industry/drilling/drilling-fluid/)
 
 ## วัตถุประสงค์การเรียนรู้

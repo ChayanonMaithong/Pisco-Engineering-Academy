@@ -6,6 +6,7 @@ sidebar:
 ---
 
 **ระดับ:** Beginner
+**ทบทวนจาก ม.ปลาย:** [ฟิสิกส์ ม.6](/foundations/high-school/physics/) (ความร้อนและแก๊ส), [เคมี ม.5](/foundations/high-school/chemistry/) (แก๊สและสมบัติของแก๊ส)
 **ใช้ต่อใน:** [Thermal Power Plants](/industry/thermal/thermal-power-overview/), [Gas Turbine & Combined Cycle](/industry/thermal/gas-turbine-combined-cycle/), [Concentrated Solar Power](/industry/solar/concentrated-solar-power/), ระบบระบายความร้อนของกังหันลม
 
 ## วัตถุประสงค์การเรียนรู้
