@@ -2,7 +2,7 @@
 title: คณิตศาสตร์ ม.4–ม.6
 description: หัวข้อคณิตศาสตร์เพิ่มเติม ม.ปลาย และการนำไปใช้ในงานวิศวกรรม
 sidebar:
-  label: คณิตศาสตร์
+  label: ภาพรวมวิชา
   order: 1
 ---
 
@@ -11,13 +11,16 @@ sidebar:
 ## หัวข้อตามชั้นปี
 
 ### ม.4
+
+ทุกหัวข้อมีบทเรียนแล้ว คลิกชื่อหัวข้อเพื่อเริ่มเรียน
+
 | หัวข้อ | สาระสำคัญ | ใช้ต่อในงานวิศวกรรม |
 |---|---|---|
-| เซต | ยูเนียน อินเตอร์เซกชัน แผนภาพเวนน์ | ตรรกะของโปรแกรม, ฐานข้อมูล |
-| ตรรกศาสตร์ | ประพจน์ ตัวเชื่อม สัจนิรันดร์ | **วงจรดิจิทัล** (logic gates), PLC ใน[ระบบควบคุมโรงไฟฟ้า](/industry/thermal/gas-turbine-combined-cycle/) |
-| จำนวนจริงและพหุนาม | อสมการ ค่าสัมบูรณ์ การแยกตัวประกอบ | ช่วงค่าที่ยอมรับได้ เช่น [pressure window](/industry/drilling/drilling-fluid/) ที่ต้องอยู่ระหว่างสองค่า |
-| ฟังก์ชัน | โดเมน เรนจ์ กราฟ ฟังก์ชันประกอบ ฟังก์ชันผกผัน | ทุกสมการทางวิศวกรรม เช่น [power curve ของกังหันลม](/industry/wind/wind-turbine-technology/) |
-| ฟังก์ชันเอกซ์โพเนนเชียลและลอการิทึม | $a^x$, $\log_a x$, สมการเอกซ์โพเนนเชียล | [Wind shear](/industry/wind/wind-resource-assessment/), การคายประจุของตัวเก็บประจุ, เดซิเบลของเสียง |
+| [เซต](/foundations/high-school/math/m4-sets/) | ยูเนียน อินเตอร์เซกชัน แผนภาพเวนน์ | ตรรกะของโปรแกรม, ฐานข้อมูล |
+| [ตรรกศาสตร์](/foundations/high-school/math/m4-logic/) | ประพจน์ ตัวเชื่อม สัจนิรันดร์ | **วงจรดิจิทัล** (logic gates), PLC ใน[ระบบควบคุมโรงไฟฟ้า](/industry/thermal/gas-turbine-combined-cycle/) |
+| [จำนวนจริงและพหุนาม](/foundations/high-school/math/m4-real-numbers/) | อสมการ ค่าสัมบูรณ์ การแยกตัวประกอบ | ช่วงค่าที่ยอมรับได้ เช่น [pressure window](/industry/drilling/drilling-fluid/) ที่ต้องอยู่ระหว่างสองค่า |
+| [ฟังก์ชัน](/foundations/high-school/math/m4-functions/) | โดเมน เรนจ์ กราฟ ฟังก์ชันประกอบ ฟังก์ชันผกผัน | ทุกสมการทางวิศวกรรม เช่น [power curve ของกังหันลม](/industry/wind/wind-turbine-technology/) |
+| [ฟังก์ชันเอกซ์โพเนนเชียลและลอการิทึม](/foundations/high-school/math/m4-exp-log/) | $a^x$, $\log_a x$, สมการเอกซ์โพเนนเชียล | [Wind shear](/industry/wind/wind-resource-assessment/), การคายประจุของตัวเก็บประจุ, เดซิเบลของเสียง |
 
 ### ม.5
 | หัวข้อ | สาระสำคัญ | ใช้ต่อในงานวิศวกรรม |

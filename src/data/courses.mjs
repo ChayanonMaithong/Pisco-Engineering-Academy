@@ -4,12 +4,15 @@
 export const PASS_PERCENT = 70;
 
 export const tiers = [
-  { id: 'high-school', title: 'มัธยมปลาย', subtitle: 'ม.4–ม.6 · ปูพื้นก่อนเข้าคณะวิศวะ' },
+  { id: 'high-school', title: 'มัธยมปลาย', subtitle: 'ม.4–ม.6 แยกตามรายวิชา · ปูพื้นก่อนเข้าคณะวิศวะ', overview: '/foundations/high-school/' },
   { id: 'university', title: 'มหาวิทยาลัย', subtitle: 'หลักสูตรและวิชาพื้นฐานของแต่ละภาควิชา' },
   { id: 'industry', title: 'Industry Practice', subtitle: 'งานจริงในแต่ละอุตสาหกรรม' },
 ];
 
 const ICONS = {
+  sigma: '<path d="M18 4H6l6 8-6 8h12"/>',
+  atom: '<circle cx="12" cy="12" r="1.6" fill="currentColor"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>',
+  leaf: '<path d="M5 19c0-9 6-14 15-15-1 9-6 15-15 15z"/><path d="M5 19 13 11"/>',
   book: '<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7"/>',
   bolt: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
   bridge: '<path d="M2 18h20M4 18v-6M20 18v-6M2 12c4 0 6-5 10-5s6 5 10 5M8 18v-4M12 18v-6M16 18v-4"/>',
@@ -28,11 +31,32 @@ const I = 'industry/';
 
 export const courses = [
   {
-    id: 'high-school', tier: 'high-school', title: 'มัธยมปลาย: ปูพื้นสู่วิศวกรรม', short: 'มัธยมปลาย',
-    color: '#2f9e6b', icon: ICONS.book,
-    description: 'คณิตศาสตร์ ฟิสิกส์ เคมี ชีววิทยา ม.4–ม.6 พร้อมชี้ว่าแต่ละหัวข้อถูกนำไปใช้ที่ไหนในงานวิศวกรรมจริง',
-    outcomes: ['รู้ว่าหัวข้อ ม.ปลาย หัวข้อใดสำคัญกับภาควิชาใด', 'เชื่อมสมการ ม.ปลาย เข้ากับโจทย์งานจริง', 'เตรียมพื้นฐานก่อนเรียนวิชาปี 1–2 ในมหาวิทยาลัย'],
-    lessons: ['foundations/high-school', 'foundations/high-school/math', 'foundations/high-school/physics', 'foundations/high-school/chemistry', 'foundations/high-school/biology'],
+    id: 'hs-math', tier: 'high-school', title: 'คณิตศาสตร์ ม.ปลาย', short: 'คณิตศาสตร์', color: '#2f9e6b', icon: ICONS.sigma,
+    description: 'คณิตศาสตร์เพิ่มเติม ม.4–ม.6 พร้อมตัวอย่างการใช้งานจริงในงานวิศวกรรม',
+    note: 'ตอนนี้มีบทเรียน ม.4 ครบ · ม.5–ม.6 กำลังจัดทำ',
+    outcomes: ['ใช้เซตและตรรกศาสตร์คิดอย่างเป็นระบบ', 'แก้สมการ อสมการ และค่าสัมบูรณ์', 'ใช้ฟังก์ชัน เอกซ์โพเนนเชียล และลอการิทึมกับโจทย์จริง'],
+    lessons: ['math', 'math/m4-sets', 'math/m4-logic', 'math/m4-real-numbers', 'math/m4-functions', 'math/m4-exp-log'].map((x) => 'foundations/high-school/' + x),
+  },
+  {
+    id: 'hs-physics', tier: 'high-school', title: 'ฟิสิกส์ ม.ปลาย', short: 'ฟิสิกส์', color: '#3a7fd0', icon: ICONS.atom,
+    description: 'ฟิสิกส์เพิ่มเติม ม.4–ม.6 กลศาสตร์ คลื่น ไฟฟ้า ความร้อน — พื้นฐานของวิศวกรรมทุกสาขา',
+    note: 'ตอนนี้มีบทเรียน ม.4 (กลศาสตร์) ครบ · ม.5–ม.6 กำลังจัดทำ',
+    outcomes: ['ใช้หน่วย SI และเลขนัยสำคัญอย่างถูกต้อง', 'แก้โจทย์การเคลื่อนที่ แรง และสมดุล', 'ใช้งาน พลังงาน และโมเมนตัมกับเครื่องจักรและกังหันลม'],
+    lessons: ['physics', 'physics/m4-measurement', 'physics/m4-linear-motion', 'physics/m4-force-newton', 'physics/m4-equilibrium', 'physics/m4-work-energy', 'physics/m4-momentum', 'physics/m4-curvilinear'].map((x) => 'foundations/high-school/' + x),
+  },
+  {
+    id: 'hs-chemistry', tier: 'high-school', title: 'เคมี ม.ปลาย', short: 'เคมี', color: '#c2504a', icon: ICONS.flask,
+    description: 'เคมีเพิ่มเติม ม.4–ม.6 ตั้งแต่อะตอม พันธะ โมล ไปจนถึงปฏิกิริยาที่ใช้ในโรงไฟฟ้าและงานเจาะ',
+    note: 'ตอนนี้มีบทเรียน ม.4 ครบ · ม.5–ม.6 กำลังจัดทำ',
+    outcomes: ['ทำงานกับสารเคมีอย่างปลอดภัย', 'อธิบายสมบัติของสารจากโครงสร้างอะตอมและพันธะ', 'คำนวณโมล ความเข้มข้น และปริมาณสัมพันธ์'],
+    lessons: ['chemistry', 'chemistry/m4-lab-safety', 'chemistry/m4-atoms-periodic', 'chemistry/m4-chemical-bonds', 'chemistry/m4-mole', 'chemistry/m4-solutions', 'chemistry/m4-stoichiometry'].map((x) => 'foundations/high-school/' + x),
+  },
+  {
+    id: 'hs-biology', tier: 'high-school', title: 'ชีววิทยา ม.ปลาย', short: 'ชีววิทยา', color: '#5a9e2f', icon: ICONS.leaf,
+    description: 'ชีววิทยาเพิ่มเติม ม.4–ม.6 และความเชื่อมโยงกับพลังงานชีวภาพ สิ่งแวดล้อม และความปลอดภัย',
+    note: 'ตอนนี้มีบทเรียน ม.4 ครบ · ม.5–ม.6 กำลังจัดทำ',
+    outcomes: ['ออกแบบการทดลองด้วยวิธีการทางวิทยาศาสตร์', 'อธิบายเซลล์ สารชีวโมเลกุล และพันธุกรรม', 'เชื่อมความรู้ชีววิทยากับพลังงานชีวภาพและสิ่งแวดล้อม'],
+    lessons: ['biology', 'biology/m4-study-biology', 'biology/m4-chemistry-of-life', 'biology/m4-cell', 'biology/m4-inheritance', 'biology/m4-genes-chromosomes', 'biology/m4-dna-technology', 'biology/m4-evolution'].map((x) => 'foundations/high-school/' + x),
   },
   {
     id: 'electrical', tier: 'university', title: 'วิศวกรรมไฟฟ้า', short: 'ไฟฟ้า', color: '#e3a21a', icon: ICONS.bolt,
