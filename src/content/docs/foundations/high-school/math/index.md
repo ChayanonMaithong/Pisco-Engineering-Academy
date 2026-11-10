@@ -23,14 +23,17 @@ sidebar:
 | [ฟังก์ชันเอกซ์โพเนนเชียลและลอการิทึม](/foundations/high-school/math/m4-exp-log/) | $a^x$, $\log_a x$, สมการเอกซ์โพเนนเชียล | [Wind shear](/industry/wind/wind-resource-assessment/), การคายประจุของตัวเก็บประจุ, เดซิเบลของเสียง |
 
 ### ม.5
+
+ทุกหัวข้อมีบทเรียนแล้ว คลิกชื่อหัวข้อเพื่อเริ่มเรียน
+
 | หัวข้อ | สาระสำคัญ | ใช้ต่อในงานวิศวกรรม |
 |---|---|---|
-| ฟังก์ชันตรีโกณมิติ | sin cos tan, เอกลักษณ์, กฎของไซน์และโคไซน์ | **[Directional drilling](/industry/drilling/directional-drilling/)**, แรงบนโครงถัก, ไฟฟ้ากระแสสลับ, มุมของดวงอาทิตย์ใน[งาน solar](/industry/solar/solar-fundamentals/) |
-| เมทริกซ์ | การคูณ ดีเทอร์มิแนนต์ อินเวอร์ส แก้ระบบสมการ | วิเคราะห์โครงสร้าง (stiffness matrix), วงจรไฟฟ้า, load flow ในระบบไฟฟ้า |
-| เวกเตอร์ในสามมิติ | ผลคูณสเกลาร์ ผลคูณเวกเตอร์ | แรงและโมเมนต์ใน Statics, ตำแหน่งหลุมเจาะ (N, E, TVD) |
-| จำนวนเชิงซ้อน | รูปเชิงขั้ว ทฤษฎีบทเดอมัวร์ | **วงจรไฟฟ้ากระแสสลับ** (phasor, impedance) |
-| หลักการนับเบื้องต้น | วิธีเรียงสับเปลี่ยน วิธีจัดหมู่ | การวางแผนการผลิต, ความน่าเชื่อถือของระบบ |
-| ความน่าจะเป็น | ปริภูมิตัวอย่าง เหตุการณ์ | ความเสี่ยง, [P50/P90](/industry/wind/wind-farm-layout-energy-yield/), ความน่าเชื่อถือของอุปกรณ์ |
+| [ฟังก์ชันตรีโกณมิติ](/foundations/high-school/math/m5-trigonometry/) | sin cos tan, เอกลักษณ์, กฎของไซน์และโคไซน์ | **[Directional drilling](/industry/drilling/directional-drilling/)**, แรงบนโครงถัก, ไฟฟ้ากระแสสลับ, มุมของดวงอาทิตย์ใน[งาน solar](/industry/solar/solar-fundamentals/) |
+| [เมทริกซ์](/foundations/high-school/math/m5-matrices/) | การคูณ ดีเทอร์มิแนนต์ อินเวอร์ส แก้ระบบสมการ | วิเคราะห์โครงสร้าง (stiffness matrix), วงจรไฟฟ้า, load flow ในระบบไฟฟ้า |
+| [เวกเตอร์ในสามมิติ](/foundations/high-school/math/m5-vectors/) | ผลคูณสเกลาร์ ผลคูณเวกเตอร์ | แรงและโมเมนต์ใน Statics, ตำแหน่งหลุมเจาะ (N, E, TVD) |
+| [จำนวนเชิงซ้อน](/foundations/high-school/math/m5-complex-numbers/) | รูปเชิงขั้ว ทฤษฎีบทเดอมัวร์ | **วงจรไฟฟ้ากระแสสลับ** (phasor, impedance) |
+| [หลักการนับเบื้องต้น](/foundations/high-school/math/m5-counting/) | วิธีเรียงสับเปลี่ยน วิธีจัดหมู่ | การวางแผนการผลิต, ความน่าเชื่อถือของระบบ |
+| [ความน่าจะเป็น](/foundations/high-school/math/m5-probability/) | ปริภูมิตัวอย่าง เหตุการณ์ | ความเสี่ยง, [P50/P90](/industry/wind/wind-farm-layout-energy-yield/), ความน่าเชื่อถือของอุปกรณ์ |
 
 ### ม.6
 | หัวข้อ | สาระสำคัญ | ใช้ต่อในงานวิศวกรรม |

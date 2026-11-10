@@ -25,14 +25,17 @@ sidebar:
 | [การเคลื่อนที่แนวโค้ง](/foundations/high-school/physics/m4-curvilinear/) | โพรเจกไทล์, วงกลม, แรงสู่ศูนย์กลาง | โรเตอร์ที่หมุน, [tip speed ratio](/industry/wind/wind-turbine-technology/) |
 
 ### ม.5: คลื่นและไฟฟ้า
+
+ทุกหัวข้อมีบทเรียนแล้ว คลิกชื่อหัวข้อเพื่อเริ่มเรียน
+
 | หัวข้อ | สาระสำคัญ | ใช้ต่อในงานวิศวกรรม |
 |---|---|---|
-| การเคลื่อนที่แบบฮาร์มอนิกอย่างง่าย | สปริง, ลูกตุ้ม, ความถี่ธรรมชาติ | **Vibration** ของเครื่องจักร, ความถี่ 1P/3P ของ[เสากังหันลม](/industry/wind/wind-turbine-technology/) |
-| คลื่น | ความถี่ ความยาวคลื่น การสะท้อน การแทรกสอด | คลื่นทะเลกระทำต่อ[ฐานรากนอกชายฝั่ง](/industry/wind/offshore-wind/), การสำรวจแผ่นดินไหว (seismic) |
-| แสงเชิงฟิสิกส์ | การเลี้ยวเบน, เกรตติง | LiDAR, สายใยแก้วนำแสง |
-| เสียง | ความเข้มเสียง, เดซิเบล, ดอปเพลอร์ | เสียงจากกังหันลม, SoDAR, ultrasonic testing |
-| ไฟฟ้าสถิต | กฎของคูลอมบ์, สนามไฟฟ้า, ศักย์, ตัวเก็บประจุ | ฉนวนไฟฟ้าแรงสูง, ESP ดักฝุ่นใน[โรงไฟฟ้า](/industry/thermal/thermal-power-overview/) |
-| ไฟฟ้ากระแส | กฎของโอห์ม, วงจรอนุกรม/ขนาน, กำลังไฟฟ้า | **[String sizing ของแผง PV](/industry/solar/pv-plant-design/)**, สายเคเบิล |
+| [การเคลื่อนที่แบบฮาร์มอนิกอย่างง่าย](/foundations/high-school/physics/m5-shm/) | สปริง, ลูกตุ้ม, ความถี่ธรรมชาติ | **Vibration** ของเครื่องจักร, ความถี่ 1P/3P ของ[เสากังหันลม](/industry/wind/wind-turbine-technology/) |
+| [คลื่น](/foundations/high-school/physics/m5-waves/) | ความถี่ ความยาวคลื่น การสะท้อน การแทรกสอด | คลื่นทะเลกระทำต่อ[ฐานรากนอกชายฝั่ง](/industry/wind/offshore-wind/), การสำรวจแผ่นดินไหว (seismic) |
+| [แสงเชิงฟิสิกส์](/foundations/high-school/physics/m5-light/) | การเลี้ยวเบน, เกรตติง | LiDAR, สายใยแก้วนำแสง |
+| [เสียง](/foundations/high-school/physics/m5-sound/) | ความเข้มเสียง, เดซิเบล, ดอปเพลอร์ | เสียงจากกังหันลม, SoDAR, ultrasonic testing |
+| [ไฟฟ้าสถิต](/foundations/high-school/physics/m5-electrostatics/) | กฎของคูลอมบ์, สนามไฟฟ้า, ศักย์, ตัวเก็บประจุ | ฉนวนไฟฟ้าแรงสูง, ESP ดักฝุ่นใน[โรงไฟฟ้า](/industry/thermal/thermal-power-overview/) |
+| [ไฟฟ้ากระแส](/foundations/high-school/physics/m5-current-electricity/) | กฎของโอห์ม, วงจรอนุกรม/ขนาน, กำลังไฟฟ้า | **[String sizing ของแผง PV](/industry/solar/pv-plant-design/)**, สายเคเบิล |
 
 ### ม.6: แม่เหล็ก ความร้อน ของไหล และฟิสิกส์ยุคใหม่
 | หัวข้อ | สาระสำคัญ | ใช้ต่อในงานวิศวกรรม |
