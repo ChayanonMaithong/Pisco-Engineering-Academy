@@ -38,14 +38,17 @@ sidebar:
 | [ไฟฟ้ากระแส](/foundations/high-school/physics/m5-current-electricity/) | กฎของโอห์ม, วงจรอนุกรม/ขนาน, กำลังไฟฟ้า | **[String sizing ของแผง PV](/industry/solar/pv-plant-design/)**, สายเคเบิล |
 
 ### ม.6: แม่เหล็ก ความร้อน ของไหล และฟิสิกส์ยุคใหม่
+
+ทุกหัวข้อมีบทเรียนแล้ว คลิกชื่อหัวข้อเพื่อเริ่มเรียน
+
 | หัวข้อ | สาระสำคัญ | ใช้ต่อในงานวิศวกรรม |
 |---|---|---|
-| แม่เหล็กและไฟฟ้า | แรงแม่เหล็ก, การเหนี่ยวนำ (ฟาราเดย์), ไฟฟ้ากระแสสลับ, หม้อแปลง | **เครื่องกำเนิดไฟฟ้า**ในกังหันลมและโรงไฟฟ้า, หม้อแปลง, มอเตอร์ |
-| ความร้อนและแก๊ส | ความจุความร้อน, ความร้อนแฝง, กฎแก๊สอุดมคติ, ทฤษฎีจลน์ | **[Thermodynamics](/foundations/university/mechanical/thermodynamics/)**, [กังหันก๊าซ](/industry/thermal/gas-turbine-combined-cycle/), ความหนาแน่นอากาศ |
-| ของแข็งและของไหล | ความเค้น-ความเครียด, มอดุลัสของยัง, ความดันในของไหล, หลักแบร์นูลลี | **[Fluid Mechanics](/foundations/university/mechanical/fluid-mechanics/)**, [แรงดันในหลุมเจาะ](/industry/drilling/drilling-fluid/), Strength of Materials |
-| คลื่นแม่เหล็กไฟฟ้า | สเปกตรัม, โพลาไรเซชัน | การสื่อสาร, เรดาร์, รังสีอาทิตย์ |
-| ฟิสิกส์อะตอม | ปรากฏการณ์โฟโตอิเล็กทริก, แบบจำลองอะตอม | **[เซลล์แสงอาทิตย์](/industry/solar/solar-fundamentals/)** (band gap) |
-| ฟิสิกส์นิวเคลียร์และอนุภาค | กัมมันตภาพรังสี, ครึ่งชีวิต, ฟิชชัน | Well logging ด้วยรังสี, การตรวจรอยเชื่อมด้วยรังสี (RT), โรงไฟฟ้านิวเคลียร์ |
+| [แม่เหล็กและไฟฟ้า](/foundations/high-school/physics/m6-magnetism/) | แรงแม่เหล็ก, การเหนี่ยวนำ (ฟาราเดย์), ไฟฟ้ากระแสสลับ, หม้อแปลง | **เครื่องกำเนิดไฟฟ้า**ในกังหันลมและโรงไฟฟ้า, หม้อแปลง, มอเตอร์ |
+| [ความร้อนและแก๊ส](/foundations/high-school/physics/m6-heat-gas/) | ความจุความร้อน, ความร้อนแฝง, กฎแก๊สอุดมคติ, ทฤษฎีจลน์ | **[Thermodynamics](/foundations/university/mechanical/thermodynamics/)**, [กังหันก๊าซ](/industry/thermal/gas-turbine-combined-cycle/), ความหนาแน่นอากาศ |
+| [ของแข็งและของไหล](/foundations/high-school/physics/m6-solids-fluids/) | ความเค้น-ความเครียด, มอดุลัสของยัง, ความดันในของไหล, หลักแบร์นูลลี | **[Fluid Mechanics](/foundations/university/mechanical/fluid-mechanics/)**, [แรงดันในหลุมเจาะ](/industry/drilling/drilling-fluid/), Strength of Materials |
+| [คลื่นแม่เหล็กไฟฟ้า](/foundations/high-school/physics/m6-em-waves/) | สเปกตรัม, โพลาไรเซชัน | การสื่อสาร, เรดาร์, รังสีอาทิตย์ |
+| [ฟิสิกส์อะตอม](/foundations/high-school/physics/m6-atomic/) | ปรากฏการณ์โฟโตอิเล็กทริก, แบบจำลองอะตอม | **[เซลล์แสงอาทิตย์](/industry/solar/solar-fundamentals/)** (band gap) |
+| [ฟิสิกส์นิวเคลียร์และอนุภาค](/foundations/high-school/physics/m6-nuclear/) | กัมมันตภาพรังสี, ครึ่งชีวิต, ฟิชชัน | Well logging ด้วยรังสี, การตรวจรอยเชื่อมด้วยรังสี (RT), โรงไฟฟ้านิวเคลียร์ |
 
 ## ตัวอย่าง: จาก ม.6 สู่งานจริง
 

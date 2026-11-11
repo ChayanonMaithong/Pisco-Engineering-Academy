@@ -4,7 +4,7 @@
 export const PASS_PERCENT = 70;
 
 export const tiers = [
-  { id: 'high-school', title: 'มัธยมปลาย', subtitle: 'ม.4–ม.6 แยกตามรายวิชา · ปูพื้นก่อนเข้าคณะวิศวะ', overview: '/foundations/high-school/' },
+  { id: 'high-school', title: 'มัธยมปลาย', subtitle: 'ม.4–ม.6 แยกตามรายวิชา ครบทุกชั้นปี · ปูพื้นก่อนเข้าคณะวิศวะ', overview: '/foundations/high-school/' },
   { id: 'university', title: 'มหาวิทยาลัย', subtitle: 'หลักสูตรและวิชาพื้นฐานของแต่ละภาควิชา' },
   { id: 'industry', title: 'Industry Practice', subtitle: 'งานจริงในแต่ละอุตสาหกรรม' },
 ];
@@ -33,30 +33,30 @@ export const courses = [
   {
     id: 'hs-math', tier: 'high-school', title: 'คณิตศาสตร์ ม.ปลาย', short: 'คณิตศาสตร์', color: '#2f9e6b', icon: ICONS.sigma,
     description: 'คณิตศาสตร์เพิ่มเติม ม.4–ม.6 พร้อมตัวอย่างการใช้งานจริงในงานวิศวกรรม',
-    note: 'ตอนนี้มีบทเรียน ม.4–ม.5 ครบ · ม.6 กำลังจัดทำ',
-    outcomes: ['ใช้เซตและตรรกศาสตร์คิดอย่างเป็นระบบ', 'ใช้ฟังก์ชัน เอกซ์โพเนนเชียล ลอการิทึม และตรีโกณมิติกับโจทย์จริง', 'แก้ระบบสมการด้วยเมทริกซ์ และใช้เวกเตอร์กับจำนวนเชิงซ้อน', 'คำนวณความน่าจะเป็นและความน่าเชื่อถือของระบบ'],
-    lessons: ['math', 'math/m4-sets', 'math/m4-logic', 'math/m4-real-numbers', 'math/m4-functions', 'math/m4-exp-log', 'math/m5-trigonometry', 'math/m5-matrices', 'math/m5-vectors', 'math/m5-complex-numbers', 'math/m5-counting', 'math/m5-probability'].map((x) => 'foundations/high-school/' + x),
+    note: 'มีบทเรียนครบ ม.4–ม.6',
+    outcomes: ['ใช้เซตและตรรกศาสตร์คิดอย่างเป็นระบบ', 'ใช้ฟังก์ชัน เอกซ์โพเนนเชียล ลอการิทึม และตรีโกณมิติกับโจทย์จริง', 'แก้ระบบสมการด้วยเมทริกซ์ และใช้เวกเตอร์กับจำนวนเชิงซ้อน', 'คำนวณความน่าจะเป็นและความน่าเชื่อถือของระบบ', 'ใช้แคลคูลัส สถิติ และการแจกแจงปกติกับข้อมูลจริง เช่น P90 และ NPV'],
+    lessons: ['math', 'math/m4-sets', 'math/m4-logic', 'math/m4-real-numbers', 'math/m4-functions', 'math/m4-exp-log', 'math/m5-trigonometry', 'math/m5-matrices', 'math/m5-vectors', 'math/m5-complex-numbers', 'math/m5-counting', 'math/m5-probability', 'math/m6-sequences-series', 'math/m6-calculus', 'math/m6-statistics', 'math/m6-probability-distributions'].map((x) => 'foundations/high-school/' + x),
   },
   {
     id: 'hs-physics', tier: 'high-school', title: 'ฟิสิกส์ ม.ปลาย', short: 'ฟิสิกส์', color: '#3a7fd0', icon: ICONS.atom,
     description: 'ฟิสิกส์เพิ่มเติม ม.4–ม.6 กลศาสตร์ คลื่น ไฟฟ้า ความร้อน — พื้นฐานของวิศวกรรมทุกสาขา',
-    note: 'ตอนนี้มีบทเรียน ม.4–ม.5 ครบ · ม.6 กำลังจัดทำ',
-    outcomes: ['ใช้หน่วย SI และเลขนัยสำคัญอย่างถูกต้อง', 'แก้โจทย์การเคลื่อนที่ แรง สมดุล งาน และโมเมนตัม', 'อธิบายการสั่น คลื่น เสียง และแสง', 'วิเคราะห์ไฟฟ้าสถิตและวงจรไฟฟ้ากระแสตรง'],
-    lessons: ['physics', 'physics/m4-measurement', 'physics/m4-linear-motion', 'physics/m4-force-newton', 'physics/m4-equilibrium', 'physics/m4-work-energy', 'physics/m4-momentum', 'physics/m4-curvilinear', 'physics/m5-shm', 'physics/m5-waves', 'physics/m5-light', 'physics/m5-sound', 'physics/m5-electrostatics', 'physics/m5-current-electricity'].map((x) => 'foundations/high-school/' + x),
+    note: 'มีบทเรียนครบ ม.4–ม.6',
+    outcomes: ['ใช้หน่วย SI และเลขนัยสำคัญอย่างถูกต้อง', 'แก้โจทย์การเคลื่อนที่ แรง สมดุล งาน และโมเมนตัม', 'อธิบายการสั่น คลื่น เสียง และแสง', 'วิเคราะห์ไฟฟ้าสถิตและวงจรไฟฟ้ากระแสตรง', 'อธิบายเครื่องกำเนิดไฟฟ้า หม้อแปลง ความร้อน ของไหล และฟิสิกส์ยุคใหม่'],
+    lessons: ['physics', 'physics/m4-measurement', 'physics/m4-linear-motion', 'physics/m4-force-newton', 'physics/m4-equilibrium', 'physics/m4-work-energy', 'physics/m4-momentum', 'physics/m4-curvilinear', 'physics/m5-shm', 'physics/m5-waves', 'physics/m5-light', 'physics/m5-sound', 'physics/m5-electrostatics', 'physics/m5-current-electricity', 'physics/m6-magnetism', 'physics/m6-heat-gas', 'physics/m6-solids-fluids', 'physics/m6-em-waves', 'physics/m6-atomic', 'physics/m6-nuclear'].map((x) => 'foundations/high-school/' + x),
   },
   {
     id: 'hs-chemistry', tier: 'high-school', title: 'เคมี ม.ปลาย', short: 'เคมี', color: '#c2504a', icon: ICONS.flask,
     description: 'เคมีเพิ่มเติม ม.4–ม.6 ตั้งแต่อะตอม พันธะ โมล ไปจนถึงปฏิกิริยาที่ใช้ในโรงไฟฟ้าและงานเจาะ',
-    note: 'ตอนนี้มีบทเรียน ม.4–ม.5 ครบ · ม.6 กำลังจัดทำ',
-    outcomes: ['ทำงานกับสารเคมีอย่างปลอดภัย', 'อธิบายสมบัติของสารจากโครงสร้างอะตอมและพันธะ', 'คำนวณโมล ความเข้มข้น ปริมาณสัมพันธ์ และกฎของแก๊ส', 'ใช้อัตราปฏิกิริยา สมดุลเคมี และ pH กับกระบวนการจริง'],
-    lessons: ['chemistry', 'chemistry/m4-lab-safety', 'chemistry/m4-atoms-periodic', 'chemistry/m4-chemical-bonds', 'chemistry/m4-mole', 'chemistry/m4-solutions', 'chemistry/m4-stoichiometry', 'chemistry/m5-gases', 'chemistry/m5-reaction-rate', 'chemistry/m5-equilibrium', 'chemistry/m5-acid-base'].map((x) => 'foundations/high-school/' + x),
+    note: 'มีบทเรียนครบ ม.4–ม.6',
+    outcomes: ['ทำงานกับสารเคมีอย่างปลอดภัย', 'อธิบายสมบัติของสารจากโครงสร้างอะตอมและพันธะ', 'คำนวณโมล ความเข้มข้น ปริมาณสัมพันธ์ และกฎของแก๊ส', 'ใช้อัตราปฏิกิริยา สมดุลเคมี และ pH กับกระบวนการจริง', 'อธิบายการกัดกร่อน แบตเตอรี่ เชื้อเพลิง และวัสดุพอลิเมอร์'],
+    lessons: ['chemistry', 'chemistry/m4-lab-safety', 'chemistry/m4-atoms-periodic', 'chemistry/m4-chemical-bonds', 'chemistry/m4-mole', 'chemistry/m4-solutions', 'chemistry/m4-stoichiometry', 'chemistry/m5-gases', 'chemistry/m5-reaction-rate', 'chemistry/m5-equilibrium', 'chemistry/m5-acid-base', 'chemistry/m6-electrochemistry', 'chemistry/m6-organic', 'chemistry/m6-polymers'].map((x) => 'foundations/high-school/' + x),
   },
   {
     id: 'hs-biology', tier: 'high-school', title: 'ชีววิทยา ม.ปลาย', short: 'ชีววิทยา', color: '#5a9e2f', icon: ICONS.leaf,
     description: 'ชีววิทยาเพิ่มเติม ม.4–ม.6 และความเชื่อมโยงกับพลังงานชีวภาพ สิ่งแวดล้อม และความปลอดภัย',
-    note: 'ตอนนี้มีบทเรียน ม.4–ม.5 ครบ · ม.6 กำลังจัดทำ',
-    outcomes: ['ออกแบบการทดลองด้วยวิธีการทางวิทยาศาสตร์', 'อธิบายเซลล์ สารชีวโมเลกุล และพันธุกรรม', 'อธิบายการทำงานของพืชและระบบในร่างกายมนุษย์', 'เชื่อมความรู้ชีววิทยากับพลังงานชีวภาพ สิ่งแวดล้อม และความปลอดภัย'],
-    lessons: ['biology', 'biology/m4-study-biology', 'biology/m4-chemistry-of-life', 'biology/m4-cell', 'biology/m4-inheritance', 'biology/m4-genes-chromosomes', 'biology/m4-dna-technology', 'biology/m4-evolution', 'biology/m5-plant-structure', 'biology/m5-photosynthesis', 'biology/m5-plant-reproduction', 'biology/m5-digestion-respiration', 'biology/m5-circulation-immunity', 'biology/m5-excretion'].map((x) => 'foundations/high-school/' + x),
+    note: 'มีบทเรียนครบ ม.4–ม.6',
+    outcomes: ['ออกแบบการทดลองด้วยวิธีการทางวิทยาศาสตร์', 'อธิบายเซลล์ สารชีวโมเลกุล และพันธุกรรม', 'อธิบายการทำงานของพืชและระบบในร่างกายมนุษย์', 'เชื่อมความรู้ชีววิทยากับพลังงานชีวภาพ สิ่งแวดล้อม และความปลอดภัย', 'ใช้ความรู้ระบบนิเวศและพฤติกรรมสัตว์ประเมินผลกระทบของโครงการ'],
+    lessons: ['biology', 'biology/m4-study-biology', 'biology/m4-chemistry-of-life', 'biology/m4-cell', 'biology/m4-inheritance', 'biology/m4-genes-chromosomes', 'biology/m4-dna-technology', 'biology/m4-evolution', 'biology/m5-plant-structure', 'biology/m5-photosynthesis', 'biology/m5-plant-reproduction', 'biology/m5-digestion-respiration', 'biology/m5-circulation-immunity', 'biology/m5-excretion', 'biology/m6-nervous-system', 'biology/m6-endocrine-reproduction', 'biology/m6-animal-behavior', 'biology/m6-biodiversity', 'biology/m6-ecology'].map((x) => 'foundations/high-school/' + x),
   },
   {
     id: 'electrical', tier: 'university', title: 'วิศวกรรมไฟฟ้า', short: 'ไฟฟ้า', color: '#e3a21a', icon: ICONS.bolt,
